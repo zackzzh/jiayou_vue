@@ -1,0 +1,363 @@
+<template>
+  <div class="homeMainDivType">
+    <!-- ivivew的锚点 -->
+    <!-- <jy-anchor :list="muneList"></jy-anchor> -->
+    <!-- <jy-anchor class="swiper-pagination" :list="muneList"></jy-anchor> -->
+    <!-- 右侧导航 -->
+    <div
+      class="swiper-pagination rightMenu animated slideInDown"
+      :style="`background-image: url(${muneList.bgImgUrl})`"
+    ></div>
+
+    <div class="swiper-home swiper-container" :style="`height:${heightNum}px`">
+      <div class="swiper-wrapper">
+        <!-- 轮播项-至下 :style="`height:${heightData}px`" -->
+        <div
+          class="swiper-slide"
+          :data-hash="item.link"
+          :id="item.link"
+          v-for="item in muneList.list"
+          :key="item.key"
+        >
+          <!-- <home-img :list="item" :animationData="animationData"> -->
+          <home-img style="overflow: hidden" :list="item" :class="animationData.imgIn">
+            <div v-if="item.isCenterImg" slot="centerImg">
+              <!-- 轮播图 -->
+              <home-swiper
+                v-if="item.isSlideshow"
+                :list="slideshowList"
+                :data="getProductData"
+                :animationData="animationData"
+              ></home-swiper>
+              <!-- 新闻动态 -->
+              <home-news
+                v-if="item.isNews"
+                :list="newsList"
+                :data="newsData"
+                :animationData="animationData"
+                @newsChange="newsChange"
+              ></home-news>
+            </div>
+            <!-- 精品案例样式 -->
+            <div v-if="item.isBottomImg" slot="bottomImg">
+              <!-- <p>我是底部</p> -->
+              <home-case :list="caseList" :data="casesDataFun" :animationData="animationData"></home-case>
+            </div>
+          </home-img>
+        </div>
+        <!-- 页脚 -->
+        <div class="swiper-slide">
+          <jy-footer class="jyFooterType" :animationData="animationData"></jy-footer>
+        </div>
+        <!-- 轮播项-至上 -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState, mapGetters } from "vuex";
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+
+import jyAnchor from "@/components/jy-anchor";
+import homeImg from "./home-img";
+import homeSwiper from "./home-swiper";
+import homeCase from "./home-case";
+import homeNews from "./home-news";
+
+import jyFooter from "@/components/jy-footer/index";
+
+import homeData from "./homeData";
+
+export default {
+  name: "home",
+  components: {
+    jyFooter,
+    // 锚点，右侧导航
+    jyAnchor,
+    // 整体布局图片
+    homeImg,
+    // 轮播
+    homeSwiper,
+    // 精品案例
+    homeCase,
+    // 新闻动态
+    homeNews
+  },
+  created() {
+    document.body.style.cssText = "overflow: hidden";
+    document.documentElement.scrollTop = 0;
+    this.getCasesData(this.casesParams);
+
+    this.getNews(this.paramsData);
+    // console.log("document.body.clientWidth", document.body.clientWidth);
+    // console.log("document.body.clientHeight", document.body.clientHeight);
+    // const windowHeight = window.screen.height;
+    // const windowWidth = window.screen.width;
+    // this.scaleNum = windowHeight / windowWidth;
+    //       window.screen.height
+    // 屏幕分辨率的宽： window.screen.width
+
+    // console.log("homeQuery", this.$route.query);
+  },
+  mounted() {
+    if (this.$route.query.id) {
+      const idVal = this.$route.query.id;
+      const regexp = /\w+$/;
+      const idNum = parseInt(idVal.match(regexp)[0]);
+      // console.log("idididi",idNum);
+      this.setHomeImgSwiper().slideTo(idNum, 1000, false);
+    } else {
+      this.setHomeImgSwiper();
+    }
+  },
+  computed: {
+    ...mapState("home", ["newsData", "productData"]),
+    ...mapState("cases", ["casesData", "casesTypeList"]),
+    ...mapGetters("product", ["getProductData"]),
+    casesDataFun() {
+      return this.casesData.page || {};
+    }
+  },
+  data() {
+    return {
+      // offsetTop: 0
+      muneList: homeData.muneList,
+      caseList: homeData.caseList,
+      slideshowList: homeData.slideshowList,
+      newsList: homeData.newsList,
+      heightNum: 1080,
+      animationData: {},
+      paramsData: {
+        typeid: 9
+      },
+      casesParams: {
+        page: 1,
+        limit: 8,
+        isShowIndex: "1"
+      }
+      // heightData: 1570
+    };
+  },
+  methods: {
+    ...mapActions("home", ["getNews", "getProduct"]),
+    ...mapActions("cases", ["getCasesData", "casesType"]),
+    newsChange(val) {
+      // console.log("news的数据：", val);
+      this.paramsData = {
+        typeid: val
+      };
+      this.getNews(this.paramsData);
+    },
+    heightFun() {
+      const elData = document.querySelector(".homeMainDivType");
+      const elWidth = elData.getBoundingClientRect().width;
+      this.heightNum = elWidth * (27 / 48);
+    },
+    setHomeImgSwiper() {
+      const that = this;
+      return new Swiper(".swiper-home", {
+        // height: "auto",
+        //autoplay: true, //可选选项，自动滑动
+        direction: "vertical",
+        // mousewheel: {
+        //   releaseOnEdges: true
+        // },
+        mousewheel: true,
+        simulateTouch: false,
+        pagination: {
+          el: ".swiper-pagination",
+          // type: "custom",
+          clickable: true,
+          // clickableClass: "clickableClass",
+          bulletClass: "bulleType",
+          bulletActiveClass: "bulleActiveType",
+          // hashNavigation: true
+          renderBullet: function(index, className) {
+            // console.log("renderBullet", index, className);
+            let text = null;
+            let borderType = "";
+            // let customer = "";
+            switch (index) {
+              case 0:
+                text = "首页置顶";
+                break;
+              case 1:
+                text = "产品服务";
+                break;
+              case 2:
+                text = "精品案例";
+                break;
+              case 3:
+                text = "关于我们";
+                break;
+              case 4:
+                text = "行业动态";
+                borderType = "border: none";
+                break;
+              // case 5:
+              //   text = "客服";
+              //   borderType = "border: none";
+              //   break;
+            }
+            if (index === 5) {
+              return "";
+            } else {
+              return (
+                '<span class="' +
+                className +
+                '" style="' +
+                borderType +
+                '">' +
+                text +
+                "</span>"
+              );
+            }
+
+            // return (
+            //   '<span class="' +
+            //   className +
+            //   '" style="' +
+            //   borderType +
+            //   '">' +
+            //   text +
+            //   "</span>"
+            // );
+          }
+        },
+        on: {
+          // 回调函数，当Swiper的progress被改变时执行。接受Swiper的progress作为参数（0-1）。
+          progress: function(progress) {
+            // const elData = document.querySelector(".jyFooterType");
+            // const elWidth = elData.getBoundingClientRect().width;
+            // that.heightNum = elWidth * (27 / 48);
+            // 获取高度，设置高度
+            // console.log("滚动了");
+            that.heightFun();
+
+            if (progress === 0.8) {
+              that.animationData = {
+                // leftIn: "animated zoomInLeft",
+                // rightIn: "animated zoomInRight"
+                rightIn: "animated flipInX"
+              };
+            } else if (progress === 0.6) {
+              that.animationData = {
+                imgIn: "animated zoomIn"
+              };
+            } else if (progress === 0.4) {
+              that.animationData = {
+                leftIn: "animated bounceInLeft",
+                rightIn: "animated bounceInRight"
+              };
+            } else if (progress === 0.2) {
+              that.animationData = {
+                leftIn: "animated fadeInLeftBig",
+                rightIn: "animated fadeInRightBig"
+              };
+            } else if (progress === 0) {
+              that.animationData = {
+                imgIn: "animated zoomIn"
+              };
+            } else if (progress === 1) {
+              // 获取最后一个节点
+              const slide = this.slides.eq(that.muneList.list.length);
+
+              // const bodyHeight = document.body.clientHeight;
+              // const bodyWidth = document.body.clientWidth;
+              // const minNum = Math.min(bodyHeight, bodyWidth);
+
+              const footerEl = document.querySelector(".jyFooterType");
+              const footerElHeight = footerEl.getBoundingClientRect().height;
+
+              const transNum = that.heightNum - footerElHeight - 100;
+              // const elData =
+              // const elWidth = elData.width;
+              // console.log("bodyHeight", transNum);
+              // slide.transform("translateY(" + "530px" + ")");
+              if (transNum > 0) {
+                slide.transform("translateY(" + transNum + "px)");
+              }
+              that.animationData = {
+                logoIn: "animated flipInX",
+                addIn: "animated bounceInRight",
+                cardIn: "animated bounceInLeft",
+                cardIn0: "animated bounceInRight",
+                cardIn1: "animated bounceInRight",
+                cardIn2: "animated bounceInUp",
+                cardIn3: "animated bounceInLeft",
+                cardIn4: "animated bounceInLeft"
+              };
+            } else {
+              that.animationData = {};
+            }
+          }
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.homeMainDivType {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  // line-height: 0;
+  // transition: all 2s;
+  .rightMenu {
+    position: fixed;
+    top: 220px;
+    right: 100px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    /deep/.bulleType {
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid rgba(86, 121, 255, 0.4);
+      font-size: 14px;
+      line-height: 14px;
+      color: #a9d1ff;
+      -webkit-transition: font-size 300ms;
+      -moz-transform: font-size 300ms;
+      -ms-transform: font-size 300ms;
+      -o-transform: font-size 300ms;
+      transition: font-size 300ms;
+    }
+    /deep/.bulleType:hover {
+      font-size: 16px;
+      color: #1b85ff;
+      background-color: rgba(230, 230, 230, 1);
+    }
+    /deep/.bulleActiveType {
+      font-size: 16px;
+      color: #1b85ff;
+      background-color: rgba(230, 230, 230, 1);
+    }
+  }
+  .swiper-home {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+// @media screen and (min-width: 760px) and (max-width: 1024px) {
+//   .rightMenu {
+//     top: 180px;
+//     right: 80px;
+//   }
+// }
+
+@media screen and (min-width: 760px) and (max-width: 1030px) {
+  .homeMainDivType {
+    .rightMenu {
+      position: fixed;
+      top: 150px;
+      right: 50px;
+    }
+  }
+}
+// rightMenu
+</style>

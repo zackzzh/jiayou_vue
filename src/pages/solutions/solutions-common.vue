@@ -1,0 +1,100 @@
+<template>
+  <div>
+    <!-- 公共组件 -->
+    <home-img :list="item" v-for="item in moduleFun.bgImgList" :key="item.key">
+      <!-- isCenterImg  isMiddle -->
+      <div slot="centerImg">
+        <!-- 行业解决方案 -->
+        <solutions-solutions v-if="item.isSolutions" :list="commonData.solutionsData"/>
+        <!-- 简介 -->
+        <solutions-middle
+          v-if="item.isMiddle"
+          :list="moduleFun.contentData"
+          :commonData="commonData.middleData"
+        />
+        <!-- 功能介绍 -->
+        <solutions-function
+          v-if="item.isFunction"
+          :commonData="commonData.functionData"
+          :list="moduleFun.list"
+        />
+      </div>
+    </home-img>
+    <more-dit></more-dit>
+  </div>
+</template>
+
+<script>
+import homeImg from "@/pages/home/home-img";
+import moreDit from "@/components/more-dit";
+import solutionsSolutions from "./solutions-solutions";
+import solutionsMiddle from "./solutions-middle";
+import solutionsFunction from "./solutions-function";
+import solutionsData from "./solutionsData";
+export default {
+  components: {
+    homeImg,
+    solutionsSolutions,
+    solutionsMiddle,
+    solutionsFunction,
+    moreDit
+  },
+  data() {
+    return {
+      commonData: solutionsData.commonData,
+      moduleData: null
+    };
+  },
+  computed: {
+    moduleFun: function() {
+      const testData = null;
+      const regex = /\w+$/;
+      //.match(regex)
+      const queryData = this.$route.query.pathName.match(regex)[0];
+      switch (queryData) {
+        // 集团/公司
+        case "company":
+          this.testData = solutionsData.companyData;
+          break;
+        // 酒店/餐饮
+        case "catering":
+          this.testData = solutionsData.cateringData;
+          break;
+        // 服饰/化妆
+        case "fashionMakeup":
+          this.testData = solutionsData.fashionMakeupData;
+          break;
+        // 教育/培训
+        case "education":
+          this.testData = solutionsData.educationData;
+          break;
+        // 金融/证券
+        case "finance":
+          this.testData = solutionsData.financeData;
+          break;
+        // 医院/医疗
+        case "medical":
+          this.testData = solutionsData.medicalData;
+          break;
+        // 外贸
+        case "foreignTrade":
+          this.testData = solutionsData.foreignData;
+          break;
+        // machinery家电/机械
+        case "machinery":
+          this.testData = solutionsData.machineryData;
+          break;
+        default:
+          this.testData = undefined;
+          break;
+      }
+      document.documentElement.scrollTop = 0;
+      // console.log("公共组件", queryData, this.testData);
+      return this.testData;
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>

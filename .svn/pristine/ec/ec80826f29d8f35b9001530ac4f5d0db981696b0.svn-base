@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <Row>
+      <i-col span="12">
+        <div class="cardDivType">
+          <p class="titleType">{{list.title}}</p>
+          <p class="subtitleType">{{list.subtitle}}</p>
+          <p class="contentType">{{list.content}}</p>
+        </div>
+      </i-col>
+      <i-col span="12">
+        <img style="width:140%" :src="list.imgUrl">
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped>
+.cardDivType {
+  margin: 40px 0;
+  text-align: left;
+}
+.titleType {
+  color: #000000;
+  margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: bold;
+}
+.subtitleType {
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 50px;
+  color: #0dafff;
+}
+.contentType {
+  margin-top: 40px;
+  text-align: left;
+  font-size: 22px;
+  line-height: 45px;
+  color: #777777;
+}
+</style>

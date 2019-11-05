@@ -1,0 +1,64 @@
+<template>
+  <div>
+    <div class="titleType">
+      <p>行业动态</p>
+      <p>Industry News</p>
+    </div>
+    <Row>
+      <i-col span="9">
+        <!-- <Tabs class="tabType tabLeftType" :value="leftName">
+          <TabPane
+            :label="item.title"
+            :name="item.key"
+            v-for="item in list.leftList"
+            :key="item.key"
+          >
+            <home-tab-left :tabList="item.list"/>
+          </TabPane>
+          <Button type="text" slot="extra">更多。。。</Button>
+        </Tabs>-->
+        <home-tabs :tabsList="list.leftList" :class="animationData.leftIn"/>
+      </i-col>
+      <i-col offset="1" span="14">
+        <home-tabs :tabsList="list.rightList" :class="animationData.rightIn"/>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+// import homeTabLeft from "./home-tab-left";
+import homeTabs from "./home-tabs";
+
+export default {
+  props: ["list", "animationData"],
+  components: {
+    // homeTabLeft
+    homeTabs
+  },
+  computed: {
+    animationFun() {
+      // console.log("新闻信息", this.animationData);
+      return this.animationData;
+    }
+  }
+  // data() {
+  //   return {
+  //     //   leftName: "n01"
+  //   };
+  // },
+  // created() {
+  //   console.log("新闻信息", this.animationData);
+  // }
+};
+</script>
+
+<style scoped>
+.titleType {
+  font-size: 44px;
+  font-weight: bold;
+  line-height: 50px;
+  letter-spacing: 5px;
+  margin: 0 0 40px 0;
+}
+</style>

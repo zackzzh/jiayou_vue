@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <p class="titleType">{{list.title}}</p>
+    <Divider/>
+    <Row :gutter="150" class="rowType">
+      <i-col span="12" v-for="item in list.list" :key="item.key">
+        <p class="subtitleType">{{item.subtitle}}</p>
+        <p class="contentType">{{item.content}}</p>
+        <img class="imgType" :src="item.imgUrl">
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"],
+  created() {
+    // console.log("官网定制", this.list);
+  }
+};
+</script>
+
+<style scoped lang="less">
+.titleType {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 80px 0;
+}
+.rowType {
+  z-index: 1;
+  .subtitleType {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  .contentType {
+    font-size: 18px;
+    height: 150px;
+    margin: 40px 0 30px 0;
+  }
+  .imgType {
+    width: 100%;
+    height: auto;
+    /* z-index: 100; */
+  }
+}
+</style>

@@ -1,0 +1,10 @@
+import axios from '../api.request'
+export const homeApi = {
+  casesApi: (params) => {
+    return axios.request({
+      url: 'tcase/list',
+      data: params,
+      method: 'post'
+    })
+  }
+}

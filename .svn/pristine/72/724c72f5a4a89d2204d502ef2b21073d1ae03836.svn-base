@@ -1,0 +1,193 @@
+<template>
+  <div class="menuDivType">
+    <Menu @on-select="handlerMenu" class="menuType" mode="horizontal" :active-name="activeName">
+      <Row>
+        <i-col offset="6" :lg="5" :md="4">
+          <img class="logoImgType" src="@/assets/common/logo-blue02.png">
+        </i-col>
+        <i-col :lg="13" :md="14">
+          <div v-for="o in list" :key="o.key">
+            <MenuItem
+              class="itemType unActiveType"
+              :class="{activeType: activeName===o.pathName}"
+              v-if="!o.child"
+              :name="o.pathName"
+            >
+              <!-- <Icon :type="o.icon"/> -->
+              {{o.title}}
+            </MenuItem>
+            <Submenu
+              class="rowType itemType unActiveType"
+              :class="{activeType: activeName===o.pathName}"
+              v-if="o.child"
+              :name="o.pathName"
+            >
+              <template slot="title">
+                <!-- <Icon :type="o.icon"/> -->
+                {{o.title}}
+              </template>
+              <!-- 卡形式二级菜单 -->
+              <menu-card v-if="o.isCard" :itemList="o.children"/>
+              <!-- 图标形式二级菜单 -->
+              <menu-icon v-if="o.isIcon" :itemList="o.children"></menu-icon>
+            </Submenu>
+          </div>
+        </i-col>
+      </Row>
+    </Menu>
+  </div>
+</template>
+
+<script>
+import menuCard from "./menu-card";
+import menuIcon from "./menu-icon";
+
+export default {
+  name: "headerMenu",
+  props: ["list"],
+  components: {
+    menuCard,
+    menuIcon
+  },
+  computed: {
+    rowTypeData() {
+      const widthData = this.rowWidth * this.listDemo.length;
+      return `width: ${widthData}px`;
+    }
+  },
+  data() {
+    return {
+      activeName: "/home"
+    };
+  },
+  created() {
+    // console.log("$route",this.$route.path);
+    this.handlerMenu(this.$route.path, true);
+  },
+  methods: {
+    // 获取菜单的name，只能获取MenuItem的name值
+    handlerMenu(val, isGo) {
+      // console.log("handlerMenu",val);
+      const regex = /^\/\w+/;
+      const pathVal = val.match(regex)[0];
+      const regex2 = /\/\w+/g;
+      const pathVal2 = val.match(regex2);
+      // console.log("handlerMenu", val);
+      if (val === "/") {
+        // 菜单显示样式
+        this.activeName = "/home";
+      } else {
+        this.activeName = pathVal;
+      }
+      if (!isGo) {
+        // console.log("菜单数据isGo", pathVal, val);
+        if (pathVal === "/solutions") {
+          // 行业解决方案
+          this.$go({
+            path: val,
+            query: {
+              pathName: val
+            }
+          });
+        } else if (pathVal === "/aboutUs") {
+          // 关于我们
+          this.$go({
+            path: "/aboutUs",
+            query: {
+              pathName: val
+            }
+          });
+        } else if (pathVal2.length > 2 && pathVal2[1] === "/supportService") {
+          //配套服务
+          const pathVal = pathVal2[0] + pathVal2[1];
+          this.$go({
+            path: pathVal,
+            query: {
+              pathName: val
+            }
+          });
+        } else if (
+          pathVal2.length > 2 &&
+          (pathVal2[1] === "/webDesign" || pathVal2[1] === "/appDevelop")
+        ) {
+          // 网站建设
+          const pathVal = pathVal2[0] + pathVal2[1] + "/subpage";
+          this.$go({
+            path: pathVal,
+            query: {
+              pathName: pathVal2[2]
+            }
+          });
+        } else if (
+          pathVal2.length > 2 &&
+          (pathVal2[1] === "/mobileDevelop" || pathVal2[1] === "/deals")
+        ) {
+          // 移动开发，运营推广
+          // console.log("二级菜单");
+          // this.$go({
+          //   path: "/aboutUs",
+          //   query: {
+          //     pathName: val
+          //   }
+          // });
+        } else {
+          this.$go({
+            path: val
+          });
+        }
+      }
+      // console.log("菜单数据", val, pathVal, this.activeName);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.menuDivType {
+  position: relative;
+  .menuType {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    .logoImgType {
+      margin-top: 5px;
+      height: 50px;
+      width: auto;
+    }
+    .itemType {
+      font-size: 18px;
+      font-weight: bold;
+      // .cardColType {
+      //   width: 230px;
+      // }
+      // .cardColType:hover {
+      //   background: rgba(255, 255, 255, 0.3);
+      // }
+    }
+    .itemType:hover {
+      /* border-bottom: 3px solid #fdc5ad !important; 253,197,173 */
+      margin-top: -2px;
+      border-bottom: 3px solid rgba(253, 197, 173, 0.7) !important;
+      color: #fcb69f !important;
+    }
+    .unActiveType {
+      color: #e7f8ff !important;
+    }
+    .activeType {
+      // padding-bottom: -10px !important;
+      margin-top: -2px;
+      border-bottom: 3px solid #fdc5ad !important;
+      color: #fcb69f !important;
+    }
+    .rowType > :last-of-type {
+      cursor: default !important;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+  .menuType:after {
+    background: none;
+  }
+}
+</style>

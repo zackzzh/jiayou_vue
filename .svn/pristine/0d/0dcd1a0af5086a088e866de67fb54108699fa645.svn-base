@@ -1,0 +1,8 @@
+import * as types from './mutation-types'
+
+export const mutations = {
+  [types.CASES] (state, o) {
+    console.log("CASES",o)
+    state.casesData = o
+  }
+}

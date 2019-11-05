@@ -1,0 +1,291 @@
+export default [
+    {
+        key: "1",
+        pathName: "/home",
+        title: "首页",
+        icon: "ios-home",
+        child: false
+    }, {
+        key: "2",
+        pathName: "/product",
+        title: "产品服务",
+        icon: "ios-briefcase",
+        isCard: true,
+        child: true,
+        children: [
+            {
+                key: "2-1",
+                pathName: "/product/webDesign",
+                title: "网站建设",
+                link: "网站建设link",
+                list: [
+                    {
+                        key: "2-1-1",
+                        pathName: "/product/webDesign/enterprise",
+                        title: "企业网站"
+                    }, {
+                        key: "2-1-2",
+                        pathName: "/product/webDesign/marketing",
+                        title: "营销网站"
+                    },
+                    {
+                        key: "2-1-3",
+                        pathName: "/product/webDesign/responsive",
+                        title: "响应式网站"
+                        // pathName: "/product/webDesign/brand",
+                        // title: "品牌网站"
+                    }, 
+                    {
+                        key: "2-1-4",
+                        pathName: "/product/webDesign/eBusiness",
+                        title: "电商网站"
+                    }, {
+                        key: "2-1-5",
+                        pathName: "/product/webDesign/trade",
+                        title: "行业门户网站"
+                    },
+                    //  {
+                    //     key: "2-1-6",
+                    // }
+                ]
+            }, {
+                key: "2-2",
+                title: "APP开发",
+                pathName: "/product/appDevelop",
+                link: "APP开发link",
+                list: [
+                    {
+                        key: "2-2-1",
+                        pathName: "/product/appDevelop/eBusiness",
+                        title: "电商类"
+                    }, {
+                        key: "2-2-2",
+                        pathName: "/product/appDevelop/catering",
+                        title: "餐饮类"
+                    }, {
+                        key: "2-2-3",
+                        pathName: "/product/appDevelop/financial",
+                        title: "金融类"
+                    }, {
+                        key: "2-2-4",
+                        pathName: "/product/appDevelop/medical",
+                        title: "医疗类"
+                    }, {
+                        key: "2-2-5",
+                        pathName: "/product/appDevelop/travel",
+                        title: "旅游类"
+                    }, {
+                        key: "2-2-6",
+                        pathName: "/product/appDevelop/housekeeping",
+                        title: "家政类"
+                    }, {
+                        key: "2-2-7",
+                        pathName: "/product/appDevelop/estate",
+                        title: "地产类"
+                    }, {
+                        key: "2-2-8",
+                        pathName: "/product/appDevelop/social",
+                        title: "社交类"
+                    }
+                    // , {
+                    //     key: "2-2-9",
+                    //     pathName: "/product/appDevelop/online",
+                    //     title: "直播类"
+                    // }
+                ]
+            }, {
+                key: "2-3",
+                title: "移动开发",
+                pathName: "/product/mobileDevelop",
+                link: "移动开发link",
+                list: [
+                    {
+                        key: "2-3-1",
+                        pathName: "/product/mobileDevelop/applet",
+                        title: "小程序"
+                    }, {
+                        key: "2-3-2",
+                        pathName: "/product/mobileDevelop/h5",
+                        title: "H5手机网站"
+                    }, {
+                        key: "2-3-3",
+                        pathName: "/product/mobileDevelop/microMall",
+                        title: "微商城"
+                    }, {
+                        key: "2-3-4",
+                        pathName: "/product/mobileDevelop/wap",
+                        title: "WAP手机网站"
+                    }, {
+                        key: "2-3-5",
+                        pathName: "/product/mobileDevelop/vipcn",
+                        title: "公众号"
+                    }
+                ]
+            }, {
+                key: "2-4",
+                title: "运营推广",
+                pathName: "/product/deals",
+                link: "运营推广link",
+                list: [
+                    {
+                        key: "2-4-1",
+                        pathName: "/product/deals/maintain",
+                        title: "网站维护"
+                    }, {
+                        key: "2-4-2",
+                        pathName: "/product/deals/operation",
+                        title: "网站运营"
+                    }, {
+                        key: "2-4-3",
+                        pathName: "/product/deals/digit",
+                        title: "数字互动运营"
+                    }, {
+                        key: "2-4-4",
+                        pathName: "/product/deals/train",
+                        title: "活动直通车"
+                    }, {
+                        key: "2-4-5",
+                        pathName: "/product/deals/seoOptimize",
+                        title: "网站SEO优化"
+                    }
+                ]
+            }, {
+                key: "2-5",
+                title: "配套服务",
+                pathName: "/product/supportService",
+                link: "配套服务link",
+                list: [
+                    {
+                        key: "2-5-1",
+                        pathName: "/product/supportService/domain",
+                        title: "域名注册"
+                    }, {
+                        key: "2-5-2",
+                        pathName: "/product/supportService/serverRental",
+                        title: "服务器租用"
+                    }, {
+                        key: "2-5-3",
+                        pathName: "/product/supportService/mail",
+                        title: "企业邮箱"
+                    }, {
+                        key: "2-5-4",
+                        pathName: "/product/supportService/virtualHost ",
+                        title: "虚拟主机"
+                    }
+                ]
+            }
+        ]
+    }, {
+        key: "3",
+        pathName: "/solutions",
+        title: "行业解决方案",
+        icon: "md-print",
+        isIcon: true,
+        child: true,
+        children: [
+            {
+                key: "3-1",
+                title: "集团/公司",
+                pathName: "/solutions/company",
+                iconUrl: "static/menu/01.png",
+                activeUrl: "static/menu/01a.png"
+            }, {
+                key: "3-2",
+                title: "酒店/餐饮",
+                pathName: "/solutions/catering",
+                iconUrl: "static/menu/02.png",
+                activeUrl: "static/menu/02a.png"
+            }, {
+                key: "3-3",
+                title: "服饰/化妆",
+                pathName: "/solutions/fashionMakeup",
+                iconUrl: "static/menu/03.png",
+                activeUrl: "static/menu/03a.png"
+            }, {
+                key: "3-4",
+                title: "教育/培训",
+                pathName: "/solutions/education",
+                iconUrl: "static/menu/04.png",
+                activeUrl: "static/menu/04a.png"
+            }, {
+                key: "3-5",
+                title: "金融/证券",
+                pathName: "/solutions/finance",
+                iconUrl: "static/menu/05.png",
+                activeUrl: "static/menu/05a.png"
+            }, {
+                key: "3-6",
+                title: "医院/医疗",
+                pathName: "/solutions/medical",
+                iconUrl: "static/menu/06.png",
+                activeUrl: "static/menu/06a.png"
+            }, {
+                key: "3-7",
+                title: "外贸",
+                pathName: "/solutions/foreignTrade",
+                iconUrl: "static/menu/07.png",
+                activeUrl: "static/menu/07a.png"
+            }, {
+                key: "3-8",
+                title: "家电/机械",
+                pathName: "/solutions/machinery",
+                iconUrl: "static/menu/08.png",
+                activeUrl: "static/menu/08a.png"
+            }
+        ]
+    }, {
+        key: "4",
+        pathName: "/cases",
+        title: "精品案例",
+        icon: "ios-photos",
+        child: false
+    }, {
+        key: "5",
+
+        pathName: "/trends",
+        title: "行业动态",
+        icon: "md-analytics",
+        child: false
+    }, 
+    {
+        key: "6",
+        pathName: "/aboutUs",
+        title: "关于我们",
+        icon: "ios-people",
+        // isIcon: true,
+        child: false,
+        // children: [
+        //     {
+        //         key: "6-1",
+        //         title: "公司简介",
+        //         pathName: "/aboutUs/profile",
+        //         iconUrl: "static/menu/aboutUs/01.png",
+        //     }, {
+        //         key: "6-2",
+        //         title: "团队介绍",
+        //         pathName: "/aboutUs/team",
+        //         iconUrl: "static/menu/aboutUs/02.png",
+        //     }, {
+        //         key: "6-3",
+        //         title: "企业文化",
+        //         pathName: "/aboutUs/culture",
+        //         iconUrl: "static/menu/aboutUs/03.png",
+        //     }, {
+        //         key: "6-4",
+        //         title: "合作伙伴",
+        //         pathName: "/aboutUs/partner",
+        //         iconUrl: "static/menu/aboutUs/04.png",
+        //     }, {
+        //         key: "6-5",
+        //         title: "加入我们",
+        //         pathName: "/aboutUs/joinUs",
+        //         iconUrl: "static/menu/aboutUs/05.png",
+        //     }, {
+        //         key: "6-6",
+        //         title: "团队风采",
+        //         pathName: "/aboutUs/eliteTeam",
+        //         iconUrl: "static/menu/aboutUs/06.png",
+        //     }
+        // ]
+    }
+]

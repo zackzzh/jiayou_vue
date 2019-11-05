@@ -1,0 +1,567 @@
+<template>
+  <!-- 这是合作伙伴 -->
+  <div>
+    <p class="titleType">{{list.title}}</p>
+    <Row :gutter="100">
+      <i-col span="8" v-for="(item,index) in data" :key="item.id">
+        <div class="imgDivType">
+          <img class="imgType" :class="`imgType${index}`" :src="item.picUrl">
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "data"]
+};
+</script>
+
+<style scoped lang="less">
+.titleType {
+  padding-top: 80px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+.imgDivType {
+  width: 100%;
+  height: 250px;
+  .imgType0 {
+    width: 60%;
+    // margin-left: 60%;
+    -webkit-animation: img0Animation 3800ms linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img0Animation 3800ms linear 0s infinite;
+    -o-animation: img0Animation 3800ms linear 0s infinite;
+    animation: img0Animation 3800ms linear 0s infinite;
+    // background: red;
+    // animation: imgAnimation 5s linear 2s infinite alternate;
+  }
+  .imgType0:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  @-webkit-keyframes img0Animation {
+    0% {
+      margin: 0 0 0 60%;
+    }
+    25% {
+      margin: 0 0 0 62%;
+    }
+    50% {
+      margin: 2% 0 0 62%;
+    }
+    75% {
+      margin: 2% 0 0 60%;
+    }
+    100% {
+      margin: 0 0 0 60%;
+    }
+  }
+  @-moz-keyframes img0Animation {
+    0% {
+      margin: 0 0 0 60%;
+    }
+    25% {
+      margin: 0 0 0 62%;
+    }
+    50% {
+      margin: 2% 0 0 62%;
+    }
+    75% {
+      margin: 2% 0 0 60%;
+    }
+    100% {
+      margin: 0 0 0 60%;
+    }
+  }
+  @-o-keyframes img0Animation {
+    0% {
+      margin: 0 0 0 60%;
+    }
+    25% {
+      margin: 0 0 0 62%;
+    }
+    50% {
+      margin: 2% 0 0 62%;
+    }
+    75% {
+      margin: 2% 0 0 60%;
+    }
+    100% {
+      margin: 0 0 0 60%;
+    }
+  }
+  @keyframes img0Animation {
+    0% {
+      margin: 0 0 0 60%;
+    }
+    25% {
+      margin: 0 0 0 62%;
+    }
+    50% {
+      margin: 2% 0 0 62%;
+    }
+    75% {
+      margin: 2% 0 0 60%;
+    }
+    100% {
+      margin: 0 0 0 60%;
+    }
+  }
+
+  .imgType1 {
+    width: 45%;
+    // margin: 18% 0 0 40%;
+    -webkit-animation: img1Animation 3200ms linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img1Animation 3200ms linear 0s infinite;
+    -o-animation: img1Animation 3200ms linear 0s infinite;
+    animation: img1Animation 3200ms linear 0s infinite;
+  }
+  .imgType1:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  @-webkit-keyframes img1Animation {
+    0% {
+      margin: 18% 0 0 40%;
+    }
+    25% {
+      margin: 18% 0 0 42%;
+    }
+    50% {
+      margin: 20% 0 0 42%;
+    }
+    75% {
+      margin: 20% 0 0 40%;
+    }
+    100% {
+      margin: 18% 0 0 40%;
+    }
+  }
+  @-moz-keyframes img1Animation {
+    0% {
+      margin: 18% 0 0 40%;
+    }
+    25% {
+      margin: 18% 0 0 42%;
+    }
+    50% {
+      margin: 20% 0 0 42%;
+    }
+    75% {
+      margin: 20% 0 0 40%;
+    }
+    100% {
+      margin: 18% 0 0 40%;
+    }
+  }
+  @-o-keyframes img1Animation {
+    0% {
+      margin: 18% 0 0 40%;
+    }
+    25% {
+      margin: 18% 0 0 42%;
+    }
+    50% {
+      margin: 20% 0 0 42%;
+    }
+    75% {
+      margin: 20% 0 0 40%;
+    }
+    100% {
+      margin: 18% 0 0 40%;
+    }
+  }
+  @keyframes img1Animation {
+    0% {
+      margin: 18% 0 0 40%;
+    }
+    25% {
+      margin: 18% 0 0 42%;
+    }
+    50% {
+      margin: 20% 0 0 42%;
+    }
+    75% {
+      margin: 20% 0 0 40%;
+    }
+    100% {
+      margin: 18% 0 0 40%;
+    }
+  }
+
+  .imgType2 {
+    width: 40%;
+    // margin-top: 30%;
+    -webkit-animation: img2Animation 2900ms linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img2Animation 2900ms linear 0s infinite;
+    -o-animation: img2Animation 2900ms linear 0s infinite;
+    animation: img2Animation 2900ms linear 0s infinite;
+  }
+  .imgType2:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  // margin-top: 30%;
+  @-webkit-keyframes img2Animation {
+    0% {
+      margin: 30% 0 0 0;
+    }
+    25% {
+      margin: 30% 0 0 2%;
+    }
+    50% {
+      margin: 28% 0 0 2%;
+    }
+    75% {
+      margin: 28% 0 0 0;
+    }
+    100% {
+      margin: 30% 0 0 0;
+    }
+  }
+  @-moz-keyframes img2Animation {
+    0% {
+      margin: 30% 0 0 0;
+    }
+    25% {
+      margin: 30% 0 0 2%;
+    }
+    50% {
+      margin: 28% 0 0 2%;
+    }
+    75% {
+      margin: 28% 0 0 0;
+    }
+    100% {
+      margin: 30% 0 0 0;
+    }
+  }
+  @-o-keyframes img2Animation {
+    0% {
+      margin: 30% 0 0 0;
+    }
+    25% {
+      margin: 30% 0 0 2%;
+    }
+    50% {
+      margin: 28% 0 0 2%;
+    }
+    75% {
+      margin: 28% 0 0 0;
+    }
+    100% {
+      margin: 30% 0 0 0;
+    }
+  }
+  @keyframes img2Animation {
+    0% {
+      margin: 30% 0 0 0;
+    }
+    25% {
+      margin: 30% 0 0 2%;
+    }
+    50% {
+      margin: 28% 0 0 2%;
+    }
+    75% {
+      margin: 28% 0 0 0;
+    }
+    100% {
+      margin: 30% 0 0 0;
+    }
+  }
+
+  .imgType3 {
+    width: 44%;
+    -webkit-animation: img3Animation 3400ms linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img3Animation 3400ms linear 0s infinite;
+    -o-animation: img3Animation 3400ms linear 0s infinite;
+    animation: img3Animation 3400ms linear 0s infinite;
+  }
+  .imgType3:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  @-webkit-keyframes img3Animation {
+    0% {
+      margin: 0 0 0 0;
+    }
+    25% {
+      margin: 0 0 0 2%;
+    }
+    50% {
+      margin: 2% 0 0 2%;
+    }
+    75% {
+      margin: 2% 0 0 0;
+    }
+    100% {
+      margin: 0 0 0 0;
+    }
+  }
+  @-moz-keyframes img3Animation {
+    0% {
+      margin: 0 0 0 0;
+    }
+    25% {
+      margin: 0 0 0 2%;
+    }
+    50% {
+      margin: 2% 0 0 2%;
+    }
+    75% {
+      margin: 2% 0 0 0;
+    }
+    100% {
+      margin: 0 0 0 0;
+    }
+  }
+  @-o-keyframes img3Animation {
+    0% {
+      margin: 0 0 0 0;
+    }
+    25% {
+      margin: 0 0 0 2%;
+    }
+    50% {
+      margin: 2% 0 0 2%;
+    }
+    75% {
+      margin: 2% 0 0 0;
+    }
+    100% {
+      margin: 0 0 0 0;
+    }
+  }
+  @keyframes img3Animation {
+    0% {
+      margin: 0 0 0 0;
+    }
+    25% {
+      margin: 0 0 0 2%;
+    }
+    50% {
+      margin: 2% 0 0 2%;
+    }
+    75% {
+      margin: 2% 0 0 0;
+    }
+    100% {
+      margin: 0 0 0 0;
+    }
+  }
+
+  .imgType4 {
+    width: 53%;
+    // margin: 25% 0 0 -70%;
+    -webkit-animation: img4Animation 3s linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img4Animation 3s linear 0s infinite;
+    -o-animation: img4Animation 3s linear 0s infinite;
+    animation: img4Animation 3s linear 0s infinite;
+  }
+  .imgType4:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  @-webkit-keyframes img4Animation {
+    0% {
+      margin: 25% 0 0 -70%;
+    }
+    25% {
+      margin: 25% 0 0 -68%;
+    }
+    50% {
+      margin: 23% 0 0 -68%;
+    }
+    75% {
+      margin: 23% 0 0 -70%;
+    }
+    100% {
+      margin: 25% 0 0 -70%;
+    }
+  }
+  @-moz-keyframes img4Animation {
+    0% {
+      margin: 25% 0 0 -70%;
+    }
+    25% {
+      margin: 25% 0 0 -68%;
+    }
+    50% {
+      margin: 23% 0 0 -68%;
+    }
+    75% {
+      margin: 23% 0 0 -70%;
+    }
+    100% {
+      margin: 25% 0 0 -70%;
+    }
+  }
+  @-o-keyframes img4Animation {
+    0% {
+      margin: 25% 0 0 -70%;
+    }
+    25% {
+      margin: 25% 0 0 -68%;
+    }
+    50% {
+      margin: 23% 0 0 -68%;
+    }
+    75% {
+      margin: 23% 0 0 -70%;
+    }
+    100% {
+      margin: 25% 0 0 -70%;
+    }
+  }
+  @keyframes img4Animation {
+    0% {
+      margin: 25% 0 0 -70%;
+    }
+    25% {
+      margin: 25% 0 0 -68%;
+    }
+    50% {
+      margin: 23% 0 0 -68%;
+    }
+    75% {
+      margin: 23% 0 0 -70%;
+    }
+    100% {
+      margin: 25% 0 0 -70%;
+    }
+  }
+
+  .imgType5 {
+    width: 45%;
+    // margin: 20% 0 0 -130%;
+    -webkit-animation: img5Animation 2800ms linear 0s infinite; /* Safari 与 Chrome */
+    -moz-animation: img5Animation 2800ms linear 0s infinite;
+    -o-animation: img5Animation 2800ms linear 0s infinite;
+    animation: img5Animation 2800ms linear 0s infinite;
+  }
+  .imgType5:hover {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  // margin: 20% 0 0 -130%;
+  @-webkit-keyframes img5Animation {
+    0% {
+      margin: 20% 0 0 -120%;
+    }
+    25% {
+      margin: 20% 0 0 -118%;
+    }
+    50% {
+      margin: 22% 0 0 -118%;
+    }
+    75% {
+      margin: 22% 0 0 -120%;
+    }
+    100% {
+      margin: 20% 0 0 -120%;
+    }
+  }
+  @-moz-keyframes img5Animation {
+    0% {
+      margin: 20% 0 0 -120%;
+    }
+    25% {
+      margin: 20% 0 0 -118%;
+    }
+    50% {
+      margin: 22% 0 0 -118%;
+    }
+    75% {
+      margin: 22% 0 0 -120%;
+    }
+    100% {
+      margin: 20% 0 0 -120%;
+    }
+  }
+  @-o-keyframes img5Animation {
+    0% {
+      margin: 20% 0 0 -120%;
+    }
+    25% {
+      margin: 20% 0 0 -118%;
+    }
+    50% {
+      margin: 22% 0 0 -118%;
+    }
+    75% {
+      margin: 22% 0 0 -120%;
+    }
+    100% {
+      margin: 20% 0 0 -120%;
+    }
+  }
+  @keyframes img5Animation {
+    0% {
+      margin: 20% 0 0 -120%;
+    }
+    25% {
+      margin: 20% 0 0 -118%;
+    }
+    50% {
+      margin: 22% 0 0 -118%;
+    }
+    75% {
+      margin: 22% 0 0 -120%;
+    }
+    100% {
+      margin: 20% 0 0 -120%;
+    }
+  }
+
+  // @keyframes imgAnimation {
+  //   0% {
+  //     margin: 0 0 0 60%;
+  //   }
+  //   25% {
+  //     margin: 0 0 0 62%;
+  //   }
+  //   50% {
+  //     margin: 2% 0 0 62%;
+  //   }
+  //   75% {
+  //     margin: 2% 0 0 60%;
+  //   }
+  //   100% {
+  //     margin: 0 0 0 60%;
+  //   }
+  // }
+  // @keyframes imgAnimation {
+  //   0% {
+  //     margin: 0 0 0 0;
+  //   }
+  //   25% {
+  //     margin: 0 0 0 10px;
+  //   }
+  //   50% {
+  //     margin: 10px 0 0 10px;
+  //   }
+  //   75% {
+  //     margin: 10px 0 0 0;
+  //   }
+  //   100% {
+  //     margin: 0 0 0 0;
+  //   }
+  // }
+}
+</style>

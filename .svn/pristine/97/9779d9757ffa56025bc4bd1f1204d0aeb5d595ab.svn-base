@@ -1,0 +1,77 @@
+<template>
+  <div class="footerCardType">
+    <!-- 页脚card -->
+    <Row type="flex" justify="start">
+      <i-col offset="1" span="3" class="cardType" v-for="item in list" :key="item.key">
+        <!-- <p class="titleType">{{item.title}}</p> -->
+        <p class="titleType">{{item.title}}</p>
+        <p
+          class="footerItemType"
+          v-for="o in item.list"
+          :key="o.key"
+          @click="handlerClick(o)"
+        >{{o.title}}</p>
+      </i-col>
+      <div class="bottomType">
+        <p>
+          <Icon class="iconType" type="ios-call"/>电话：020-81807466
+        </p>
+        <p>
+          <Icon class="iconType" type="ios-pin"/>地址：广州市荔湾区信义路24号4栋241(七喜创意园)
+        </p>
+      </div>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"],
+  // created() {
+  //   console.log("footerDatalist", this.list);
+  // },
+  methods: {
+    handlerClick(val) {
+      this.$emit("fromCard", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.footerCardType {
+  .cardType {
+    /* margin: 0 44px; */
+    height: auto;
+    text-align: center;
+    color: #e7f8ff;
+    .titleType {
+      font-size: 24px;
+    }
+    .footerItemType {
+      margin: 10px 0;
+      /* width: 120px; */
+      letter-spacing: 2px;
+      font-size: 20px;
+      color: #8cddfe;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      -ms-text-overflow: ellipsis;
+    }
+  }
+  .bottomType {
+    margin-top: 20px;
+    margin-left: 60px;
+    color: #e7f8ff;
+    font-size: 16px;
+    .iconType {
+      font-size: 20px;
+      color: #8cddfe;
+      margin-right: 6px;
+    }
+  }
+}
+</style>

@@ -1,0 +1,96 @@
+<template>
+  <div>
+    <!-- 公共部分第一帕 -->
+    <div class="titleDivType">
+      <p class="titleType">{{list.title}}</p>
+      <p class="titleEnType">{{list.titleEn}}</p>
+      <p class="subtitleType">{{list.subtitle}}</p>
+    </div>
+    <Row type="flex" justify="space-around">
+      <i-col span="8" class="cardDivType" v-for="item in list.list" :key="item.key">
+        <div class="imgType" :style="`background-image:url(${list.bgImgUrl})`">
+          <img :src="item.imgUrl">
+        </div>
+        <p class="subtitleType">{{item.subtitle}}</p>
+        <div class="lineType"></div>
+        <p class="contentType">{{item.content}}</p>
+        <div class="colonType">
+          <img :src="list.colonImgUrl">
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped lang="less">
+.titleDivType {
+  margin-bottom: 38px;
+  .titleType {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: rgba(245, 245, 245, 0.8);
+  }
+  .titleEnType {
+    margin: 6px 0 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .subtitleType {
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: rgba(245, 245, 245, 0.6);
+  }
+}
+.cardDivType {
+  text-align: center;
+  .imgType {
+    margin: 0 30%;
+    // width: 40%;
+    height: 40%;
+    background-size: 100% 100%;
+
+    img {
+      width: 60%;
+      padding: 20% 0;
+      -webkit-transition: -webkit-transform 1s; /* For Safari 3.1 to 6.0 */
+      transition: transform 1s;
+    }
+  }
+  .imgType:hover {
+    img {
+      -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+      transform: rotate(360deg);
+    }
+  }
+  .subtitleType {
+    margin-top: 20px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .lineType {
+    margin: 20px 45%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  }
+  .contentType {
+    margin: 0 20%;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .colonType {
+    margin-top: 20%;
+    img {
+      width: 8%;
+    }
+  }
+}
+</style>

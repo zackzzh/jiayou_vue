@@ -1,0 +1,82 @@
+<template>
+  <div>
+    <!-- 网站建设 -->
+    <home-img :list="item" v-for="item in webImgList.webList" :key="item.key">
+      <web-style-one v-if="item.isCenterImg" slot="centerImg" :list="styleOneData"></web-style-one>
+      <web-style-two v-if="item.isStyleTwo" slot="centerImg" :list="styleTwoData"></web-style-two>
+      <web-case
+        v-if="item.isBottomImg"
+        slot="bottomImg"
+        :list="webCaseData"
+        :data="casesDataFun"
+        @handlerClick="handlerClick"
+      ></web-case>
+      <!-- isBottomImg -->
+    </home-img>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from "vuex";
+
+import jyFooter from "@/components/jy-footer/index";
+
+import homeImg from "@/pages/home/home-img";
+import webStyleOne from "./web-style-one";
+import webStyleTwo from "./web-style-two";
+import webCase from "./web-case";
+
+import webDesignData from "./webDesignData";
+
+export default {
+  components: {
+    jyFooter,
+    homeImg,
+    webStyleOne,
+    webStyleTwo,
+    webCase
+  },
+  created() {
+    document.body.style.cssText = "overflow: auto";
+    document.documentElement.scrollTop = 0;
+
+    // console.log("网站建设+++++++", this.$route.query);
+    const pageNum = {
+      page: 1, //当前页码
+      limit: 6 //一页多少条
+    };
+    Object.assign(pageNum, this.$route.query);
+    this.getCasesData(pageNum);
+  },
+  computed: {
+    ...mapState("cases", ["casesData"]),
+    casesDataFun() {
+      return this.casesData.page || {};
+    }
+    // ...mapGetters("test", ["getTest"])
+  },
+  data() {
+    return {
+      webImgList: webDesignData,
+      styleOneData: webDesignData.webStyle.styleOne,
+      styleTwoData: webDesignData.webStyle.styleTwo,
+      webCaseData: webDesignData.webCase
+    };
+  },
+  methods: {
+    ...mapActions("cases", ["getCasesData"]),
+    handlerClick(val) {
+      this.$go({
+        path: "/cases",
+        query: {
+          id: val.id
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>

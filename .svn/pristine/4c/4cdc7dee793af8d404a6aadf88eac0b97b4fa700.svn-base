@@ -1,0 +1,50 @@
+import * as types from './mutation-types'
+import { api } from '@/api'
+// import { UserValidate } from '@/validate'
+// import session from '@/libs/session'
+
+export const actions = {
+  // 精品案例列表
+  async cases({ commit }, o) {
+    // console.log("oooooo", o)
+    const val = {
+      page: o.current,
+      typeId: o.id
+    }
+    let res = await api.casesApi.cases(val)
+    // console.log("访问后端数据", res);
+    if (res.code === 200) {
+      commit(types.CASES, res.page)
+      // console.log('操作访问成功')
+    } else {
+      console.log('操作访问失败')
+    }
+  },
+  // 案例类型
+  async casesType({ commit }, o) {
+    // console.log("oooooo", o)
+    let res = await api.casesApi.casesType()
+    // console.log("访问后端数据", res);
+    if (res.code === 200) {
+      commit(types.CASESTYPE, res.caseTypeList)
+      // console.log('操作访问成功')
+    } else {
+      console.log('操作访问失败')
+    }
+  },
+  // // 根据案例类型查找
+  // async getInfoByTypeId({ commit }, o) {
+  //   // console.log("oooooo", o)
+  //   // const value = {
+  //   //   typeId: o.id
+  //   // }
+  //   let res = await api.casesApi.getInfoByTypeId(o)
+  //   console.log("访问后端数据", res);
+  //   if (res.code === 200) {
+  //     commit(types.CASES, res.caseList)
+  //     // console.log('操作访问成功')
+  //   } else {
+  //     console.log('操作访问失败')
+  //   }
+  // }
+}

@@ -1,0 +1,97 @@
+<template>
+  <div class="footerCardType">
+    <!-- 页脚card -->
+    <Row type="flex" justify="start">
+      <i-col
+        offset="1"
+        span="3"
+        class="cardType"
+        :class="animationData.cardIn"
+        v-for="item in listFun"
+        :key="item.id"
+      >
+        <!-- <p class="titleType">{{item.title}}</p> -->
+        <!-- <div> -->
+        <p class="titleType">{{item.title}}</p>
+        <div
+          class="footerItemType"
+          v-for="o in item.list"
+          :key="o.id"
+          @click="handlerClick(o,item)"
+        >{{o.title}}</div>
+        <!-- </div> -->
+      </i-col>
+      <div class="bottomType" :class="animationData.addIn">
+        <p>
+          <Icon class="iconType" type="ios-call"/>电话：020-81807466
+        </p>
+        <p>
+          <Icon class="iconType" type="ios-pin"/>地址：广州市荔湾区信义路24号4栋241(七喜创意园)
+        </p>
+      </div>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "data", "animationData"],
+  // created() {
+  //   console.log("footerDatalist", this.list);
+  // },
+  methods: {
+    handlerClick(val, parentVal) {
+      // console.log("这是跳转吗", val);
+      this.$emit("fromCard", val, parentVal);
+    }
+  },
+  computed: {
+    listFun() {
+      return this.list.map((item, index) => {
+        if (index >= 1 && index <= 3) {
+          item.list = this.data[index - 1];
+        }
+        return item;
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.footerCardType {
+  .cardType {
+    /* margin: 0 44px; */
+    // margin-left: -2px;
+    height: auto;
+    text-align: center;
+    color: #e7f8ff;
+    .titleType {
+      font-size: 20px;
+    }
+    .footerItemType {
+      margin: 10px 0;
+      /* width: 120px; */
+      letter-spacing: 2px;
+      font-size: 16px;
+      color: #8cddfe;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      -ms-text-overflow: ellipsis;
+    }
+  }
+  .bottomType {
+    margin-left: 60px;
+    color: #e7f8ff;
+    font-size: 16px;
+    .iconType {
+      font-size: 20px;
+      color: #8cddfe;
+      margin-right: 6px;
+    }
+  }
+}
+</style>

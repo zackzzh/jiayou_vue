@@ -1,0 +1,35 @@
+<template>
+  <!-- 团队风采轮播 -->
+  <div>
+    <p class="titleType">{{list.title}}</p>
+    <Carousel v-model="value" loop autoplay>
+      <CarouselItem v-for="item in data" :key="item.id">
+        <!-- <div class="demo-carousel">1</div> -->
+        <img class="imgType" :src="item.picUrl">
+      </CarouselItem>
+    </Carousel>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "data"],
+  data() {
+    return {
+      value: 0
+    };
+  }
+};
+</script>
+
+<style scoped lang="less">
+.titleType {
+  margin: 90px 0 56px;
+  font-size: 40px;
+  font-weight: bold;
+}
+.imgType {
+  width: 100%;
+  height: auto;
+}
+</style>

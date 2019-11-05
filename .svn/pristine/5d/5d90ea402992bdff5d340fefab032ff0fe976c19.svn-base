@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <!-- 这是行业动态 -->
+    <img class="bgImgType" :src="trendsData.bgImgUrl">
+    <div class="rowDivType">
+      <Row>
+        <i-col span="15">
+          <trends-left :data="leftData"/>
+        </i-col>
+        <i-col offset="1" span="8">
+          <trends-news :data="newsData"/>
+        </i-col>
+      </Row>
+    </div>
+  </div>
+</template>
+
+<script>
+import trendsNews from "./trends-news";
+import trendsLeft from "./trends-left";
+
+import trendsData from "./trendsData";
+
+export default {
+  components: {
+    trendsNews,
+    trendsLeft
+  },
+  data() {
+    return {
+      trendsData,
+      newsData: trendsData.newData,
+      leftData: trendsData.leftData
+    };
+  }
+};
+</script>
+
+<style scoped lang="less">
+/* box-shadow: 0 0 40px rgba(0,0,0,0.21) */
+.bgImgType {
+  width: 100%;
+  height: auto;
+}
+.rowDivType {
+  margin: 3% 15%;
+}
+</style>

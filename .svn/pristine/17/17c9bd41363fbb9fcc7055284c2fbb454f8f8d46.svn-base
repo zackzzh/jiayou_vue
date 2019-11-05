@@ -1,0 +1,3 @@
+export const GETNEWS = 'GETNEWS'
+export const PRODUCTDATA = 'PRODUCTDATA'
+export const HOMEPAGEDATA = 'HOMEPAGEDATA'

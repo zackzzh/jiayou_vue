@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <!-- 功能介绍 -->
+    <div class="titleDivType">
+      <p class="titleType">{{commonData.title}}</p>
+      <div class="lineType"></div>
+      <p class="titleEnType">{{commonData.titleEn}}</p>
+    </div>
+    <!-- {{list}} -->
+    <Row class="rowType" :gutter="100">
+      <i-col span="8" v-for="item in list" :key="item.key">
+        <div class="cardDivType">
+          <p class="cardTitleType" :class="{cardTitle2: item.title.length === 2}">{{item.title}}</p>
+          <p class="cardContentType" v-for="o in item.itemList" :key="o.key">{{o.content}}</p>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["commonData", "list"]
+};
+</script>
+
+<style scoped lang="less">
+.titleDivType {
+  .titleType {
+    font-size: 58px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .lineType {
+    margin: 10px 38% 20px 38%;
+    border-bottom: 2px solid #ffffff;
+  }
+  .titleEnType {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+.rowType {
+  .cardDivType {
+    height: 320px;
+    margin: 40px 50px;
+    padding: 10px;
+    line-height: 40px;
+    background-color: #eeeeee;
+    background-origin: content-box;
+    .cardTitleType {
+      width: 90px;
+      height: 90px;
+      margin: -20px 0 15px 20px;
+      padding: 5px 5px;
+      font-size: 30px;
+      background-color: #cd0c27;
+    }
+    .cardTitle2 {
+      padding: 25px 5px;
+    }
+    .cardContentType {
+      margin-left: 20px;
+      font-size: 22px;
+      color: #484848;
+      text-align: left;
+    }
+  }
+}
+</style>

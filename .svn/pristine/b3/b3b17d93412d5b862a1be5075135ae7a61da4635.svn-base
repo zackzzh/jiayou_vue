@@ -1,0 +1,66 @@
+<template>
+  <div class="mainDivType">
+    <Card class="cardTyle">
+      <Row>
+        <img class="imgType" :src="list.imgUrl">
+        <i-col offset="10" span="13">
+          <div class="cardDivType">
+            <!-- <img src="../../images/logo.png"> -->
+            <!-- <h3>A high quality UI Toolkit based on Vue.js</h3> -->
+            <p class="titleType">{{list.title}}</p>
+            <p class="subtitleType">{{list.subtitle}}</p>
+            <Divider/>
+            <p class="contentType">{{list.content}}</p>
+          </div>
+        </i-col>
+      </Row>
+    </Card>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped>
+.mainDivType {
+  position: relative;
+}
+.cardTyle {
+  margin-top: 5%;
+  border-radius: 30px;
+  letter-spacing: 8px;
+  color: #000000;
+}
+.imgType {
+  position: absolute;
+  top: 20%;
+  left: -20%;
+  width: 60%;
+  height: auto;
+  z-index: 1;
+}
+.cardDivType {
+  margin: 40px 0;
+  text-align: right;
+}
+.titleType {
+  margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: bold;
+}
+.subtitleType {
+  font-size: 60px;
+  color: #0dafff;
+}
+.contentType {
+  text-align: left;
+  /* width: 60%; */
+  /* float: right; */
+  font-size: 18px;
+  line-height: 45px;
+  color: #777777;
+}
+</style>

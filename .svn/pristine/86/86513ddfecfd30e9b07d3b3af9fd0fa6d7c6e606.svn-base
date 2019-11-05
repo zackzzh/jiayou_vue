@@ -1,0 +1,2 @@
+export const NEWSLIST = 'NEWSLIST'
+export const HOTNEWSLIST = 'HOTNEWSLIST'

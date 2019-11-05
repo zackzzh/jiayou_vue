@@ -1,0 +1,15 @@
+import * as types from './mutation-types'
+
+export const mutations = {
+  [types.CASESDATA] (state, o) {
+    // console.log("CASES",o)CASESTYPE
+    state.casesData = o
+  },
+  [types.CASESINFO] (state, o) {
+    // console.log("CASES",o)
+    state.casesInfo = o
+  },
+  setImgShow(state,o) {
+    state.imgShow = o;
+  }
+}

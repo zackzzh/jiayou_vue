@@ -1,0 +1,105 @@
+<template>
+  <!-- 左侧列表 -->
+  <div class="mainDivType">
+    <Row class="rowType" v-for="item in list[pageNum.current-1]" :key="item.key">
+      <i-col span="6">
+        <img style="width: 90%" :src="item.imgUrl">
+      </i-col>
+      <i-col span="18">
+        <div>
+          <p class="titleType">{{item.title}}</p>
+          <p class="contentType">{{item.content}}</p>
+        </div>
+      </i-col>
+    </Row>
+    <div class="pageDivType">
+      <div>
+        <span>5条/页&nbsp;&nbsp;&nbsp;共{{list.length}}页</span>
+      </div>
+      <Page
+        class-name="pageType"
+        :total="data.list.length"
+        :page-size="5"
+        show-elevator
+        @on-change="handlerChange"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["data"],
+  computed: {
+    list() {
+      const listArr = [];
+      let listFiveArr = [];
+      for (let i = 0; i < this.data.list.length; i++) {
+        // console.log("listArr, listFiveArr", listArr, listFiveArr);
+        // if (i % 5 === 0 && listFiveArr.length !== 0) {
+        //   listArr.push(listFiveArr);
+        //   listFiveArr = [];
+        //   this.data.list[i] = this.data.list[i].slice(0, 280) + ".....";
+        //   listFiveArr.push(this.data.list[i]);
+        // } else {
+        //   this.data.list[i] = this.data.list[i].slice(0, 280) + ".....";
+        //   listFiveArr.push(this.data.list[i]);
+        // }
+        if (i % 5 === 0 && listFiveArr.length !== 0) {
+          listArr.push(listFiveArr);
+          listFiveArr = [];
+        }
+        if (this.data.list[i].content.length > 150) {
+          this.data.list[i].content = this.data.list[i].content.slice(0, 150) + ".....";
+        }
+        listFiveArr.push(this.data.list[i]);
+      }
+      listArr.push(listFiveArr);
+      return listArr;
+    }
+  },
+  data() {
+    return {
+      pageNum: {
+        current: 1
+      }
+    };
+  },
+  methods: {
+    handlerChange(val) {
+      // console.log("handlerChange", val);
+      this.pageNum.current = val;
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  height: 850px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.21);
+  .rowType {
+    padding: 20px;
+    border: 1px solid #f2f2f2;
+    .titleType {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .contentType {
+      font-size: 14px;
+    }
+  }
+  .pageDivType {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    .pageType {
+      font-size: 14px;
+    }
+    div {
+      margin: 5px 10px;
+      font-size: 14px;
+    }
+  }
+}
+</style>

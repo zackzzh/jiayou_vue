@@ -1,0 +1,97 @@
+<template>
+  <div>
+    <Row :style="`width: ${230 * 5}px`" type="flex" justify="space-around">
+      <div class="cardColType" v-for="item in data" :key="item.id">
+        <!-- 二级菜单card -->
+        <Card class="cardType" shadow>
+          <MenuItem
+            style="padding: 0;background: none;"
+            :name="'/product/'+item.code+'/'+item.id"
+            slot="title"
+          >
+            <p class="fontType">{{item.name}}</p>
+          </MenuItem>
+          <!-- <p class="fontType" @click="handlerClick(itemList)" slot="title">{{itemList.title}}</p> -->
+          <Row type="flex" justify="space-between">
+            <i-col span="12" v-for="o of item.childList" :key="o.id">
+              <MenuItem
+                style="padding: 0;background: none;"
+                :name="'/product/'+item.code+'/'+o.code"
+              >
+                <p class="itemFontType">{{o.name}}</p>
+                <!-- <p class="itemFontType" @click="handlerClick(item)">{{item.title}}</p> -->
+              </MenuItem>
+            </i-col>
+          </Row>
+        </Card>
+        <div class="floorType" @click="handlerClick('/product/'+item.code+'/'+item.id)">
+          <!-- <p class="floorType fontType" style="background: rgba(0, 0, 0, 0)">{{itemList.link}}</p> -->
+          <!-- 链接跳转 -->
+          <Button ghost long>{{item.name}}</Button>
+        </div>
+      </div>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["itemList", "data"],
+  // created() {
+  //   console.log("menuCard", this.itemList);
+  // },
+  // computed: {
+  //   menuFun() {
+  //     console.log("获取的菜单数据data:", this.data);
+  //   }
+  // },
+  // data() {
+  //   return {};
+  // },
+
+  methods: {
+    handlerClick(val) {
+      // console.log("点击了啊", val);
+      this.$emit("handlerMenu", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.cardColType {
+  width: 230px;
+  overflow: hidden;
+  // padding: 0;
+  .cardType {
+    height: 180px;
+    margin: 0 5px;
+    // margin-bottom: 0;
+    cursor: default;
+    background: none;
+    .fontType {
+      cursor: pointer;
+      color: #ffffff;
+    }
+    .fontType:hover {
+      font-size: 16px;
+    }
+    .itemFontType {
+      cursor: pointer;
+      color: #8cddfe;
+      margin-bottom: 8px;
+    }
+    .itemFontType:hover {
+      font-size: 16px;
+    }
+  }
+  .floorType {
+    text-align: center;
+    // margin-bottom: 1px;
+    margin: -12px 0 -10px;
+  }
+}
+.cardColType:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+</style>

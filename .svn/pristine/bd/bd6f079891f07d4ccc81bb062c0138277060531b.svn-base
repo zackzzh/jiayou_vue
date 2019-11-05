@@ -1,0 +1,88 @@
+<template>
+  <div>
+    <div class="titleDivType">
+      <p class="titleType">{{list.title}}</p>
+      <p class="enTitleType">{{list.enTitle}}</p>
+    </div>
+    <Row :gutter="40">
+      <i-col span="6" class="cardDivType" v-for="item in list.list" :key="item.key">
+        <div @mouseenter="mouseenter(item)" @mouseleave="mouseleave(item)">
+          <img class="imgType" :src="item.imgUrl">
+          <transition name="transbox">
+            <div class="transbox" v-show="isShow === item.key">
+              <img :src="item.qrImgUrl">
+            </div>
+          </transition>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"],
+  data() {
+    return {
+      isShow: null
+    };
+  },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.key;
+      // console.log("mouseenter",val);
+    },
+    mouseleave(val) {
+      this.isShow = null;
+      // console.log("mouseleave",val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.titleDivType {
+  margin: 10px 0 60px;
+  font-size: 50px;
+  letter-spacing: 5px;
+  .titleType {
+    font-weight: bold;
+  }
+  .enTitleType {
+    font-size: 40px;
+  }
+}
+.cardDivType {
+  position: relative;
+  .imgType {
+    width: 100%;
+    height: auto;
+  }
+  .transbox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 88%;
+    height: 99%;
+    background: rgba(0, 0, 0, 0.5);
+    img {
+      width: 50%;
+      margin-top: 65%;
+      box-shadow: -9px 9px 13px rgba(0, 0, 0, 0.21);
+    }
+  }
+  .transbox-enter-active,
+  .transbox-leave-active {
+    transition: all 0.5s ease;
+  }
+  .transbox-enter,
+  .transbox-leave-to {
+    // transform: translateY(10px);
+    height: 0%;
+    opacity: 0;
+  }
+  // .showType {
+  //   display: none;
+  // }
+}
+</style>

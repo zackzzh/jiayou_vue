@@ -1,0 +1,10 @@
+import axios from '../api.request'
+export const trendsApi = {
+  newsList: (params) => {
+    return axios.request({
+      url: 'tnews/list',
+      data: params,
+      method: 'post'
+    })
+  }
+}

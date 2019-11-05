@@ -1,0 +1,42 @@
+<template>
+  <div>
+    <home-img :list="item" v-for="item in imgList" :key="item.key">
+      <!-- <web-style-one v-if="item.isCenterImg" slot="centerImg" :list="styleOneData"></web-style-one>-->
+      <app-custom v-if="item.isCenterImg" slot="centerImg" :list="customData"></app-custom>
+      <web-style-two v-if="item.isStyleTwo" slot="centerImg" :list="testData"></web-style-two>
+      <web-case v-if="item.isBottomImg" slot="bottomImg" :list="caseList"></web-case>
+    </home-img>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyFooter from "@/components/jy-footer/index";
+
+import homeImg from "@/pages/home/home-img";
+import webCase from "@/pages/product/web-design/web-case";
+import webStyleTwo from "@/pages/product/web-design/web-style-two";
+import appCustom from "./app-custom";
+
+import appDevelopData from "./appDevelopData";
+export default {
+  components: {
+    jyFooter,
+    homeImg,
+    webCase,
+    webStyleTwo,
+    appCustom
+  },
+  data() {
+    return {
+      imgList: appDevelopData.imgList,
+      caseList: appDevelopData.caseList,
+      testData: appDevelopData.testData,
+      customData: appDevelopData.appCustom
+    };
+  }
+};
+</script>
+
+<style scoped>
+</style>

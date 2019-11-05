@@ -1,0 +1,49 @@
+
+<template>
+  <div>
+    <home-img :list="item" v-for="item in imgList" :key="item.key">
+      <applet-one v-if="item.isCenterImg" slot="centerImg" :list="appletOne"></applet-one>
+      <applet-advantage v-if="item.isAdvantage" slot="centerImg" :list="advantage"></applet-advantage>
+      <!-- isCase -->
+      <applet-case v-if="item.isCase" slot="centerImg" :list="caseData"></applet-case>
+    </home-img>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyFooter from "@/components/jy-footer/index";
+
+import homeImg from "@/pages/home/home-img";
+// applet-one
+import appletOne from "./applet-one";
+import appletAdvantage from "./applet-advantage";
+import appletCase from "./applet-case";
+
+import appletData from "./appletData";
+
+export default {
+  components: {
+    jyFooter,
+    homeImg,
+    appletOne,
+    appletAdvantage,
+    appletCase
+  },
+  data() {
+    return {
+      imgList: appletData.imgList,
+      appletOne: appletData.appletOne,
+      advantage: appletData.advantage,
+      caseData: appletData.caseData
+    };
+  },
+  created() {
+    document.body.style.cssText = "overflow: auto";
+    // console.log("appletData",appletData);
+  }
+};
+</script>
+
+<style scoped>
+</style>

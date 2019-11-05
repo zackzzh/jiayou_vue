@@ -1,0 +1,19 @@
+<template>
+  <div>
+    <router-view/>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyFooter from "@/components/jy-footer/index";
+
+export default {
+  components: {
+    jyFooter
+  }
+};
+</script>
+
+<style scoped>
+</style>

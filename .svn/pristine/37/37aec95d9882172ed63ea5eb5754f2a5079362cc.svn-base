@@ -1,0 +1,313 @@
+<template>
+  <!-- 这是加入我们的轮播 -->
+  <div class="mainDivType">
+    <p class="titleType">{{list.title}}</p>
+    <!-- 笑脸图 -->
+    <div class="imgDivType">
+      <img class="imgType" :style="`background-image: url(${list.smileBgImgUrl})`" :src="list.smileImgUrl">
+    </div>
+    <!-- 轮播 -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="item in data" :key="item.id">
+          <div class="cardDivType" :style="`background-image: url(${list.bgImgUrl})`">
+            <p class="cardTitleType">{{item.position}}</p>
+            <!-- <div class="cardContentType">{{item}}</div> -->
+            <Row class="rowType">
+              <i-col span="8" v-for="o in subtitleList" :key="o">
+                <div class="itemType">
+                  <p class="cardSubtitleType">{{o}}</p>
+                  <div class="cardContentType" v-if="o === '任职要求'" v-html="item.responsibility"></div>
+                  <div class="cardContentType" v-else-if="o === '岗位职责'" v-html="item.requeiements"></div>
+                  <div class="cardContentType" v-else v-html="item.salary"></div>
+                </div>
+              </i-col>
+            </Row>
+          </div>
+        </div>
+        <!-- <div class="swiper-slide" v-for="item in list.list" :key="item.key"> -->
+        <!-- <img :src="item.imgUrl"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <!-- <div class="swiper-button-next"></div> -->
+    <div class="btuType">
+      <img :src="list.btnImgUrl">
+    </div>
+  </div>
+</template>
+
+<script>
+  import Swiper from "swiper";
+  import "swiper/dist/css/swiper.min.css";
+
+  export default {
+    props: ["list", "data"],
+    updated() {
+      this.setSwiper();
+    },
+    data() {
+      return {
+        subtitleList: ["任职要求", "岗位职责", "薪资待遇"]
+      };
+    },
+    methods: {
+      setSwiper() {
+        const that = this;
+        const joinSwiper = new Swiper(".swiper-container", {
+          // height: 800,
+          autoplay: true, //可选选项，自动滑动
+          direction: "vertical",
+          watchSlidesProgress: true,
+          slidesPerView: "auto",
+          centeredSlides: true,
+          loop: true,
+          loopedSlides: 5,
+          simulateTouch: false,
+          // allowTouchMove: false,
+          // preventInteractionOnTransition : true,
+          // noSwiping: true,
+          // grabCursor: true,
+          roundLengths: true,
+          // 左右切换的箭头
+          navigation: {
+            nextEl: ".btuType"
+          },
+          on: {
+            progress: function (progress) {
+              // const swiperEl = document.querySelectorAll(".swiper-container");
+              // const heightPx = swiperEl[0].getBoundingClientRect();
+
+              // console.log("heightPx",heightPx );
+
+              for (let i = 0; i < this.slides.length; i++) {
+                // 节点
+                let slide = this.slides.eq(i);
+                // 选择的项
+                let slideProgress = this.slides[i].progress;
+                // 数值长度
+                // const lengthNum = that.list.list.length;
+                // 取模
+                const moduleNum = Math.abs(slideProgress % 4);
+                // const moduleNum = Math.abs(slideProgress % lengthNum);
+
+                if (moduleNum !== 0) {
+                  // Y轴移动的数
+                  const heightNum =
+                    (5.22 * moduleNum + 0.2 * (4 * 1 + 1)) * 150 + "px";
+                  // const heightNum =
+                  //   (5.22 * moduleNum + 0.2 * (lengthNum * 1 + 1)) * 150 + "px";
+                  // 放大倍数
+                  const scaleNum = 1 - (4 - moduleNum) * 0.05;
+                  // const scaleNum = 1 - (lengthNum - moduleNum) * 0.05;
+                  const zIndex = scaleNum * 100;
+                  // console.log("heightNum", i, heightNum, scaleNum, moduleNum);
+                  slide.css("zIndex", zIndex);
+                  slide.transform(
+                    "translateY(" + heightNum + ") scale(" + scaleNum + ")"
+                  );
+                } else {
+                  slide.css("zIndex", 100);
+                  slide.transform("translateY(" + "0" + ") scale(" + "1" + ")");
+                }
+              }
+            },
+            //   回调函数，每当设置Swiper开始过渡动画时执行。transtion获取到的是Swiper的speed值。
+            setTransition: function (transition) {
+              // console.log("执行setTransition",that.testData);
+              // that.testData += 1;
+              for (let i = 0; i < this.slides.length; i++) {
+                let slide = this.slides.eq(i);
+                slide.transition(transition);
+              }
+            }
+            // click: function(val){
+            //   el: ".btuType",
+            //   console.log("点击事件",val);
+            // }
+          }
+        });
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  .mainDivType {
+    position: relative;
+    text-align: center;
+
+    .titleType {
+      margin: 80px 0 70px;
+      font-size: 40px;
+      font-weight: bold;
+      color: #4a4a4a;
+    }
+
+    .imgDivType {
+      position: relative;
+
+      .imgType {
+        width: 12%;
+        // height: 58px;
+        margin-left: -6%;
+        padding: 14px;
+        position: absolute;
+        top: -60px;
+        // left: 0;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        z-index: 101;
+      }
+    }
+
+    .swiper-container {
+      width: 90%;
+      height: 820px;
+
+      .cardDivType {
+        width: 100%;
+        height: 90%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        color: #575757;
+        .cardTitleType {
+          padding: 100px 0 44px;
+          font-size: 50px;
+          font-weight: bold;
+          color: #000000;
+        }
+        .rowType {
+          padding: 0 50px;
+
+          .itemType {
+            margin: 0 20px;
+            height: 450px;
+            box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.3);
+
+            .cardSubtitleType {
+              padding: 20px 0;
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            .cardContentType {
+              padding: 0 20px;
+              text-align: left;
+              font-size: 14px;
+              letter-spacing: 2px;
+              line-height: 26px;
+            }
+          }
+        }
+      }
+    }
+
+    .btuType {
+      position: absolute;
+      bottom: 75px;
+      left: 47%;
+      z-index: 101;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .imgDivType {
+      height: auto;
+    }
+
+    .imgType {
+      top: -23px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 0px 0 10px !important;
+      font-size: 20px !important;
+      top: -10px !important;
+      position: relative !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .imgDivType {
+      height: auto;
+    }
+
+    .imgType {
+      top: -23px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 0px 0 10px !important;
+      font-size: 20px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .imgDivType {
+      height: auto;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 25px 0 50px !important;
+      font-size: 30px !important;
+    }
+  }
+   @media screen and (min-width: 1281px) and (max-width: 1366px) {
+    
+    .imgDivType {
+      height: auto;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 25px 0 50px !important;
+      font-size: 30px !important;
+    }
+  }
+ @media screen and (min-width: 1367px) and (max-width: 1440px) {
+   .imgDivType {
+      height: auto;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 40px 0 60px !important;
+      font-size: 30px !important;
+    }
+  }
+  @media screen and (min-width: 1441px) and (max-width: 1600px) {
+    .imgDivType {
+      height: auto;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      margin: 40px 0 60px !important;
+      font-size: 35px !important;
+    }
+  }
+
+</style>

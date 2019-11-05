@@ -1,0 +1,42 @@
+<template>
+  <!-- 这是企业文化 -->
+  <div class="mainDivType">
+    <p class="titleType">{{list.title}}</p>
+    <Row :gutter="10">
+      <i-col span="8" v-for="item in list.list" :key="item.key">
+        <p class="subtitleType">{{item.subtitle}}</p>
+        <p class="contentType">{{item.content}}</p>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  letter-spacing: 5px;
+  color: #4a4a4a;
+  .titleType {
+    padding-top: 80px;
+    margin-bottom: 70px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  .subtitleType {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  .contentType {
+    margin: 0 24px;
+    font-size: 14px;
+    color: #0066ff;
+  }
+}
+</style>

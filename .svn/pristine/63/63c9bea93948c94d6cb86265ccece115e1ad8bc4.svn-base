@@ -1,0 +1,307 @@
+<template>
+  <div class="homeSwiperDivType" id="certify">
+    <!-- <div class="titleType">
+      <p>{{btnShow}}热门服务{{testData}}</p>
+      <p>Popular services</p>
+    </div>-->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item,index) in data" :key="item.id">
+          <div :class="[index%2 === 0? animationData.leftIn : animationData.rightIn]">
+            <div class="itemTitleType">
+              <p>{{item.name}}</p>
+              <!-- <p>{{item.enTitle}}</p> -->
+            </div>
+            <img class="imgType" :src="item.picUrl">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottomType" v-for="(item,index) in data" :key="item.id">
+      <!-- <p>{{index}}</p> -->
+      <div v-if="index === btnShow">
+        <!-- <div v-if="true"> -->
+        <Button
+          class="btnType"
+          ghost
+          v-for="o in item.childList"
+          :key="o.id"
+          @click="handlerMenu('/product/'+item.code+'/'+o.code)"
+        >{{o.name}}</Button>
+      </div>
+    </div>
+    <!-- <div class="swiper-pagination"></div> -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</template>
+ 
+<script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+
+export default {
+  name: "homeSwiper",
+  props: ["list", "data", "animationData"],
+  data() {
+    return {
+      btnShow: null
+    };
+  },
+  mounted() {
+    // console.log("this.data", this.data);
+    setTimeout(() => {
+      this.setCertifySwiper();
+    }, 300);
+    // this.setCertifySwiper();
+  },
+  methods: {
+    // 获取菜单的name，只能获取MenuItem的name值
+    handlerMenu(val, isGo) {
+      // console.log("valval", val);
+      if (!isGo) {
+        const regex2 = /\/\w+/g;
+        const pathVal2 = val.match(regex2);
+        if (pathVal2.length === 1) {
+          this.$go({
+            path: val
+          });
+        } else if (pathVal2.length === 2) {
+          let gotoPath;
+          if (pathVal2[0] === "/solutions") {
+            gotoPath = val;
+          } else if (pathVal2[0] === "/aboutUs") {
+            gotoPath = "/aboutUs";
+          }
+          this.$go({
+            path: gotoPath,
+            query: {
+              pathName: val
+            }
+          });
+        } else if (pathVal2.length === 3) {
+          const pathId = pathVal2[2].match(/\d+$/);
+          // console.log("pathVal2[2]", pathId);
+          if (pathVal2[1] === "/deals" || pathVal2[1] === "/mobileDevelop") {
+            const gotoPath = pathVal2[0] + pathVal2[1];
+            if (pathId) {
+              this.$go({
+                path: gotoPath
+              });
+            }
+          } else if (pathVal2[1] === "/supportService") {
+            const gotoPath = pathVal2[0] + pathVal2[1];
+            this.$go({
+              path: gotoPath,
+              query: {
+                pathName: val
+              }
+            });
+          } else if (
+            pathVal2[1] === "/webDesign" ||
+            pathVal2[1] === "/appDevelop"
+          ) {
+            console.log("mobileDevelop", val, pathId);
+            // 网站建设，去子项，二级菜单
+            if (pathId) {
+              const gotoPath = pathVal2[0] + pathVal2[1];
+              this.$go({
+                path: gotoPath,
+                query: {
+                  serviceCategoryId: pathId[0]
+                }
+              });
+            } else {
+              const gotoPath = pathVal2[0] + pathVal2[1] + "/subpage";
+              this.$go({
+                path: gotoPath,
+                query: {
+                  pathName: pathVal2[2]
+                }
+              });
+            }
+          }
+        } else {
+          this.$go({
+            path: val
+          });
+        }
+      }
+    },
+    setCertifySwiper() {
+      const that = this;
+      const certifySwiper = new Swiper("#certify .swiper-container", {
+        // 开启这个参数来计算每个slide的progress(进度、进程)，Swiper的progress无需设置即开启。
+        watchSlidesProgress: true,
+        // 设置slider容器能够同时显示的slides数量(carousel模式)。
+        // 可以设置为数字（可为小数，小数不可loop），或者 'auto'则自动根据slides的宽度来设定数量。
+        // loop模式下如果设置为'auto'还需要设置另外一个参数loopedSlides。
+        slidesPerView: "auto",
+        // 设定为true时，active slide会居中，而不是默认状态下的居左。
+        centeredSlides: true,
+        // 在loop模式下使用slidesPerview:'auto'，还需使用该参数设置所要用到的loop个数(一般设置为本来slide的个数)
+        loop: true,
+        // loopedSlides: 2,
+        loopedSlides: 5,
+        // autoplay: true,
+        // 左右切换的箭头
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        // 分页器容器的css选择器或HTML标签。分页器等组件可以置于container之外，不同Swiper的组件应该有所区分，如#pagination1，
+        // pagination: {
+        //   el: ".swiper-pagination"
+        //   //clickable :true,
+        // },
+        on: {
+          // 回调函数，当Swiper的progress被改变时执行。接受Swiper的progress作为参数（0-1）。
+          // 为什么会执行三次？？？？？？？？？？
+
+          progress: function(progress) {
+            // console.log("执行progress",  this.slides.length);
+            // const chooseArr = [];
+
+            // that.btnShow = Math.round(progress * (this.slides.length - 1)) * 1;
+            // 当前的长度值
+            const lengthNum = that.data.length;
+            // 选择的当前的数
+            let chooseNum = Math.round(progress * (this.slides.length - 1));
+
+            if (lengthNum >= 5) {
+              if (chooseNum < 5) {
+                that.btnShow = chooseNum + lengthNum - 5;
+              } else {
+                that.btnShow = (chooseNum - 5) % lengthNum;
+              }
+            } else {
+              that.btnShow = chooseNum % lengthNum;
+            }
+            // // 存储当前的数
+            // chooseArr.push(chooseNum);
+
+            const swiperEl = document.querySelectorAll(".swiper-container");
+            const widthPx = swiperEl[0].getBoundingClientRect().width;
+            // console.log("节点的宽度", " : ", widthPx);
+            // this.slides:获取Swiper的slides的Dom7/jQuery对象。通过mySwiper.slides[1]获取特定的slide。
+            for (let i = 0; i < this.slides.length; i++) {
+              // console.log("listlist",i,":",this.slides[i],"：", this.slides[i].progress ,":",progress);
+              // 获取节点 div.swiper-slide.swiper-slide-active
+              // class路径
+              let slide = this.slides.eq(i);
+              // console.log("this.slides", i, " : ", this.slides[i], slide);
+              //   console.log("this.slides", slide);
+              let slideProgress = this.slides[i].progress;
+
+              // console.log("slideProgress--", i, "分割线", this.slides);
+              // console.log("slideProgress",i," : ", slideProgress);
+
+              let modify = 1;
+              if (Math.abs(slideProgress) > 1) {
+                // modify = (Math.abs(slideProgress) - 1) * 0.5 + 1;
+                modify = (Math.abs(slideProgress) - 1) * 0.4 + 1;
+              }
+              //   let translate = slideProgress * modify * 260 + "px";
+              // const widthVariable = widthPx * 0.8 - 20;
+              const widthVariable = widthPx * 0.59 - 20;
+              // 回调函数，swiper的容器wrapper改变其坐标时执行。返回带当前transform 的偏移量的对象
+              let translate = slideProgress * modify * widthVariable + "px";
+              let scale = 1 - Math.abs(slideProgress) / 5;
+              //   let scale = 1 - Math.abs(slideProgress) / 5;
+              let zIndex = 10 - Math.abs(Math.round(slideProgress));
+
+              // scale(scalewidth,scaleheight);
+              // scalewidth：缩放当前绘图的宽度（1=100%，0.5=50%，2=200%，依次类推）。
+              // scaleheight：缩放当前绘图的高度（1=100%，0.5=50%，2=200%，依次类推）。
+              // translateX(x)	定义转换，只是用 X 轴的值。X 轴移动
+              slide.transform(
+                "translateX(" + translate + ") scale(" + scale + ")"
+              );
+              slide.css("zIndex", zIndex);
+              slide.css("opacity", 1);
+              if (Math.abs(slideProgress) > 3) {
+                slide.css("opacity", 0);
+              }
+            }
+            // console.log("progress: ", mathData, that.btnShow);
+          },
+          //   回调函数，每当设置Swiper开始过渡动画时执行。transtion获取到的是Swiper的speed值。
+          setTransition: function(transition) {
+            // console.log("执行setTransition",that.testData);
+            // that.testData += 1;
+            for (let i = 0; i < this.slides.length; i++) {
+              let slide = this.slides.eq(i);
+              slide.transition(transition);
+            }
+          }
+        }
+      });
+    }
+  }
+};
+</script>
+ 
+<style scoped lang="less">
+// .titleType {
+//   font-size: 20px;
+//   color: #85ffdc;
+//   margin: 20px 0;
+//   line-height: 20px;
+// }
+.homeSwiperDivType {
+  // margin-top: 10px;
+  .imgType {
+    width: 30%;
+    height: auto;
+  }
+  .itemTitleType {
+    margin: 0 0 10px;
+    // line-height: 30px;
+    font-size: 28px;
+  }
+  .bottomType {
+    text-align: center;
+    line-height: 16px;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    .btnType {
+      margin: 10px;
+      font-size: 18px;
+      z-index: 100;
+    }
+  }
+  .bottomShowType {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1366px) {
+  .homeSwiperDivType {
+    margin-top: -15px;
+    .itemTitleType {
+      // margin: 5px 0 10px;
+      // line-height: 30px;
+      font-size: 26px;
+    }
+    .imgType {
+      width: 28%;
+      height: auto;
+    }
+  }
+}
+@media screen and (min-width: 760px) and (max-width: 1024px) {
+  .homeSwiperDivType {
+    margin-top: -20px;
+    .itemTitleType {
+      // margin: 5px 0 10px;
+      // line-height: 30px;
+      font-size: 26px;
+    }
+    .imgType {
+      width: 28%;
+      height: auto;
+    }
+  }
+}
+</style>

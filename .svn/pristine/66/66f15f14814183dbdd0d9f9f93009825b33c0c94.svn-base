@@ -1,0 +1,284 @@
+<template>
+  <div class="casesMainDivType">
+    <img class="bgImgType" :src="casesDataDemo.bgImgUrl">
+    <div v-if="!caseIdFun.id">
+      <!-- 图标 -->
+      <Row class="iconRowType" type="flex" justify="space-around">
+        <!-- <p>{{casesTypeData}}</p> -->
+        <div v-for="item in casesData.caseTypeList" :key="item.id" @click="clickIcon(item)" :class="{'active': casesDataDemo.keyimg === item.id }">
+          <img :src="item.picUrl">
+        </div>
+      </Row>
+      <!-- 卡片 -->
+      <!-- <cases-card :data="casesApiData" @cardData="handlerCard" @handlerClick="clickCard"></cases-card> -->
+      <cases-card :data="casesDataFun" @handlerClick="clickCard"></cases-card>
+      <div class="pageDivType">
+        <div>
+          <span>6条/页&nbsp;&nbsp;&nbsp;共{{casesDataFun.totalPage}}页</span>
+        </div>
+        <Page class-name="pageType" :total="casesDataFun.totalCount" :page-size="6" :current="pageNum.page"
+          show-elevator @on-change="handlerChange" />
+      </div>
+    </div>
+    <div v-else class="infoDivType">
+      <div class="basicInfoType">
+        <Row type="flex" align="middle">
+          <i-col span="24">
+            <Row type="flex" align="middle">
+              <i-col span="6">
+                <img class="basicInfoImgType" :src="casesInfo.picUrl">
+              </i-col>
+              <i-col span="16">
+                <div class="titleType" v-html="casesInfo.title"></div>
+                <div class="subtitleType" v-html="casesInfo.subtitle"></div>
+                <div class="timeType">{{casesInfo.createtime}}</div>
+                <div class="remarkType" v-html="casesInfo.remark"></div>
+              </i-col>
+            </Row>
+          </i-col>
+          <i-col span="6">
+            <!-- <div>外链</div> -->
+            <div class="linkDivType">
+              <a class="btnType" v-if="casesInfo.caseUrl" :href="casesInfo.caseUrl" target="_blank">
+                <Button type="success">{{casesInfo.title}}</Button>
+              </a>
+              <a class="btnType" v-if="casesInfo.androidUrl" :href="casesInfo.androidUrl" target="_blank">
+                <Button type="success">安卓下载</Button>
+              </a>
+              <a class="btnType" v-if="casesInfo.iosUrl" :href="casesInfo.iosUrl" target="_blank">
+                <Button type="success">IOS下载</Button>
+              </a>
+              <div class="imgDivType">
+                <div v-if="casesInfo.picWechat">
+                  <img :src="casesInfo.picWechat">
+                  <p>公众号</p>
+                </div>
+                <div v-if="casesInfo.picApplet">
+                  <img :src="casesInfo.picApplet">
+                  <p>小程序</p>
+                </div>
+              </div>
+            </div>
+          </i-col>
+        </Row>
+      </div>
+      <div v-html="casesInfo.insturctions"></div>
+    </div>
+
+    <jy-footer />
+  </div>
+</template>
+
+<script>
+  import {
+    mapActions,
+    mapState
+  } from "vuex";
+  import jyFooter from "@/components/jy-footer/index";
+
+  import casesCard from "./cases-card";
+
+  import casesDataDemo from "./casesData";
+
+  export default {
+    components: {
+      jyFooter,
+      casesCard
+    },
+    created() {
+      // console.log("到顶部去");
+      // document.body.style.cssText = "overflow-y: auto;overflow-x: hidden";
+      document.body.style.cssText = "overflow: auto;";
+      document.documentElement.scrollTop = 0;
+
+      this.getInfoData();
+
+      // console.log("案例：", this.$route.query);
+      // this.casesType();
+    },
+    computed: {
+      ...mapState("cases", ["casesData", "casesInfo"]),
+      // ...mapGetters("test", ["getTest"])
+      casesDataFun() {
+        return this.casesData.page || {};
+      },
+      caseIdFun() {
+        // console.log("哈哈哈", this.$route.query);
+        // this.getData();
+        this.getInfoData();
+        document.documentElement.scrollTop = 0;
+        return this.$route.query;
+      }
+    },
+    data() {
+      return {
+        casesDataDemo,
+        iconList: casesDataDemo.iconList,
+        casesList: casesDataDemo.casesList,
+        pageNum: {
+          total: 1, //总条数
+          page: 1 //当前页码
+        }
+      };
+    },
+    methods: {
+      ...mapActions("cases", ["getCasesData", "getInfo"]),
+      // handlerCard(val) {
+      //   // console.log("handlerCard", this.casesList.length);
+      //   this.pageNum.total = val;
+      // },
+      handlerChange(val) {
+        // 翻页事件
+        // console.log("handlerChange", val);
+        this.pageNum.page = val;
+        this.getCasesData(this.pageNum);
+      },
+      clickIcon(val) {
+        // 点击图标项
+        // console.log("clickIcon", val);
+        this.casesDataDemo.keyimg = val.id;
+        this.pageNum.page = 1;
+        val.typeId = val.id;
+        Object.assign(val, this.pageNum);
+        this.getCasesData(val);
+      },
+      clickCard(val) {
+        // 当前点击卡片事件
+        if (val.insturctions.length > 0) {
+          this.$go({
+            path: "/cases",
+            query: {
+              id: val.id
+            }
+          });
+        }
+      },
+      getInfoData() {
+        // 获取案例详情
+        // console.log("this.caseIdFun.id", this.caseIdFun.id);
+        if (this.$route.query.id) {
+          this.getInfo(this.$route.query);
+        } else {
+          let val = {};
+          val.typeId = this.casesDataDemo.keyimg;
+          Object.assign(val, this.pageNum);
+          this.getCasesData(val);
+        }
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  .bgImgType {
+    width: 100%;
+    height: auto;
+  }
+
+  .iconRowType {
+    margin: 3% 15%;
+    height: 100px;
+
+    img:hover {
+      margin-top: -5px;
+      cursor: pointer;
+    }
+
+    .active {
+      margin-top: -10px;
+      cursor: pointer;
+    }
+  }
+
+  .pageDivType {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+    .pageType {
+      font-size: 14px;
+    }
+
+    div {
+      margin: 5px 10px;
+      font-size: 14px;
+    }
+  }
+
+  .infoDivType {
+    width: 100%;
+    padding: 3% 12%;
+
+    .basicInfoType {
+      // background-color: red;
+      margin-left:12%;
+
+      .basicInfoImgType {
+        width: 100%;
+        padding-right: 30px;
+      }
+
+      .titleType {
+        font-size: 32px;
+      }
+
+      .subtitleType {
+        margin: 6px 0;
+        font-size: 20px;
+      }
+
+      .timeType {
+        font-style: italic;
+      }
+
+      .remarkType {
+        font-size: 15px;
+        margin: 15px 0 15px 0;
+        letter-spacing: 2px;
+        line-height: 18px;
+        // text-indent: 28px;
+      }
+
+      .linkDivType {
+        margin-left: 50px;
+        text-align: center;
+
+        .btnType {
+          display: block;
+          margin: 20px 0;
+        }
+
+        .imgDivType {
+          display: flex;
+          justify-content: space-between;
+
+          div {
+            text-align: center;
+
+            img {
+              // box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+              //   // width: 100%;
+              width: 100%;
+              // padding: 0 5px;
+              border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and(min-width: 760px) and(max-width: 1000px) {
+    .iconRowType {
+      margin: 3% 20px;
+      height: 100px;
+
+      img:hover {
+        margin-top: -5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+</style>

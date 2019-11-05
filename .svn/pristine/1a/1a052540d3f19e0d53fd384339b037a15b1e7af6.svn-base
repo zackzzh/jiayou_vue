@@ -1,0 +1,34 @@
+import homeRouter from './home/home'
+import aboutRouter from './about/about'
+import casesRouter from './cases/cases'
+import productRouter from './product/product'
+import solutionsRouter from './solutions/solutions'
+import loginRouter from './login/login'
+import trendsRouter from './trends/trends'
+
+import page404Router from './test/page404'
+import testRouter from './test/test'
+
+
+export default [
+  {
+    path: "/",
+    name: "/",
+    redirect: "/home",
+    component: () => import('@/pages/index'),
+
+    children: [
+
+      homeRouter,
+      aboutRouter,
+      casesRouter,
+      productRouter,
+      solutionsRouter,
+      loginRouter,
+      trendsRouter,
+
+      testRouter
+    ]
+  },
+  page404Router
+]

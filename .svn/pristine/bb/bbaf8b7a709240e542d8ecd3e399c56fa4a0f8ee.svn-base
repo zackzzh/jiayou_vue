@@ -1,0 +1,130 @@
+<template>
+  <div class="mainDivType">
+    <Row :gutter="40">
+      <i-col offset="1" span="10">
+        <p class="titleType">{{list.title}}</p>
+        <Divider style="height: 3px;color: #15ffd6;width: 40%" />
+        <p class="contentType">{{list.content}}</p>
+      </i-col>
+      <i-col offset="1" span="12">
+        <img :src="list.imgUrl">
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list"]
+  };
+
+</script>
+
+<style scoped lang="less">
+  .mainDivType {
+    margin-top: 0px;
+    text-align: left;
+
+    .titleType {
+      //   border-bottom: 3px solid #15ffd6;
+      font-size: 54px;
+      font-weight: bold;
+      color:#fff;
+    }
+
+    /deep/ .ivu-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .contentType {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #ffefff;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .titleType {
+      font-size: 25px !important;
+    }
+
+    /deep/ .ivu-divider-horizontal {
+      margin: 5px 0 !important;
+    }
+
+    .contentType {
+      margin-top: 5px !important;
+      font-size: 12px !important;
+    }
+
+    /deep/ .ivu-col-span-10 {
+      width: 61.66666667% !important;
+    }
+
+    /deep/ .ivu-col-span-12 {
+      width: 31.66666667% !important;
+    }
+
+    /deep/ .ivu-col-offset-1 {
+      margin-left: 0px !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .titleType {
+      font-size: 35px !important;
+    }
+
+    .contentType {
+      margin-top: 25px !important;
+      font-size: 13px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .titleType {
+      font-size: 35px !important;
+    }
+
+    .contentType {
+      font-size: 13px !important;
+    }
+  }
+
+  @media screen and (min-width: 1281px) and (max-width: 1366px) {
+    .titleType {
+      font-size: 30px !important;
+    }
+
+    .contentType {
+      margin-top: 20px !important;
+      font-size: 15px !important;
+    }
+  }
+
+  @media screen and (min-width: 1367px) and (max-width: 1440px) {
+    .titleType {
+      font-size: 44px !important;
+    }
+
+    .contentType {
+      font-size: 16px !important;
+    }
+  }
+
+  @media screen and (min-width: 1441px) and (max-width: 1600px) {
+    .contentType {
+      font-size: 20px !important;
+    }
+
+    .titleType {
+      font-size: 47px !important;
+    }
+  }
+
+</style>

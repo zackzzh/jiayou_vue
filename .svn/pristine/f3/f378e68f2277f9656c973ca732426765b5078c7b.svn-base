@@ -1,0 +1,35 @@
+<template>
+  <div>
+    <!-- 这是运营推广 -->
+    <home-img :list="item" v-for="item in imgList" :key="item.key">
+      <deals-seo v-if="item.isCenterImg" slot="centerImg" :list="seoData"></deals-seo>
+      <deals-sem v-if="item.isSem" slot="centerImg" :list="semData"></deals-sem>
+    </home-img>
+  </div>
+</template>
+
+<script>
+import homeImg from "@/pages/home/home-img";
+import dealsSeo from "./deals-seo";
+import dealsSem from "./deals-sem";
+
+import dealsData from "./deals";
+
+export default {
+  components: {
+    homeImg,
+    dealsSeo,
+    dealsSem
+  },
+  data() {
+    return {
+      imgList: dealsData.imgList,
+      seoData: dealsData.seoData,
+      semData: dealsData.semData
+    };
+  }
+};
+</script>
+
+<style scoped>
+</style>

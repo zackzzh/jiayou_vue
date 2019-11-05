@@ -1,0 +1,70 @@
+<template>
+  <div>
+    <!-- 这是运营推广 -->
+    <home-img :list="item" v-for="item in imgList" :key="item.key">
+      <deals-seo v-if="item.isCenterImg" slot="centerImg" :list="seoData" class="dealsSeo"></deals-seo>
+      <deals-sem v-if="item.isSem" slot="centerImg" :list="semData" class="dealsSem"></deals-sem>
+    </home-img>
+    <more-dit></more-dit>
+    <jy-footer />
+  </div>
+</template>
+
+<script>
+  import jyFooter from "@/components/jy-footer/index";
+  import moreDit from "@/components/more-dit";
+  import homeImg from "@/pages/home/home-img";
+  import dealsSeo from "./deals-seo";
+  import dealsSem from "./deals-sem";
+
+  import dealsData from "./deals";
+
+  export default {
+    components: {
+      jyFooter,
+      homeImg,
+      dealsSeo,
+      dealsSem,
+      moreDit
+    },
+    created() {
+      document.body.style.cssText = "overflow: auto";
+      document.documentElement.scrollTop = 0;
+    },
+    data() {
+      return {
+        imgList: dealsData.imgList,
+        seoData: dealsData.seoData,
+        semData: dealsData.semData
+      };
+    }
+  };
+
+</script>
+
+<style scoped>
+  @media screen and (min-width: 769px) and (max-width:1024px) {
+    .dealsSeo {
+      margin: 0px -100px;
+      margin-top: -40px;
+    }
+
+    .dealsSem {
+      margin: 0px -100px;
+      margin-top: -80px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .dealsSeo {
+      margin: 0px -100px;
+      margin-top: -60px;
+    }
+
+    .dealsSem {
+      margin: 0px -100px;
+      margin-top: -80px;
+    }
+  }
+
+</style>

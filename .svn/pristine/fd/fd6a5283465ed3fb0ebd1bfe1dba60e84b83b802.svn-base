@@ -1,0 +1,2 @@
+export const CASES = 'CASES'
+export const CASESTYPE = 'CASESTYPE'

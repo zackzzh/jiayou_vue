@@ -1,0 +1,354 @@
+<template>
+  <div class="page-home">
+    <div class="home-top">
+      <div class="top-left">
+        <img src="/static/mobile/logo.png" alt="">
+        <div class="left-title">
+          <div>五年专业历程 </div>
+          <div>十大主营产品</div>
+        </div>
+      </div>
+      <div class="top-right">
+        <img src="/static/mobile/phone.png" alt="">
+      </div>
+    </div>
+    <div class="home-banner">
+      <img src="/static/mobile/banner.png" alt="">
+    </div>
+    <div class="home-service">
+      <div class="title">
+        三大热门服务
+      </div>
+      <div class="nav">
+        <div class="nav-item" v-for="(item, index) in nav" :key="index" @click="tabs(index)">
+          <img :src="key==index?item.image:item.imagec" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="home-banner">
+      <img src="/static/mobile/wz.png" alt="" v-if="key===0">
+      <img src="/static/mobile/app.png" alt="" v-if="key===1">
+      <img src="/static/mobile/yd.png" alt="" v-if="key===2">
+    </div>
+    <div class="home-banner">
+      <img src="/static/mobile/about.png" alt="">
+    </div>
+    <!-- <div :style="`background-image: url(${bgImgUrl})`">
+      <div class="home-style">
+        <div class="title">
+          专属设计风格
+        </div>
+        <div class="style-item">
+          <div class="style-left">
+            <img src="/static/mobile/style.png" alt="">
+          </div>
+          <div class="style-right">
+            围绕CI设计系统，根据色彩气质选择官网主色，构建专属配色方案；提炼企业理念，对官网中的组件元素进行个性化设计，增强官网辨识度；研究企业定位，坚持官网差异化设计，让一百个网站有一百种风格；线框图、原型图、保真交互Demo，官网在设计之初必经多次底稿演示，确保高质UX用户体验。
+          </div>
+        </div>
+      </div>
+      <div class="home-style">
+        <div class="title">
+          标准定制
+        </div>
+        <div class="style-item">
+          <div class="stand-left">
+            <img src="/static/mobile/stand1.png" alt="">
+          </div>
+          <div class="stand-right">
+            <div>标准功能</div>
+            <div class="samll">
+              成熟！完善！甲由科技5年行业经验，打磨出规范建站技术，并取得国家认可，通过多项专利认证。互诺科技以坚实技术基础，确保每一网站都具备完善功能；以工匠态度，致力让每一网站都成为卓越精品
+            </div>
+          </div>
+        </div>
+        <div class="style-item">
+          <div class="stand-right">
+            <div>自由定制</div>
+            <div class="samll">
+              在资深网站策划协助下，企业还可以自由打官网专属功能。提供合适企业的设计方案。通过目标定位，针对性选择布局，重点展示了客户所关心的内容；并以简洁明朗的设计风格只要提供您的想法，我们就能以最完美的方式帮你把想法变为现实
+            </div>
+          </div>
+          <div class="stand-left">
+            <img src="/static/mobile/stand2.png" alt="">
+          </div>
+        </div>
+
+        <Modal v-model="modal" :footer-hide="true">
+          <jym-modal @out="outChage"></jym-modal>
+        </Modal>
+      </div>
+    </div> -->
+    <div class="bottom">
+      <div class="bottom-one">
+        <a href="http://p.qiao.baidu.com/cps/chat?siteId=12906229&userId=27026154" class="span">在线咨询</a>
+      </div>
+      <div class="bottom-one">
+        <a href="tel:020-81807466" class="call span">电话咨询</a>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import jymModal from "@/components/jym-modal";
+  export default {
+    name: 'mhome',
+    data() {
+      return {
+        bgImgUrl: '/static/mobile/bg.png',
+        nav: [{
+            image: '/static/mobile/nav1.png',
+            imagec: '/static/mobile/navc1.png',
+          },
+          {
+            image: '/static/mobile/nav2.png',
+            imagec: '/static/mobile/navc2.png',
+          },
+          {
+            image: '/static/mobile/nav3.png',
+            imagec: '/static/mobile/navc3.png',
+          }
+        ],
+        modal: false,
+        key: 0
+      }
+    },
+    components: {
+      jymModal
+    },
+    methods: {
+      upQusetion() {
+        this.modal = true;
+      },
+      outChage(e) {
+        this.modal = e;
+      },
+      tabs(index) {
+        this.key = index;
+      }
+    }
+  }
+
+</script>
+
+<style scoped lang="less">
+  .page-home {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    z-index: 1;
+
+    .bottom {
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      z-index: 999;
+      background: #fff;
+      width: 100%;
+      height: 1.333333rem;
+
+      .bottom-one {
+        height: 1.333333rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        color: #000;
+
+        .call {
+          background: #4B9EDD;
+          color: #fff;
+        }
+
+        a {
+          color: #000;
+        }
+
+        .span {
+          text-align: center;
+          line-height: 1.0rem;
+          height: 1.0rem;
+          display: block;
+          width: 80%;
+          border: 1px solid #e5e5e5;
+        }
+      }
+    }
+
+    .home-top {
+      margin: 0.15rem 0.10rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .top-left {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 1.80rem;
+          height: 0.64rem;
+          margin-right: 0.10rem;
+        }
+
+        .left-title {
+          position: relative;
+          margin-left: 0.40rem;
+          color: #4B9EDD;
+
+          &::before {
+            position: absolute;
+            top: 0;
+            left: -0.20rem;
+            content: '';
+            width: 0;
+            height: 100%;
+            border: 0.01rem solid #4B9EDD;
+            font-size: 0.16rem;
+          }
+        }
+      }
+
+      .top-right {
+        img {
+          width: 4rem;
+          height: 0.8rem;
+        }
+      }
+    }
+
+    .home-banner {
+      font-size: 0;
+      img {
+        width: 100%;
+      }
+    }
+
+    .home-service {
+      margin: 0.20rem 0.10rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.0rem;
+        position: relative;
+        margin-bottom: 0.30rem;
+        font-size: 14px;
+
+        &::after {
+          position: absolute;
+          bottom: -0.05rem;
+          left: 0rem;
+          content: '';
+          width: 100%;
+          height: 0;
+          border: 0.01rem solid #4B9EDD;
+        }
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .nav-item {
+          display: flex;
+          flex: 1 33.3%;
+          max-width: 33.3%;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.16rem;
+          color: #B2BAB8;
+
+          img {
+            width: 40%;
+            margin-bottom: 0.10rem;
+          }
+        }
+      }
+    }
+
+    .home-style {
+      padding-top: 0.20rem;
+      margin: 0rem 0.40rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.0rem;
+        position: relative;
+        margin-bottom: 0.40rem;
+        color: #fff;
+        font-size: 14px;
+
+        &::after {
+          position: absolute;
+          bottom: -0.05rem;
+          left: 0rem;
+          content: '';
+          width: 100%;
+          height: 0;
+          border: 0.01rem solid #4B9EDD;
+        }
+      }
+
+      .style-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 0.20rem;
+
+        .style-left {
+          width: 40%;
+          font-size: 0;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .style-right {
+          width: 60%;
+          font-size: 12px;
+          color: #fff;
+        }
+
+        .stand-left {
+          width: 50%;
+          font-size: 0;
+
+          img {
+            margin-top: 0.20rem;
+            width: 100%;
+          }
+        }
+
+        .stand-right {
+          font-size: 12px;
+          color: #fff;
+          width: 50%;
+          padding: 0.10rem;
+
+          .samll {
+            margin-top: 0.10rem;
+            font-size: 12px;
+          }
+        }
+
+
+      }
+    }
+  }
+
+</style>

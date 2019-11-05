@@ -1,0 +1,42 @@
+<template>
+  <div>
+    <!-- 这是运营推广 -->
+    <home-img :list="item" v-for="item in imgList" :key="item.key">
+      <deals-seo v-if="item.isCenterImg" slot="centerImg" :list="seoData"></deals-seo>
+      <deals-sem v-if="item.isSem" slot="centerImg" :list="semData"></deals-sem>
+    </home-img>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyFooter from "@/components/jy-footer/index";
+
+import homeImg from "@/pages/home/home-img";
+import dealsSeo from "./deals-seo";
+import dealsSem from "./deals-sem";
+
+import dealsData from "./deals";
+
+export default {
+  components: {
+    jyFooter,
+    homeImg,
+    dealsSeo,
+    dealsSem
+  },
+  created() {
+    document.body.style.cssText = "overflow: auto";
+  },
+  data() {
+    return {
+      imgList: dealsData.imgList,
+      seoData: dealsData.seoData,
+      semData: dealsData.semData
+    };
+  }
+};
+</script>
+
+<style scoped>
+</style>

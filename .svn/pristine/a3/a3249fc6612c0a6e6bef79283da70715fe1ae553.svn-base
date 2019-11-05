@@ -1,0 +1,79 @@
+<template>
+  <div class="aboutMainDiv">
+    <home-img :list="bgData">
+      <div slot="centerImg">
+        <!-- 企业简介 -->
+        <about-intro id="profile" :list="introData"></about-intro>
+        <!-- 商务团队-技术团队-设计团队 -->
+        <about-card id="team" :list="cardData"></about-card>
+        <!-- cultureData -->
+        <!-- 企业文化 -->
+        <about-culture id="culture" :list="cultureData"></about-culture>
+        <!-- 合作伙伴 -->
+        <about-partner id="partner" :list="partnerData"></about-partner>
+        <!-- 加入我们 -->
+        <about-join id="joinUs" :list="joinData"></about-join>
+        <!-- 团队风采 -->
+        <about-team id="eliteTeam" :list="teamData"></about-team>
+      </div>
+    </home-img>
+  </div>
+</template>
+
+<script>
+import homeImg from "@/pages/home/home-img";
+
+import aboutIntro from "./about-intro";
+import aboutCard from "./about-card";
+import aboutCulture from "./about-culture";
+import aboutPartner from "./about-partner";
+import aboutTeam from "./about-team";
+import aboutJoin from "./about-join";
+
+import aboutData from "./aboutData";
+
+export default {
+  components: {
+    homeImg,
+    aboutIntro,
+    aboutCard,
+    aboutCulture,
+    aboutPartner,
+    aboutTeam,
+    aboutJoin
+  },
+  mounted() {
+    const regex = /\w+$/;
+    const pathVal = "#" + this.$route.query.pathName.match(regex)[0];
+    const anchor = this.$el.querySelector(pathVal);
+    // anchor.animate({ top: "0px" }, 800);
+    // console.log("valval", anchor);
+    // document.documentElement.style.transition = "all 2s";
+    // document.documentElement.style.WebkitTransition = "all 2s";
+    document.documentElement.scrollTop = 0;
+    const timer = setInterval(function() {
+      // document.body.scrollTop = document.body.scrollTop - 50;
+      document.documentElement.scrollTop += 50;
+      if (document.documentElement.scrollTop >= anchor.offsetTop) {
+        clearInterval(timer);
+      }
+    }, 1);
+    // document.documentElement.scrollTop = anchor.offsetTop;
+    // console.log();
+  },
+  data() {
+    return {
+      bgData: aboutData.bgData,
+      introData: aboutData.intro,
+      cardData: aboutData.cardData,
+      cultureData: aboutData.cultureData,
+      partnerData: aboutData.partnerData,
+      teamData: aboutData.teamData,
+      joinData: aboutData.joinData
+    };
+  }
+};
+</script>
+
+<style scoped>
+</style>

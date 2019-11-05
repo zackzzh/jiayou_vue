@@ -1,0 +1,159 @@
+<template>
+  <div class="aboutMainDiv">
+    <!-- <home-img :list="bgData" :key="routeDataFun"> -->
+    <div
+      :list="bgData"
+      style="background-image: url('static/aboutUs/bgImg.png')"
+      class="aboutContent"
+    >
+      <div slot="centerImg" class="aboutMeida">
+        <!-- 企业简介 -->
+        <about-intro id="profile" :list="introData"></about-intro>
+        <!-- 商务团队-技术团队-设计团队 -->
+        <about-card id="team" :list="cardData"></about-card>
+        <!-- cultureData -->
+        <!-- 企业文化 -->
+        <about-culture id="culture" :list="cultureData"></about-culture>
+        <!-- 合作伙伴 -->
+        <!-- <about-partner id="partner" :list="partnerData" :data="trecruitListData.partnerList"></about-partner> -->
+        <about-zpartner id="partner" :list="partnerData" :data="trecruitListData.partnerList"></about-zpartner>
+        <!-- 加入我们 :data="trecruitList" -->
+        <about-join id="joinUs" :list="joinData" :data="trecruitListData.recruitList"></about-join>
+        <!-- 团队风采 -->
+        <about-team id="eliteTeam" :list="teamData" :data="trecruitListData.teamList"></about-team>
+      </div>
+    </div>
+    <more-dit></more-dit>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from "vuex";
+
+import jyFooter from "@/components/jy-footer/index";
+import moreDit from "@/components/more-dit";
+import homeImg from "@/pages/home/home-img";
+import aboutZpartner from "./about-zpartner";
+import aboutIntro from "./about-intro";
+import aboutCard from "./about-card";
+import aboutCulture from "./about-culture";
+import aboutPartner from "./about-partner";
+import aboutTeam from "./about-team";
+import aboutJoin from "./about-join";
+
+import aboutData from "./aboutData";
+
+export default {
+  components: {
+    jyFooter,
+    homeImg,
+    aboutIntro,
+    aboutCard,
+    aboutCulture,
+    aboutPartner,
+    aboutTeam,
+    aboutJoin,
+    moreDit,
+    aboutZpartner
+  },
+  created() {
+    document.body.style.cssText = "overflow: auto";
+    // document.documentElement.scrollTop = 0;
+    this.trecruitList();
+  },
+  mounted() {
+    const offsetTopval = this.getElOffsetTop(this.$route.query.pathName);
+    this.hanlerScroll(offsetTopval);
+  },
+  watch: {
+    routeDataFun: function(newVal, oldVal) {
+      // console.log("oldVal,newVal", newVal, oldVal);
+      const offsetTopval = this.getElOffsetTop(newVal);
+      const scrollTopVal = document.documentElement.scrollTop;
+      this.hanlerScroll(offsetTopval, scrollTopVal);
+    }
+  },
+  computed: {
+    ...mapState("aboutUs", ["trecruitListData"]),
+    // ...mapGetters("test", ["getTest"])
+    routeDataFun() {
+      // const routeVal = this.$route.query.pathName;
+      // if (routeVal && this.isOnceGo) {
+      // console.log("this.$route.query", this.$route.query.pathName);
+      //   // document.documentElement.scrollTop = 0;
+      //   this.hanlerScroll();
+      // }
+      // this.hanlerScroll();
+      return this.$route.query.pathName;
+    }
+  },
+  data() {
+    return {
+      bgData: aboutData.bgData,
+      introData: aboutData.intro,
+      cardData: aboutData.cardData,
+      cultureData: aboutData.cultureData,
+      partnerData: aboutData.partnerData,
+      teamData: aboutData.teamData,
+      joinData: aboutData.joinData,
+      isOnceGo: false
+    };
+  },
+  methods: {
+    ...mapActions("aboutUs", ["trecruitList"]),
+    hanlerScroll(offsetTopval = 0, scrollTopVal = 0) {
+      // 滚动到指定位置
+      document.documentElement.scrollTop = scrollTopVal;
+
+      const timer = setInterval(function() {
+        if (scrollTopVal < offsetTopval) {
+          document.documentElement.scrollTop += 30;
+          if (document.documentElement.scrollTop >= offsetTopval) {
+            // console.log("anchor",document.documentElement.scrollTop,offsetTopval)
+            clearInterval(timer);
+          }
+        } else {
+          document.documentElement.scrollTop -= 30;
+          if (document.documentElement.scrollTop <= offsetTopval) {
+            // console.log("anchor",document.documentElement.scrollTop,offsetTopval)
+            clearInterval(timer);
+          }
+        }
+      }, 20);
+    },
+    getElOffsetTop(val) {
+      // 传入路由值
+      // 获取当前的offsetTop的值
+      if (val) {
+        const regex = /\w+$/;
+        const pathVal = "#" + val.match(regex)[0];
+        const anchor = this.$el.querySelector(pathVal);
+        return anchor.offsetTop;
+      } else {
+        return 0;
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+.aboutContent {
+  background-size: 100% 100%;
+}
+
+.aboutMeida {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 60px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutMeida {
+    overflow: hidden;
+    margin: -0px -100px;
+  }
+}
+</style>

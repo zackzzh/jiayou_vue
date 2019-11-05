@@ -1,0 +1,18 @@
+// 这是行业动态
+
+export default {
+    path: '/trends',
+    component: () => import('@/pages/trends/index'),
+    children: [
+        {
+            path: '/',
+            name: 'trends',
+            component: () => import('@/pages/trends/trends'),
+        },
+        {
+            path: 'details',
+            name: 'details',
+            component: () => import('@/pages/trends/trends'),
+        }
+    ]
+}

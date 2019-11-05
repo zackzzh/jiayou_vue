@@ -1,0 +1,17 @@
+import * as types from './mutation-types'
+
+export const mutations = {
+  [types.NEWSLIST](state, o) {
+    // console.log("NEWSLIST", o)
+    state.newsListData = o
+  },
+  [types.HOTNEWSLIST](state, o) {
+    // console.log("NEWSLIST", o)
+    state.hotNewsData = o
+  },
+  [types.NEWSINFO](state, o) {
+    // console.log("NEWSLIST", o)
+    state.newsInfoData = o
+  }
+  // NEWSINFO
+}

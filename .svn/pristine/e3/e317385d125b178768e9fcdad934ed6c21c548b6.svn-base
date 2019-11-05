@@ -1,0 +1,106 @@
+<template>
+  <div>
+    <Row :gutter="30">
+      <i-col span="8" v-for="item in cardArr[pageNum]" :key="item.key">
+        <div
+          class="itemImgDivType"
+          @mouseenter="mouseenter(item)"
+          @mouseleave="mouseleave(item)"
+          @click="handlerClick(item)"
+        >
+          <img class="imgType" :src="item.imgUrl">
+          <div class="shadowBoxType" :class="{displayType: isShow !== item.key}">
+            <p class="titleType">
+              {{item.title}}
+              <span>{{item.subtitle}}</span>
+            </p>
+            <p class="contentType">{{item.content}}</p>
+          </div>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "pageData"],
+  computed: {
+    pageNum() {
+      return this.pageData.current - 1;
+    }
+  },
+  data() {
+    return {
+      isShow: null,
+      cardArr: [],
+      cardSixArr: []
+    };
+  },
+  created() {
+    for (let i = 0; i < this.list.length; i++) {
+      // console.log("精品案例i % 6 === 0：", this.cardArr.length !== 0);
+      if (i % 6 === 0 && this.cardSixArr.length !== 0) {
+        this.cardArr.push(this.cardSixArr);
+        this.cardSixArr = [];
+      }
+      this.cardSixArr.push(this.list[i]);
+    }
+    this.cardArr.push(this.cardSixArr);
+
+    this.$emit("cardData", this.cardArr.length);
+    // console.log("精品案例card：", this.cardSixArr, this.cardArr);
+  },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.key;
+    },
+    mouseleave() {
+      this.isShow = null;
+    },
+    handlerClick(val) {
+      // console.log("handlerClick",val);
+      this.$emit("handlerClick", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.itemImgDivType {
+  position: relative;
+  margin: 10px 0;
+  box-shadow: -10px 10px 12px rgba(0, 0, 0, 0.21);
+  .imgType {
+    width: 100%;
+    height: auto;
+    margin-bottom: -5px;
+  }
+  .shadowBoxType {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 34%;
+    padding: 0 20px 10px 20px;
+    letter-spacing: 2px;
+    color: #fefefe;
+    background: rgba(0, 0, 0, 0.6);
+    .titleType {
+      padding: 12px 0;
+      font-size: 28px;
+      font-weight: bold;
+      span {
+        padding-left: 12px;
+        font-size: 18px;
+        font-weight: 1;
+      }
+    }
+    .contentType {
+      font-size: 14px;
+    }
+  }
+  .displayType {
+    display: none;
+  }
+}
+</style>

@@ -1,0 +1,74 @@
+<template>
+  <!-- 热门新闻 -->
+  <div class="mainDivType">
+    <div class="titleDivType" :style="`background-image: url(${list.bgImgUrl})`">{{list.title}}</div>
+    <Scroll class="scrollType" height="770">
+      <Row class="rowType" v-for="item in data.list" :key="item.key">
+        <i-col span="8">
+          <img style="width: 90%" :src="item.picUrl">
+        </i-col>
+        <i-col span="16">
+          <div>
+            <p class="titleType">{{item.title}}</p>
+            <div v-html="item.content"></div>
+          </div>
+        </i-col>
+      </Row>
+    </Scroll>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "data"],
+  computed: {
+    // list() {
+    //   return this.data.list.map(item => {
+    //     //   console.log(item.content.length)
+    //     if (item.content.length > 37) {
+    //       item.content = item.content.slice(0, 37) + "......";
+    //     }
+    //     return item;
+    //   });
+    // }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.21);
+  .titleDivType {
+    margin-left: 20px;
+    padding: 30px 0 10px 0;
+    // border: 1px solid red;
+    font-size: 18px;
+    background-size: 60% auto;
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+  }
+  .scrollType {
+    margin-top: 10px;
+    // scrollbar-3dlight-color: #3f3f3f;
+    .rowType {
+      margin: 0 20px 10px 20px;
+      color: #3f3f3f;
+      .titleType {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+    // /deep/.ivu-scroll-container {
+    //   overflow-y: auto;
+    //   scrollbar-face-color: red;
+    //   //   border-radius: 10px;
+    // }
+  }
+  // .scrollType ::-webkit-scrollbar-thumb {
+  //   border-radius: 10px;
+  //   // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  //   background-color: rgb(241, 53, 53);
+  // }
+}
+</style>

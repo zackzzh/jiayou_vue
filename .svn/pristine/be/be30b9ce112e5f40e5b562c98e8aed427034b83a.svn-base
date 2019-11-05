@@ -1,0 +1,288 @@
+<template>
+  <!-- 这是加入我们的轮播 -->
+  <div class="mainDivType">
+    <p class="titleType">{{list.title}}</p>
+    <div class="imgDivType">
+      <img
+        class="imgType"
+        :style="`background-image: url(${list.smileBgImgUrl})`"
+        :src="list.smileImgUrl"
+      >
+    </div>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="item in list.list" :key="item.key">
+          <div class="cardDivType" :style="`background-image: url(${list.bgImgUrl})`">
+            <p class="cardTitleType">{{item.title}}</p>
+            <Row class="rowType">
+              <i-col span="8" v-for="o in item.list" :key="o.key">
+                <div class="itemType">
+                  <p class="cardSubtitleType">{{o.subtitle}}</p>
+                  <div class="cardContentType">{{o.content}}</div>
+                </div>
+              </i-col>
+            </Row>
+          </div>
+        </div>
+        <!-- <div class="swiper-slide" v-for="item in list.list" :key="item.key"> -->
+        <!-- <img :src="item.imgUrl"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <!-- <div class="swiper-button-next"></div> -->
+    <div class="btuType">
+      <img :src="list.btnImgUrl">
+    </div>
+  </div>
+</template>
+
+<script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+
+export default {
+  props: ["list"],
+  mounted() {
+    this.setSwiper();
+  },
+  methods: {
+    setSwiper() {
+      const that = this;
+      const joinSwiper = new Swiper(".swiper-container", {
+        // height: 800,
+        autoplay: true, //可选选项，自动滑动
+        direction: "vertical",
+        watchSlidesProgress: true,
+        slidesPerView: "auto",
+        centeredSlides: true,
+        loop: true,
+        loopedSlides: 5,
+        simulateTouch: false,
+        // allowTouchMove: false,
+        // preventInteractionOnTransition : true,
+        // noSwiping: true,
+        // grabCursor: true,
+        roundLengths: true,
+        // 左右切换的箭头
+        navigation: {
+          nextEl: ".btuType"
+        },
+        on: {
+          progress: function(progress) {
+            // const swiperEl = document.querySelectorAll(".swiper-container");
+            // const heightPx = swiperEl[0].getBoundingClientRect();
+
+            // console.log("heightPx",heightPx );
+
+            for (let i = 0; i < this.slides.length; i++) {
+              // 节点
+              let slide = this.slides.eq(i);
+              // 选择的项
+              let slideProgress = this.slides[i].progress;
+              // 数值长度
+              const lengthNum = that.list.list.length;
+              // 取模
+              const moduleNum = Math.abs(slideProgress % lengthNum);
+
+              if (moduleNum !== 0) {
+                // Y轴移动的数
+                const heightNum =
+                  (5.22 * moduleNum + 0.2 * (lengthNum * 1 + 1)) * 150 + "px";
+                // 放大倍数
+                const scaleNum = 1 - (lengthNum - moduleNum) * 0.05;
+                const zIndex = scaleNum * 100;
+                // console.log("heightNum", i, heightNum, scaleNum, moduleNum);
+                slide.css("zIndex", zIndex);
+                slide.transform(
+                  "translateY(" + heightNum + ") scale(" + scaleNum + ")"
+                );
+              } else {
+                slide.css("zIndex", 100);
+                slide.transform("translateY(" + "0" + ") scale(" + "1" + ")");
+              }
+
+              // height=800
+              // if (moduleNum !== 0) {
+              //   // Y轴移动的数
+              //   const heightNum =
+              //     (5.07 * moduleNum + (0.2 * (lengthNum * 1 + 1) + 0.03)) * 150 + "px";
+              //   // 放大倍数
+              //   const scaleNum = 1 - (lengthNum - moduleNum) * 0.05;
+              //   const zIndex = scaleNum * 100;
+              //   console.log("heightNum", i, heightNum, scaleNum, moduleNum);
+              //   slide.css("zIndex", zIndex);
+              //   slide.transform(
+              //     "translateY(" + heightNum + ") scale(" + scaleNum + ")"
+              //   );
+              // } else {
+              //   slide.css("zIndex", 100);
+              //   slide.transform("translateY(" + "0" + ") scale(" + "1" + ")");
+              // }
+
+              //   800-1160 -- 屏宽 height=800
+              //   if (slideProgress % 4 === 0) {
+              //     console.log("slideProgress % 4 === 0", i, slideProgress);
+              //     let zIndex = 100;
+              //     //-2748px
+              //     slide.transform("translateY(" + "0px" + ") scale(" + "1" + ")");
+              //     slide.css("zIndex", zIndex);
+              //   } else if (slideProgress % 4 === 3) {
+              //     console.log("slideProgress % 4 === 1", i, slideProgress);
+              //     let zIndex = 80;
+              //     slide.transform(
+              //       "translateY(" + "2418px" + ") scale(" + "0.95" + ")"
+              //     );
+              //     slide.css("zIndex", zIndex);
+              //   } else if (slideProgress % 4 === 2) {
+              //     console.log("slideProgress % 4 === 2", i, slideProgress);
+              //     let zIndex = 60;
+              //     slide.transform(
+              //       "translateY(" + "1645px" + ") scale(" + "0.9" + ")"
+              //     );
+              //     slide.css("zIndex", zIndex);
+              //   } else if (slideProgress % 4 === 1) {
+              //     console.log("slideProgress % 4 === 3", i, slideProgress);
+              //     let zIndex = 40;
+              //     slide.transform(
+              //       "translateY(" + "870px" + ") scale(" + "0.85" + ")"
+              //     );
+              //     slide.css("zIndex", zIndex);
+              //   }
+
+              // if (slideProgress % 5 === 0) {
+              //   console.log("slideProgress % 5 === 0", i, slideProgress);
+              //   let zIndex = 100;
+              //   //-2748px
+              //   slide.transform("translateY(" + "0px" + ") scale(" + "1" + ")");
+              //   slide.css("zIndex", zIndex);
+              // } else if (slideProgress % 5 === 1) {
+              //   console.log("slideProgress % 5 === 1", i, slideProgress);
+              //   let zIndex = 60;
+              //   slide.transform(
+              //     "translateY(" + "945px" + ") scale(" + "0.80" + ")"
+              //   );
+              //   slide.css("zIndex", zIndex);
+              // } else if (slideProgress % 5 === 2) {
+              //   console.log("slideProgress % 5 === 2", i, slideProgress);
+              //   let zIndex = 70;
+              //   slide.transform(
+              //     "translateY(" + "1705px" + ") scale(" + "0.85" + ")"
+              //   );
+              //   slide.css("zIndex", zIndex);
+              // } else if (slideProgress % 5 === 3) {
+              //   console.log("slideProgress % 5 === 3", i, slideProgress);
+              //   let zIndex = 80;
+              //   slide.transform(
+              //     "translateY(" + "2465px" + ") scale(" + "0.9" + ")"
+              //   );
+              //   slide.css("zIndex", zIndex);
+              // } else if (slideProgress % 5 === 4) {
+              //   console.log("slideProgress % 5 === 4", i, slideProgress);
+              //   let zIndex = 90;
+              //   slide.transform(
+              //     "translateY(" + "3225px" + ") scale(" + "0.95" + ")"
+              //   );
+              //   slide.css("zIndex", zIndex);
+              // }
+
+              //   slide.css("opacity", 1);
+              //   if (Math.abs(slideProgress) > 3) {
+              //     slide.css("opacity", 0);
+              //   }
+            }
+          },
+          //   回调函数，每当设置Swiper开始过渡动画时执行。transtion获取到的是Swiper的speed值。
+          setTransition: function(transition) {
+            // console.log("执行setTransition",that.testData);
+            // that.testData += 1;
+            for (let i = 0; i < this.slides.length; i++) {
+              let slide = this.slides.eq(i);
+              slide.transition(transition);
+            }
+          }
+          // click: function(val){
+          //   el: ".btuType",
+          //   console.log("点击事件",val);
+          // }
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  position: relative;
+  text-align: center;
+  .titleType {
+    margin: 80px 0 70px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #4a4a4a;
+  }
+  .imgDivType {
+    position: relative;
+    .imgType {
+      width: 12%;
+      // height: 58px;
+      margin-left: -6%;
+      padding: 14px;
+      position: absolute;
+      top: -60px;
+      // left: 0;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      z-index: 101;
+    }
+  }
+  /* .swiper-container{
+    height: 100px;
+} */
+  .swiper-container {
+    width: 90%;
+    height: 820px;
+    // border: 1px solid red;
+    // img {
+    //   width: 100%;
+    // }
+    .cardDivType {
+      width: 100%;
+      height: 90%;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      color: #575757;
+      .cardTitleType {
+        padding: 100px 0 44px;
+        font-size: 50px;
+        font-weight: bold;
+        color: #000000;
+      }
+      .rowType {
+        padding: 0 50px;
+        .itemType {
+          margin: 0 20px;
+          height: 450px;
+          box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.3);
+          .cardSubtitleType {
+            padding: 20px 0;
+            font-size: 28px;
+            font-weight: bold;
+          }
+          .cardContentType {
+            padding: 0 20px;
+            font-size: 14px;
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+  }
+  .btuType {
+    position: absolute;
+    bottom: 75px;
+    left: 47%;
+    z-index: 101;
+  }
+}
+</style>

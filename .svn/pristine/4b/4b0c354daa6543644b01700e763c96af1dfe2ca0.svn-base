@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <!-- 公共导航栏 -->
+    <keep-alive>
+      <jy-header></jy-header>
+    </keep-alive>
+    <router-view/>
+    <!-- 公共页脚，页面底部 -->
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyHeader from "@/components/jy-header/index";
+import jyFooter from "@/components/jy-footer/index";
+
+export default {
+  components: {
+    jyHeader,
+    jyFooter
+  }
+};
+</script>
+
+<style scoped>
+</style>

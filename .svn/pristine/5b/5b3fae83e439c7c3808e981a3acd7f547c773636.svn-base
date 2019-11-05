@@ -1,0 +1,104 @@
+export default [
+    {
+        key: "f1",
+        title: "首页",
+        list: [
+            {
+                key: "f1-1",
+                title: "热门服务"
+            },
+            {
+                key: "f1-2",
+                title: "网站建设"
+            },
+            {
+                key: "f1-3",
+                title: "移动应用"
+            },
+            {
+                key: "f1-4",
+                title: "电商平台"
+            },
+            {
+                key: "f1-5",
+                title: "运营推广"
+            }
+        ]
+    }, {
+        key: "f2",
+        title: "精品案例",
+        list: [
+            {
+                key: "f2-1",
+                title: "花卉商城"
+            },
+            {
+                key: "f2-2",
+                title: "游侠App"
+            },
+            {
+                key: "f2-3",
+                title: "摄超电子"
+            },
+            {
+                key: "f2-4",
+                title: "UU课堂"
+            }
+        ]
+    }, {
+        key: "f3",
+        title: "新闻动态",
+        list: [
+            {
+                key: "f3-1",
+                title: "企业如何什么鬼，你个糟老头"
+            },
+            {
+                key: "f3-2",
+                title: "真正受用的网站建设平台，一生受用"
+            }
+        ]
+    }, {
+        key: "f4",
+        title: "加入我们",
+        list: [
+            {
+                key: "f4-1",
+                title: "前端工程师"
+            },
+            {
+                key: "f4-2",
+                title: "UI设计师"
+            },
+            {
+                key: "f4-3",
+                title: "销售经理"
+            },
+            {
+                key: "f4-4",
+                title: "Java工程师"
+            }
+        ]
+    }, {
+        key: "f5",
+        title: "关于我们",
+        list: [
+            {
+                key: "f5-1",
+                title: "公司简介"
+            },
+            {
+                key: "f5-2",
+                title: "团队介绍"
+            },
+            {
+                key: "f5-3",
+                title: "联系方式"
+            },
+            {
+                key: "f5-4",
+                title: "测试用"
+            }
+        ]
+    }
+]

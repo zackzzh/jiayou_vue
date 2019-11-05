@@ -1,0 +1,312 @@
+export default [
+    {
+        key: "appItem01",
+        title: "移动电商App",
+        subtitle: "适用于O2O、B2B、B2C、C2C,分销和B2B2C电子商务模式",
+        content: "定制App开发、支持IOS/安卓双系统</br>支持商家端/客户端 双端开发</br>支持对接各大ERP系统和物流系统</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/01.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/01.png",
+        functionList: [
+            {
+                key: "appItem01-1",
+                title: "会员管理"
+            },
+            {
+                key: "appItem01-2",
+                title: "商品展示"
+            }, {
+                key: "appItem01-3",
+                title: "订单管理"
+            },
+            {
+                key: "appItem01-4",
+                title: "加盟店管理"
+            },
+            {
+                key: "appItem01-5",
+                title: "物流/计费"
+            },
+            {
+                key: "appItem01-6",
+                title: "运营管理"
+            }, {
+                key: "appItem01-7",
+                title: "优惠券"
+            },
+            {
+                key: "appItem01-8",
+                title: "统计报表"
+            }
+        ]
+    }, {
+        key: "appItem02",
+        title: "餐饮类APP",
+        subtitle: "外卖大战不用“方”,甲由科技来帮忙，助您圆满完成送餐任务",
+        content: "定制App开发、支持IOS/安卓双系统</br>支持商家端/客户端 双端开发</br>支持对接蓝牙/WIFI打印机</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/02.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/02.png",
+        functionList: [
+            {
+                key: "appItem02-1",
+                title: "餐厅加盟"
+            },
+            {
+                key: "appItem02-2",
+                title: "餐厅搜索"
+            }, {
+                key: "appItem02-3",
+                title: "在线支付"
+            },
+            {
+                key: "appItem02-4",
+                title: "在线点餐"
+            },
+            {
+                key: "appItem02-5",
+                title: "精准定位"
+            },
+            {
+                key: "appItem02-6",
+                title: "积分系统"
+            }, {
+                key: "appItem02-7",
+                title: "会员管理"
+            },
+            {
+                key: "appItem02-8",
+                title: "顾客点评"
+            }
+        ]
+    }, {
+        key: "appItem03",
+        title: "金融类APP",
+        subtitle: "金融新起点，安全大平台",
+        content: "定制App开发、支持IOS/安卓双系统</br>支持商家端/客户端 双端开发</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/03.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/03.png",
+        functionList: [
+            {
+                key: "appItem03-1",
+                title: "第三方支付"
+            },
+            {
+                key: "appItem03-2",
+                title: "财务管理"
+            }, {
+                key: "appItem03-3",
+                title: "资金池"
+            },
+            {
+                key: "appItem03-4",
+                title: "众筹"
+            },
+            {
+                key: "appItem03-5",
+                title: "基金交易"
+            },
+            {
+                key: "appItem03-6",
+                title: "股票配资"
+            }, {
+                key: "appItem03-7",
+                title: "风险评估"
+            },
+            {
+                key: "appItem03-8",
+                title: "借贷"
+            }
+        ]
+    }, {
+        key: "appItem04",
+        title: "医疗类app",
+        subtitle: "提高工作效率，降低差错风险，软化医疗关系",
+        content: "定制App开发、支持IOS/安卓双系统</br>支持管理端/客户端 双端开发</br>支持对接各类蓝牙/WIFI医疗电子检测设备</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/04.png",
+        bimgUrl: "static/webDesign/appDevelop/appItemImg/04b.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/04.png",
+        functionList: [
+            {
+                key: "appItem04-1",
+                title: "缴费记录"
+            },
+            {
+                key: "appItem04-2",
+                title: "健康指数"
+            }, {
+                key: "appItem04-3",
+                title: "在线支付"
+            },
+            {
+                key: "appItem04-4",
+                title: "病历存储"
+            },
+            {
+                key: "appItem04-5",
+                title: "报告查询"
+            },
+            {
+                key: "appItem04-6",
+                title: "专家预约"
+            }, {
+                key: "appItem04-7",
+                title: "在线就诊"
+            },
+            {
+                key: "appItem04-8",
+                title: "在线咨询"
+            }
+        ]
+    }, {
+        key: "appItem05",
+        title: "旅游类App",
+        subtitle: "布局清晰，操作简单，手指一点，出行无忧",
+        content: "定制App开发、支持IOS 安卓双系统开发</br>支持商家端/客户端 双端开发</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/05.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/05.png",
+        functionList: [
+            {
+                key: "appItem05-1",
+                title: "酒店预定"
+            },
+            {
+                key: "appItem05-2",
+                title: "景点管理"
+            }, {
+                key: "appItem05-3",
+                title: "精确导航"
+            },
+            {
+                key: "appItem05-4",
+                title: "机票预定"
+            },
+            {
+                key: "appItem05-5",
+                title: "周边旅游"
+            },
+            {
+                key: "appItem05-6",
+                title: "线路规划"
+            }, {
+                key: "appItem05-7",
+                title: "旅游计划"
+            },
+            {
+                key: "appItem05-8",
+                title: "导游资讯"
+            }
+        ]
+    }, {
+        key: "appItem06",
+        title: "家政类APP",
+        subtitle: "线上线下无缝对接，客户家政轻松牵手",
+        content: "定制App开发、支持IOS 安卓双系统开发</br>支持商家端/客户端 双端开发</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/06.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/06.png",
+        functionList: [
+            {
+                key: "appItem06-1",
+                title: "家政预约"
+            },
+            {
+                key: "appItem06-2",
+                title: "家政工展示"
+            }, {
+                key: "appItem06-3",
+                title: "家政工管理"
+            },
+            {
+                key: "appItem06-4",
+                title: "在线支付"
+            },
+            {
+                key: "appItem06-5",
+                title: "客服系统"
+            },
+            {
+                key: "appItem06-6",
+                title: "客服评价"
+            }, {
+                key: "appItem06-7",
+                title: "精确定位"
+            }
+        ]
+    }, {
+        key: "appItem07",
+        title: "地产类App",
+        subtitle: "借力互联网，进军房地产！买房卖房租房，一站搞定",
+        content: "定制App开发、支持IOS 安卓双系统开发</br>支持公司端/中介端/客户端 三端开发</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/07.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/07.png",
+        functionList: [
+            {
+                key: "appItem07-1",
+                title: "经纪人管理"
+            },
+            {
+                key: "appItem07-2",
+                title: "行家盘搜索"
+            }, {
+                key: "appItem07-3",
+                title: "关联地产公司"
+            },
+            {
+                key: "appItem07-4",
+                title: "房源发布"
+            },
+            {
+                key: "appItem07-5",
+                title: "在线客服"
+            },
+            {
+                key: "appItem07-6",
+                title: "预约看房"
+            }, {
+                key: "appItem07-7",
+                title: "沙盘展示"
+            },
+            {
+                key: "appItem07-8",
+                title: "楼盘收藏"
+            }
+        ]
+    }, {
+        key: "appItem08",
+        title: "社交类APP",
+        subtitle: "支持各种IM场景，沟通联系无所顾忌",
+        content: "定制App开发、支持IOS 安卓双系统开发</br>支持商家端/客户端 双端开发</br>支持App+PC+web+微信四合一全网开发",
+        imgUrl: "static/webDesign/appDevelop/appItemImg/08.png",
+        bgimgUrl: "static/webDesign/appDevelop/appItemBgimg/08.png",
+        functionList: [
+            {
+                key: "appItem08-1",
+                title: "互动游戏"
+            },
+            {
+                key: "appItem08-2",
+                title: "好友管理"
+            }, {
+                key: "appItem08-3",
+                title: "定位搜索"
+            },
+            {
+                key: "appItem08-4",
+                title: "表情"
+            },
+            {
+                key: "appItem08-5",
+                title: "语音聊天"
+            },
+            {
+                key: "appItem08-6",
+                title: "视频直播"
+            }, {
+                key: "appItem08-7",
+                title: "任务发布"
+            },
+            {
+                key: "appItem08-8",
+                title: "活动圈子"
+            }
+        ]
+    }
+]

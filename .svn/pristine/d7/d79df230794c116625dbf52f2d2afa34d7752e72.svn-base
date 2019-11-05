@@ -1,0 +1,50 @@
+<template>
+  <div class="mainDivType">
+    <img class="imgType" :src="list.titleImgUrl">
+    <Row :gutter="80" type="flex" justify="space-around">
+      <i-col
+        span="7"
+        class="cardType"
+        :style="`background-image: url(${item.imgUrl})`"
+        v-for="item in list.list"
+        :key="item.key"
+      >
+      <p class="titleType">{{item.title}}</p>
+      <p class="contentType">{{item.content}}</p>
+        <!-- <img :src="item.imgUrl" /> -->
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  margin-top: 40px;
+  .imgType {
+    width: 340px;
+    height: auto;
+  }
+  .cardType {
+    height: 500px;
+    padding: 130px;
+    // border: 1px dashed #c6c6c6;
+    letter-spacing: 2px;
+    background-size: 100% 100%;
+    // width: 100%;
+    .titleType{
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+    .contentType{
+        font-size: 18px;
+        margin: 0 10px;
+    }
+  }
+}
+</style>

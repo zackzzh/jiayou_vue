@@ -1,0 +1,94 @@
+<template>
+  <div>
+    <div class="titleType">
+      <p>行业动态</p>
+      <p>Industry News</p>
+    </div>
+    <!-- <i-col span="9">
+        <home-tabs :tabsList="list.leftList" :class="animationData.leftIn"/>
+    </i-col>-->
+    <!-- <Row>
+      <i-col offset="1" span="14">
+        <home-tabs :tabsList="list.rightList" :class="animationData.rightIn"/>
+      </i-col>
+    </Row>-->
+    <!-- <home-tabs :tabsList="list.rightList" :class="animationData.rightIn"/> -->
+    <Tabs class="tabType" :class="animationData.rightIn" @on-click="handlerClick">
+      <Button type="text" slot="extra" @click="handlerMore">更多......</Button>
+      <TabPane
+        :label="item.name"
+        :name="`${item.id}`"
+        v-for="item in data.newsTypeList"
+        :key="item.id"
+      >
+        <home-tab-right
+          v-if="item.id === tabMenu"
+          :tabList="list.rightList[item.id].list"
+          :data="data.page.list"
+        />
+      </TabPane>
+    </Tabs>
+  </div>
+</template>
+
+<script>
+// import homeTabLeft from "./home-tab-left";
+import homeTabs from "./home-tabs";
+
+import homeTabRight from "./home-tab-right";
+
+export default {
+  props: ["data", "list", "animationData"],
+  components: {
+    // homeTabLeft
+    homeTabs,
+    homeTabRight
+  },
+  // mounted() {
+  //     console.log("this.homenews", this.data.page.list);
+  // },
+  // updated() {
+  //   this.tabMenu = this.data.newsTypeList[0].name;
+  //   console.log("this.tabMenu", this.tabMenu);
+  // },
+  computed: {
+    animationFun() {
+      // console.log("新闻信息", this.animationData);
+      return this.animationData;
+    }
+  },
+  data() {
+    return {
+      tabMenu: 1
+    };
+  },
+  methods: {
+    handlerMore() {
+      this.$go({
+        path: "/trends"
+      });
+    },
+    handlerClick(val) {
+      this.tabMenu = parseInt(val);
+      // console.log("点击新闻菜单", parseInt(val));
+      this.$emit("newsChange", this.tabMenu);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.tabType {
+  padding: 5px 0;
+  line-height: 20px;
+  text-align: left;
+  background: #ffffff;
+}
+.titleType {
+  font-size: 44px;
+  font-weight: bold;
+  line-height: 50px;
+  letter-spacing: 5px;
+  margin: 0 0 40px 0;
+}
+</style>

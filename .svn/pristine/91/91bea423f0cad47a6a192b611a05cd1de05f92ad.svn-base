@@ -1,0 +1,95 @@
+<template>
+  <div>
+    <img class="bgImgType" :src="casesData.bgImgUrl">
+    <!-- 图标 -->
+    <Row class="iconRowType" type="flex" justify="space-around">
+      <div v-for="item in iconList" :key="item.key" @click="clickIcon(item)">
+        <img :src="item.imgUrl">
+      </div>
+    </Row>
+    <!-- 卡片 -->
+    <cases-card
+      :list="casesList"
+      :pageData="pageNum"
+      @cardData="handlerCard"
+      @handlerClick="clickCard"
+    ></cases-card>
+    <div class="pageDivType">
+      <div>
+        <span>6条/页&nbsp;&nbsp;&nbsp;共{{pageNum.total}}页</span>
+      </div>
+      <Page
+        class-name="pageType"
+        :total="casesList.length"
+        :page-size="6"
+        show-elevator
+        @on-change="handlerChange"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import casesCard from "./cases-card";
+
+import casesData from "./casesData";
+
+export default {
+  components: {
+    casesCard
+  },
+  data() {
+    return {
+      casesData: casesData,
+      iconList: casesData.iconList,
+      casesList: casesData.casesList,
+      pageNum: {
+        total: 1, //总条数
+        current: 1 //当前页码
+      }
+    };
+  },
+  methods: {
+    handlerCard(val) {
+      // console.log("handlerCard", this.casesList.length);
+      this.pageNum.total = val;
+    },
+    handlerChange(val) {
+      // console.log("handlerChange", val);
+      this.pageNum.current = val;
+    },
+    clickIcon(val) {
+      // console.log("clickIcon", val);
+    },
+    clickCard(val) {
+      // console.log("clickCard", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.bgImgType {
+  width: 100%;
+  height: auto;
+}
+.iconRowType {
+  margin: 3% 15%;
+  height: 100px;
+  img:hover {
+    margin-top: -5px;
+  }
+}
+.pageDivType {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  .pageType {
+    font-size: 14px;
+  }
+  div {
+    margin: 5px 10px;
+    font-size: 14px;
+  }
+}
+</style>

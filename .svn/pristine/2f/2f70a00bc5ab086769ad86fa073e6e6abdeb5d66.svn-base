@@ -1,0 +1,262 @@
+<template>
+  <div class="menuDivType">
+    <Menu
+      @on-select="handlerMenu"
+      class="menuType"
+      mode="horizontal"
+      :active-name="routePathFun"
+      @on-open-change="handleChange"
+    >
+      <Row type="flex" justify="center">
+        <i-col :lg="4"></i-col>
+        <i-col :lg="5" :md="4" :sm="5">
+          <img class="logoImgType" src="@/assets/common/logo-blue02.png" @click="$go('/home')">
+        </i-col>
+        <i-col :lg="15" :md="18" :sm="19">
+          <div v-for="o in list" :key="o.key">
+            <MenuItem
+              class="itemType unActiveType"
+              :class="{activeType: routePathFun===o.pathName}"
+              v-if="!o.child"
+              :name="o.pathName"
+            >
+              <!-- <Icon :type="o.icon"/> -->
+              {{o.title}}
+            </MenuItem>
+            <Submenu
+              class="rowType itemType unActiveType"
+              :class="{activeType: routePathFun===o.pathName}"
+              v-if="o.child"
+              :name="o.pathName"
+            >
+              <template slot="title">
+                <!-- <Icon :type="o.icon"/> -->
+                {{o.title}}
+              </template>
+              <!-- 卡形式二级菜单 -->
+              <menu-card
+                v-if="o.isCard"
+                :itemList="o.children"
+                :data="data"
+                @handlerMenu="handlerMenu"
+              />
+              <!-- 图标形式二级菜单 -->
+              <menu-icon v-if="o.isIcon" :itemList="o.children"></menu-icon>
+            </Submenu>
+          </div>
+        </i-col>
+      </Row>
+    </Menu>
+  </div>
+</template>
+
+<script>
+import { mapState, mapMutations, mapGetters } from "vuex";
+import menuCard from "./menu-card";
+import menuIcon from "./menu-icon";
+
+export default {
+  inject: ["reload"],
+  name: "headerMenu",
+  props: ["list", "data"],
+  components: {
+    menuCard,
+    menuIcon
+  },
+
+  created() {
+    // console.log("$route",this.$route.path);
+    // this.handlerMenu(this.$route.path, true);
+    // console.log("强制刷新后执行吗", this.$route);
+    this.handlerMenu(this.$route.path, true);
+  },
+  computed: {
+    ...mapState("cases", ["imgShow"]),
+    routePathFun() {
+      // console.log("this.$route.path", this.$route.path);
+      const regex = /^\/\w+/;
+      // 菜单显示
+      const pathVal = this.$route.path.match(regex)[0];
+      return pathVal;
+    }
+  },
+  // data() {
+  //   return {
+  //     isGo: false
+  //   };
+  // },
+  methods: {
+    ...mapMutations("cases", ["setImgShow"]),
+    // 获取菜单的name，只能获取MenuItem的name值
+    handleChange(val) {
+      console.log("this.imgShow", this.imgShow);
+      if (this.imgShow) {
+        this.setImgShow(this.imgShow);
+      } else {
+        let path = window.sessionStorage.getItem("gotoPath");
+        console.log("path", path);
+        switch (path) {
+          case "company":
+            this.setImgShow("3-1");
+            break;
+          case "catering":
+            this.setImgShow("3-2");
+            break;
+          case "fashionMakeup":
+            this.setImgShow("3-3");
+            break;
+          case "education":
+            this.setImgShow("3-4");
+            break;
+          case "finance":
+            this.setImgShow("3-5");
+            break;
+          case "medical":
+            this.setImgShow("3-6");
+            break;
+          case "foreignTrade":
+            this.setImgShow("3-7");
+            break;
+          case "machinery":
+            this.setImgShow("3-8");
+            break;
+        }
+      }
+    },
+    handlerMenu(val, isGo) {
+      if (!isGo) {
+        const regex2 = /\/\w+/g;
+        const pathVal2 = val.match(regex2);
+        if (pathVal2.length === 1) {
+          this.$go({
+            path: val
+          });
+          this.reload();
+        } else if (pathVal2.length === 2) {
+          let gotoPath;
+          if (pathVal2[0] === "/solutions") {
+            gotoPath = val;
+            let arr = val.split("/");
+            window.sessionStorage.setItem("gotoPath", arr[2]);
+          } else if (pathVal2[0] === "/aboutUs") {
+            gotoPath = "/aboutUs";
+          }
+          this.$go({
+            path: gotoPath,
+            query: {
+              pathName: val
+            }
+          });
+        } else if (pathVal2.length === 3) {
+          const pathId = pathVal2[2].match(/\d+$/);
+          // console.log("pathVal2[2]", pathId);
+          // if (pathVal2[1] === "/deals") {
+          //   const gotoPath = pathVal2[0] + pathVal2[1];
+          //   if (pathId) {
+          //     this.$go({
+          //       path: gotoPath
+          //     });
+          //   }
+          // } else
+          if (pathVal2[1] === "/supportService" || pathVal2[1] === "/deals") {
+            const gotoPath = pathVal2[0] + pathVal2[1];
+            this.$go({
+              path: gotoPath,
+              query: {
+                pathName: val
+              }
+            });
+          } else if (
+            pathVal2[1] === "/webDesign" ||
+            pathVal2[1] === "/appDevelop" ||
+            pathVal2[1] === "/mobileDevelop"
+          ) {
+            // 网站建设，去子项，二级菜单
+            if (pathId) {
+              const gotoPath = pathVal2[0] + pathVal2[1];
+              this.$go({
+                path: gotoPath,
+                query: {
+                  serviceCategoryId: pathId[0]
+                }
+              });
+            } else {
+              const gotoPath = pathVal2[0] + pathVal2[1] + "/subpage";
+              this.$go({
+                path: gotoPath,
+                query: {
+                  pathName: pathVal2[2]
+                }
+              });
+            }
+          }
+        } else {
+          this.$go({
+            path: val
+          });
+        }
+      }
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.menuDivType {
+  position: relative;
+
+  .menuType {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+
+    .logoImgType {
+      margin-top: 5px;
+      height: 50px;
+      width: auto;
+      cursor: pointer;
+    }
+
+    .itemType {
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+    }
+
+    .itemType:hover {
+      /* border-bottom: 3px solid #fdc5ad !important; 253,197,173 */
+      margin-top: -2px;
+      border-bottom: 3px solid rgba(253, 197, 173, 0.7) !important;
+      color: #fcb69f !important;
+    }
+
+    .unActiveType {
+      color: #e7f8ff !important;
+    }
+
+    .activeType {
+      // padding-bottom: -10px !important;
+      margin-top: -2px;
+      border-bottom: 3px solid #fdc5ad !important;
+      color: #fcb69f !important;
+    }
+
+    .rowType > :last-of-type {
+      cursor: default !important;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  .menuType:after {
+    background: none;
+  }
+}
+
+@media screen and (min-width: 760px) and (max-width: 1000px) {
+  .itemType {
+    padding: 0 6px;
+  }
+}
+</style>

@@ -1,0 +1,122 @@
+<template>
+  <div class="tabRMainDivType">
+    <!-- <div v-for="(item,index) in data" :key="item.id"> -->
+    <div v-if="data.length">
+      <Card class="cardRowType">
+        <Row>
+          <div @click="handlerClick(data[0])">
+            <i-col span="8">
+              <img style="width: 90%" :src="data[0].picUrl">
+            </i-col>
+            <i-col span="16">
+              <div>
+                <div class="titleType" v-html="data[0].title"></div>
+                <div class="contentType" v-html="data[0].subtitle"></div>
+                <!-- <div class="contentType">{{listArr}}</div> -->
+                <div class="timeDivType">{{data[0].author}}&nbsp;&nbsp;{{data[0].createtime}}</div>
+              </div>
+            </i-col>
+          </div>
+        </Row>
+      </Card>
+      <Row>
+        <i-col span="12" v-for="(item,index) in listFun" :key="index">
+          <Table
+            style="margin: 5px"
+            class="tableType"
+            size="small"
+            :columns="columns"
+            :data="item"
+            :show-header="false"
+            @on-row-click="handlerClick"
+          ></Table>
+        </i-col>
+      </Row>
+      <!-- </div> -->
+    </div>
+    <div v-else>暂无数据</div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["tabList", "data"],
+  computed: {
+    listFun() {
+      const listArr = [];
+      // odd奇数
+      // even偶数
+      // console.log("this.data", this.data);
+      const evenArr = [];
+      const oddArr = [];
+      this.data.map((item, index) => {
+        if (index !== 0) {
+          if (index % 2) {
+            evenArr.push(item);
+          } else {
+            oddArr.push(item);
+          }
+        }
+      });
+      listArr.push(evenArr, oddArr);
+      // console.log("this.listArr", listArr);
+      return listArr;
+    }
+  },
+  data() {
+    return {
+      // listArr: [],
+      columns: [
+        {
+          title: "标题",
+          key: "title",
+          ellipsis: true,
+          tooltip: true
+        },
+        {
+          title: "日期",
+          key: "createtime",
+          width: 150,
+          ellipsis: true,
+          tooltip: true
+        }
+      ]
+    };
+  },
+  methods: {
+    handlerClick(val) {
+      // console.log("点击获取数据：", val);
+      this.$go({
+        path: "/trends",
+        query: {
+          id: val.id
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.tabRMainDivType {
+  margin: 0 5px;
+  .cardRowType:hover {
+    background-color: #ebf7ff;
+    cursor: pointer;
+  }
+  .titleType {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .contentType {
+    margin: 10px 0;
+  }
+  .timeDivType {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
+  }
+  .tableType:hover {
+    cursor: pointer;
+  }
+}
+</style>

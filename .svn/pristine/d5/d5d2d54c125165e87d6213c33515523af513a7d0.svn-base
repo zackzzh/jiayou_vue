@@ -1,0 +1,12 @@
+import axios from '../api.request'
+export const aboutApi = {
+  trecruitList: (params) => {
+    // console.log("发送的数据", params)
+    return axios.request({
+      // baseURL: '/test/jyweb/',
+      url: 'trecruit/list',
+      data: params,
+      method: 'post'
+    })
+  }
+}

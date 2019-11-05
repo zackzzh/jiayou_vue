@@ -1,0 +1,8 @@
+import * as types from './mutation-types'
+
+export const mutations = {
+  [types.TRECRUITLIST] (state, o) {
+    // console.log("TRECRUITLIST",o)
+    state.trecruitListData = o
+  }
+}

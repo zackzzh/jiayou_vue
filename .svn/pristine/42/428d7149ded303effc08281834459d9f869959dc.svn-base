@@ -1,0 +1,45 @@
+<template>
+  <div class="mainDivType">
+    <p class="titleType">{{data.title}}</p>
+    <p class="subtitleType">{{data.subtitle}}</p>
+    <div class="contentType">
+      <p>{{data.content}}</p>
+      <div>
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["data"]
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  text-align: left;
+  .titleType {
+    font-size: 58px;
+    color: #017fff;
+    letter-spacing: 10px;
+  }
+  .subtitleType {
+    margin: 24px 0 48px 0;
+    font-size: 34px;
+    font-weight: bold;
+    color: #555556;
+    letter-spacing: 5px;
+    white-space: nowrap;
+  }
+  .contentType {
+    line-height: 44px;
+    font-size: 26px;
+    color: #2a2a2a;
+    div {
+      margin: 50px 0 0 0;
+    }
+  }
+}
+</style>

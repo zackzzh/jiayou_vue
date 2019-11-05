@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <Tabs class="tabType" :value="tabsList[0].key">
+      <Button type="text" slot="extra" @click="handlerMore">更多......</Button>
+      <TabPane :label="item.title" :name="item.key" v-for="item in tabsList" :key="item.key">
+        <home-tab-left v-if="item.isLeft" :tabList="item.list"/>
+        <home-tab-right v-if="item.isRight" :tabList="item.list"/>
+      </TabPane>
+    </Tabs>
+  </div>
+</template>
+
+<script>
+import homeTabLeft from "./home-tab-left";
+import homeTabRight from "./home-tab-right";
+
+export default {
+  props: ["tabsList"],
+  components: {
+    homeTabLeft,
+    homeTabRight
+  },
+  data() {
+    return {
+      leftName: "n01"
+    };
+  },
+  methods: {
+    handlerMore() {
+      this.$go({
+        path: "/trends"
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.tabType {
+  background: #ffffff;
+  line-height: 20px;
+  text-align: left;
+}
+</style>

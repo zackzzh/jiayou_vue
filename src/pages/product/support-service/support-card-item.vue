@@ -1,0 +1,291 @@
+<template>
+  <div>
+    <!-- 企业邮箱 -->
+    <div class="mailDivType" v-if="data.isMail">
+      <!-- 卡片标题 -->
+      <p class="titleType">{{data.subtitle}}</p>
+      <div class="lineDivType"></div>
+      <!-- 价格 -->
+      <p class="priceType">
+        {{data.price}}
+        <span>元/年</span>
+      </p>
+      <!-- 数量 -->
+      <div class="inputDivType">
+        <Icon class="iconType" type="ios-remove-circle-outline" @click="handlerSub" />
+        <input type="number" min="1" v-model="inputValue">
+        <Icon class="iconType" type="ios-add-circle-outline" @click="handlerAdd" />
+      </div>
+      <p class="discountsType">{{data.discounts}}</p>
+      <!-- 容量 -->
+      <div class="capacityType">
+        <p>
+          {{data.mailboxCapacity}}
+          <span>邮箱容量</span>
+        </p>
+        <div class="verLineDivType"></div>
+        <p>
+          {{data.attachmentCapacity}}
+          <span>超大附件</span>
+        </p>
+      </div>
+      <Button class="btnType" type="primary" shape="circle">立刻购买</Button>
+    </div>
+    <!-- 虚拟主机 -->
+    <div class="noMailDivType" v-else>
+      <img :src="data.image" alt="">
+      <p class="titleType">{{data.subtitle}}</p>
+      <div class="content">
+        {{data.content}}
+      </div>
+      <!-- <p class="titleType">{{data.subtitle}}</p>
+      <div class="spaceType">
+        <p>
+          {{data.freeSpace}}
+          <span>可用空间</span>
+        </p>
+        <div class="verLineDivType"></div>
+        <p>
+          {{data.monthlyTraffic}}
+          <span>月流量</span>
+        </p>
+        <div class="verLineDivType"></div>
+        <p>
+          {{data.databaseSpace}}
+          <span>数据空间</span>
+        </p>
+      </div>
+      <p class="priceType">
+        {{data.price}}
+        <span>元/年</span>
+      </p>
+      <div class="contentDivType">
+        <p class="systemType">操作系统：{{data.system}}</p>
+        <p class="databaseType">数据库：{{data.database}}</p>
+        <p class="languageType">支持语言：{{data.language}}</p>
+        <p class="computerRoomType">机房地区：{{data.computerRoom}}</p>
+      </div>
+      <Button class="btnType" type="primary" shape="circle">购买配置</Button> -->
+      <div>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["data"],
+    data() {
+      return {
+        inputValue: 1
+      };
+    },
+    methods: {
+      handlerSub() {
+        console.log("点击减按钮");
+      },
+      handlerAdd() {
+        console.log("点击加按钮");
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  .mailDivType {
+    .titleType {
+      font-size: 20px;
+      font-weight: bold;
+      color: #222222;
+      letter-spacing: 3px;
+    }
+
+    .lineDivType {
+      margin: 14px 35% 5px;
+      border-bottom: 4px solid #fef2f3;
+    }
+
+    .priceType {
+      font-size: 39px;
+      font-weight: bold;
+      color: #fe0000;
+      letter-spacing: 3px;
+
+      span {
+        font-size: 12px;
+      }
+    }
+
+    .inputDivType {
+      margin-top: 10px;
+      font-size: 24px;
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+      }
+
+      input {
+        margin: 0 20px;
+        width: 15%;
+        text-align: center;
+        background: none;
+        outline: none;
+        border: 0px;
+        border-bottom: 1px solid #000000;
+      }
+
+      .iconType {
+        cursor: pointer;
+      }
+    }
+
+    .discountsType {
+      margin: 15px 0 20px;
+      // font-size: 8px;
+      color: #007eff;
+    }
+
+    .capacityType {
+      font-size: 30px;
+      letter-spacing: 2px;
+
+      p {
+        display: inline-block;
+      }
+
+      span {
+        font-size: 8px;
+        display: block;
+      }
+
+      .verLineDivType {
+        display: inline-block;
+        width: 1px;
+        height: 50px;
+        border: 1px solid #808080;
+      }
+    }
+
+    .btnType {
+      margin-top: 24px;
+      font-size: 16px;
+      padding: 10px 30px;
+    }
+  }
+
+  .noMailDivType {
+    padding:0px 20px;
+    margin-bottom: 20px;
+    // width: 30%;
+    .titleType {
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #000000;
+      letter-spacing: 3px;
+    }
+
+    .spaceType {
+      color: #a1a1a1;
+      font-size: 16px;
+      letter-spacing: 2px;
+
+      p {
+        display: inline-block;
+      }
+
+      span {
+        display: block;
+        font-size: 8px;
+      }
+
+      .verLineDivType {
+        display: inline-block;
+        //   width: 1px;
+        height: 32px;
+        border: 1px solid #808080;
+        margin: 0 5px;
+      }
+    }
+
+    .priceType {
+      font-size: 75px;
+      font-weight: bold;
+      color: #fe0000;
+      letter-spacing: 3px;
+
+      span {
+        font-size: 12px;
+      }
+    }
+
+    .contentDivType {
+      // width: 10%;
+      margin: 0 30px;
+      text-align: left;
+      color: #828488;
+      font-size: 8px;
+      letter-spacing: 2px;
+      line-height: 25px;
+      white-space: nowrap;
+
+      p {
+        // width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .btnType {
+      margin-top: 24px;
+      font-size: 16px;
+      padding: 10px 30px;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    .content{
+      line-height: 30px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .capacityType {
+      font-size: 25px !important;
+    }
+
+    .spaceType {
+      font-size: 12px !important;
+      letter-spacing: 0px !important;
+    }
+
+    .priceType {
+      font-size: 46px !important;
+    }
+
+    .contentDivType {
+      margin: 0 10px !important;
+
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width:1024px) {
+    .spaceType {
+      font-size: 14px !important;
+    }
+
+    .priceType {
+      font-size: 66px !important;
+    }
+  }
+
+</style>

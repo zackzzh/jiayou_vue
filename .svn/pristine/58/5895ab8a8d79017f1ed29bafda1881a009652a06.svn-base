@@ -1,0 +1,170 @@
+<template>
+  <div class="mainDivType" style="width: 100%">
+    <Row type="flex" align="middle">
+      <i-col span="14">
+        <img class="imgType" :src="list.imgUrl">
+      </i-col>
+      <i-col span="10">
+        <div class="cardType" :class="{cardLineOneType: index===0,cardLineTwoType: index === 1}" v-for="(item,index) in list.list"
+          :key="item.key">
+          <p class="titleType">{{item.title}}</p>
+          <p class="contentType">{{item.content}}</p>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list"]
+  };
+
+</script>
+
+<style scoped lang="less">
+  .mainDivType {
+
+    //   margin-top: 30px;
+    .imgType {
+      width: 130%;
+      //   float: left;
+      margin-left: -25%;
+    }
+
+    .cardType {
+      height: 300px;
+      margin: 50px 0;
+      border-radius: 30px;
+      box-shadow: 0px 0px 22px 2px rgba(82, 184, 161, 0.77);
+
+      .titleType {
+        padding: 30px 0;
+        font-size: 35px;
+        color: #000000;
+      }
+
+      .contentType {
+        margin: 0 45px;
+        font-size: 20px;
+        color: #000000;
+      }
+    }
+
+    .cardLineOneType {
+      background: -webkit-linear-gradient(left bottom,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(top right,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(top right,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Firefox 3.6 - 15 */
+      background: linear-gradient(to top right,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* 标准的语法（必须放在最后） */
+    }
+
+    .cardLineTwoType {
+      background: -webkit-linear-gradient(right top,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(bottom left,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(bottom left,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* Firefox 3.6 - 15 */
+      background: linear-gradient(to bottom left,
+        rgba(170, 251, 200, 0.5),
+        rgba(109, 207, 255, 0.5));
+      /* 标准的语法（必须放在最后） */
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .titleType {
+      padding: 5px 0 !important;
+      font-size: 15px !important;
+    }
+
+    .cardType {
+      height: 150px !important;
+      margin: 10px 0 !important;
+    }
+
+    .contentType {
+      margin: -10px 33px !important;
+      font-size: 12px !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width:1024px) {
+    .titleType {
+      padding: 10px 0 !important;
+      font-size: 25px !important;
+    }
+
+    .cardType {
+      height: 200px !important;
+      margin: 20px 0 !important;
+    }
+
+    .contentType {
+      margin: -10px 45px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width:1280px) {
+    .titleType {
+      padding: 20px 0 !important;
+      font-size: 30px !important;
+    }
+
+    .cardType {
+      height: 260px !important;
+      margin: 20px 0 !important;
+    }
+
+    .contentType {
+      font-size: 18px !important;
+    }
+  }
+
+  @media screen and (min-width: 1281px) and (max-width:1366px) {
+
+    .cardType {
+      height: 300px !important;
+      margin: 20px 0 !important;
+    }
+
+    .contentType {
+      margin: -20px 45px !important;
+    }
+  }
+
+  @media screen and (min-width: 1367px) and (max-width:1440px) {
+
+    .cardType {
+      height: 280px !important;
+      margin: 30px 0 !important;
+    }
+
+    .contentType {
+      margin: -20px 45px !important;
+    }
+  }
+
+</style>

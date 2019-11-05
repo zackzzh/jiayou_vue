@@ -1,0 +1,805 @@
+<template>
+  <div class="appMainDivType" id="appMainDivType">
+    <div class="swiper-pagination rightMenu animated slideInDown"></div>
+    <div class="swiper-container" :style="`height: ${heightFun}px`">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item,index) in dataFun" :key="item.key">
+          <app-item-bgimg :data="item.bgimgUrl">
+            <Row class="appRowType" type="flex">
+              <!-- 图片样式 -->
+              <i-col span="12" :order="index%2===0?2:1">
+                <div class="appImgDivType" :class="animationData.imgIn">
+                  <div :class="`imgType${index}`" v-if="index === 3">
+                    <img class="bgimgType" :class="animationData.bimgUrl" :src="item.bimgUrl">
+                    <img class="preimgType" :class="animationData.preimgIn" :src="item.imgUrl">
+                  </div>
+                  <img v-else :class="`imgType${index}`" :src="item.imgUrl">
+                </div>
+              </i-col>
+              <!-- 文字内容按钮样式 -->
+              <i-col span="12" :order="index%2===0?1:2">
+                <div class="appCardDivType" :class="animationData.divIn">
+                  <p class="titleType">{{item.title}}</p>
+                  <p class="subtitleType">{{item.subtitle}}</p>
+                  <div class="contentDivType" v-for="o in item.content" :key="o.key">
+                    <p>{{o}}</p>
+                  </div>
+                  <p class="funType">功能</p>
+                  <div class="btnDivType" v-for="o in item.functionList" :key="o.key">
+                    <Button class="btnType" type="primary" shape="circle">{{o.title}}</Button>
+                  </div>
+                  <div class="btuGroupType">
+                    <Button class="gBtnType" ghost to="/cases">更多案例</Button>
+                    <Button class="btnType" @click="modal = true">我要做网站</Button>
+                  </div>
+                </div>
+              </i-col>
+            </Row>
+          </app-item-bgimg>
+        </div>
+        <div class="swiper-slide">
+          <jy-footer class="jyFooterType" :changeStyle="true"/>
+        </div>
+      </div>
+    </div>
+    <Modal v-model="modal" :footer-hide="true">
+      <jy-modal @out="outChage"></jy-modal>
+    </Modal>
+  </div>
+</template>
+
+<script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+import jyModal from "@/components/jy-modal";
+import jyFooter from "@/components/jy-footer/index";
+
+import appItemBgimg from "./app-item-bgimg";
+
+import appItemData from "./appItemData";
+
+export default {
+  components: {
+    jyFooter,
+    appItemBgimg,
+    jyModal
+  },
+  created() {},
+  mounted() {
+    document.body.style.cssText = "overflow: hidden";
+    document.documentElement.scrollTop = 0;
+    // console.log("query", this.$route.query.pathName);
+    this.setSlideToNum(this.$route.query.pathName);
+  },
+  watch: {
+    routePathFun: function(newVal, oldVal) {
+      this.setSlideToNum(newVal);
+    }
+  },
+  computed: {
+    dataFun() {
+      return this.appItemData.map(item => {
+        if (!Array.isArray(item.content)) {
+          const regexp = /\<\/br\>/;
+          item.content = item.content.split(regexp);
+        }
+        return item;
+      });
+    },
+    routePathFun() {
+      return this.$route.query.pathName;
+    },
+    heightFun() {
+      // const elData = document.querySelector(".homeMainDivType");
+      // const elWidth = elData.getBoundingClientRect().width;
+      const elWidth = document.body.clientWidth;
+      return (
+        elWidth *
+        (document.documentElement.clientHeight / document.body.clientWidth)
+      );
+    }
+  },
+  data() {
+    return {
+      appItemData,
+      heightNum: 1080,
+      animationData: {},
+      modal: false,
+      slideArr: [
+        "/eBusiness",
+        "/catering",
+        "/financial",
+        "/medical",
+        "/travel",
+        "/housekeeping",
+        "/estate",
+        "/social"
+      ]
+    };
+  },
+  methods: {
+    outChage(e) {
+      this.modal = e;
+    },
+    setSlideToNum(val) {
+      // 通过传过来的路由实现跳转
+      // let slideToNum = 0;
+      // this.slideArr.findIndex(val)
+      const slideNum = this.slideArr.indexOf(val);
+      // console.log("slideToNum", slideNum);
+      this.setSwiper().slideTo(slideNum, 1000, false);
+    },
+    setSwiper() {
+      const that = this;
+      return new Swiper(".swiper-container", {
+        //autoplay: true //可选选项，自动滑动
+        direction: "vertical",
+        pagination: ".swiper-pagination",
+        paginationClickable: true,
+        bulletClass: "bulleType",
+        bulletActiveClass: "bulleActiveType",
+        mousewheelControl: true,
+        watchSlidesProgress: true,
+        paginationBulletRender: function(swiper, index, className) {
+          let text = null;
+          let borderType = "";
+          switch (index) {
+            case 0:
+              text = "移动电商App";
+              break;
+            case 1:
+              text = "餐饮类App";
+              break;
+            case 2:
+              text = "金融类App";
+              break;
+            case 3:
+              text = "医疗类App";
+              break;
+            case 4:
+              text = "旅游类App";
+              break;
+            case 5:
+              text = "家政类App";
+              break;
+            case 6:
+              text = "地产类App";
+              break;
+            case 7:
+              text = "社交类App";
+              break;
+          }
+          if (index === 8) {
+            return "";
+          } else {
+            return (
+              '<div class="' +
+              className +
+              '" style=""><span style="">' +
+              text +
+              '</span><span style="">' +
+              "</span> </div>"
+            );
+          }
+        },
+        onProgress: function(swiper, progress) {
+          // const elData = document.querySelector(".appMainDivType");
+          // const elWidth = elData.getBoundingClientRect().width;
+          // that.heightNum = elWidth * (27 / 48);
+          // that.heightNum = elWidth * (54 / 91);27 / 48
+          console.log("elData", progress);
+          if (progress === 0) {
+            that.animationData = {
+              imgIn: "animated zoomIn ",
+              divIn: "animated slideInLeft"
+            };
+          } else if (progress === 0.125) {
+            that.animationData = {
+              imgIn: "animated slideInLeft",
+              divIn: "animated zoomIn"
+            };
+          } else if (progress === 0.25) {
+            that.animationData = {
+              imgIn: "animated zoomIn",
+              divIn: "animated slideInLeft"
+            };
+          } else if (progress === 0.375) {
+            that.animationData = {
+              // imgIn: "animated bounceInRight",
+              bimgUrl: "animated slideInLeft",
+              preimgIn: "animated bounceInDown",
+              divIn: "animated zoomIn"
+            };
+          } else if (progress === 0.5) {
+            that.animationData = {
+              imgIn: "animated zoomIn",
+              divIn: "animated slideInLeft"
+            };
+          } else if (progress === 0.625) {
+            that.animationData = {
+              imgIn: "animated slideInLeft",
+              divIn: "animated zoomIn"
+            };
+          } else if (progress === 0.75) {
+            that.animationData = {
+              imgIn: "animated zoomIn",
+              divIn: "animated slideInLeft"
+            };
+          } else if (progress === 0.875) {
+            const slideTwo = swiper.slides.eq(that.dataFun.length - 1);
+            slideTwo.transform("translateY(" + "0px" + ")");
+            that.animationData = {
+              imgIn: "animated slideInLeft",
+              divIn: "animated zoomIn"
+            };
+          } else if (progress === 1) {
+            const slideOne = swiper.slides.eq(that.dataFun.length);
+            const slideTwo = swiper.slides.eq(that.dataFun.length - 1);
+
+            const footerEl = document.querySelector(".jyFooterType");
+            const footerElHeight = footerEl.getBoundingClientRect().height;
+
+            const transNum = that.heightFun - footerElHeight;
+            if (transNum > 0) {
+              slideOne.transform("translateY(" + transNum + "px)");
+              const teans2Num = transNum + 10;
+              slideTwo.transform("translateY(" + teans2Num + "px )");
+            }
+
+            // slideOne.transform("translateY(" + "400px" + ")");
+            // slideTwo.transform("translateY(" + "410px" + ")");
+            // console.log("progress", progress, slide);
+            that.animationData = {
+              imgIn: "animated bounceOutLeft",
+              divIn: "animated bounceOutRight",
+
+              logoIn: "animated flipInX",
+              addIn: "animated bounceInRight",
+              cardIn: "animated bounceInLeft"
+            };
+          } else {
+            that.animationData = {};
+          }
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.rightMenu {
+  position: fixed;
+  top: 15%;
+  right: 100px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  /deep/.bulleType {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    color: #724009;
+    -webkit-transition: font-size 300ms;
+    -moz-transform: font-size 300ms;
+    -ms-transform: font-size 300ms;
+    -o-transform: font-size 300ms;
+    transition: font-size 300ms;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    &:after {
+      position: absolute;
+      z-index: 1;
+      content: "";
+      top: 10px;
+      right: 16px;
+      width: 0px;
+      height: 110%;
+      border: 1px dashed #724009;
+    }
+
+    .focus::before {
+      outline: none;
+    }
+
+    span:nth-child(1) {
+      margin-right: 10px;
+      width: 130px;
+      text-align: right;
+      display: inline-block;
+    }
+
+    span:nth-child(2) {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #724009;
+    }
+  }
+
+  /deep/.bulleType:hover {
+    font-size: 16px;
+    color: blue;
+
+    span:nth-child(2) {
+      background: blue !important;
+    }
+  }
+
+  /deep/.bulleType:focus {
+    outline: none;
+  }
+
+  /deep/.bulleActiveType {
+    font-size: 16px;
+    color: blue;
+
+    span:nth-child(2) {
+      background: blue !important;
+    }
+  }
+}
+
+.appMainDivType {
+  letter-spacing: 2px;
+
+  .appRowType {
+    margin: 100px 12%;
+
+    .appCardDivType {
+      .titleType {
+        font-size: 56px;
+        color: #017fff;
+      }
+
+      .subtitleType {
+        margin: 20px 0 28px 0;
+        font-size: 26px;
+        font-weight: bold;
+        color: #555556;
+        white-space: nowrap;
+      }
+
+      .contentDivType {
+        font-size: 26px;
+        color: #2a2a2a;
+        line-height: 44px;
+      }
+
+      .funType {
+        margin: 28px 0;
+        font-size: 40px;
+        color: #017fff;
+      }
+
+      .btnDivType {
+        display: inline;
+
+        .btnType {
+          margin: 0 20px 20px 0;
+        }
+      }
+
+      .btuGroupType {
+        margin-top: 20px;
+
+        .gBtnType {
+          margin-right: 40px;
+          padding: 5px 50px;
+          font-size: 24px;
+          color: #000000;
+          border: 1px solid #000000;
+        }
+
+        .gBtnType:hover {
+          // color: rgba(0, 0, 0, 0.7);
+          // border: 1px solid rgba(0, 0, 0, 0.7);
+          // background: rgba(255, 255, 255, 0.3);
+          color: rgba(255, 255, 255, 1);
+          background: rgba(0, 0, 0, 1);
+        }
+
+        .btnType {
+          padding: 5px 50px;
+          font-size: 24px;
+          color: #ffffff;
+          border: 1px solid #000000;
+          background: #000000;
+        }
+
+        .btnType:hover {
+          // border: 1px solid rgba(0, 0, 0, 0.7);
+          // background: rgba(0, 0, 0, 0.7);
+          color: rgba(0, 0, 0, 1);
+          background: rgba(0, 0, 0, 0);
+        }
+      }
+    }
+
+    .appImgDivType {
+      // position: relative;
+      .imgType0 {
+        width: 90%;
+        margin-top: 10%;
+        margin-left: 10%;
+      }
+
+      .imgType1 {
+        width: 100%;
+        margin-top: 10%;
+        margin-left: -15%;
+      }
+
+      .imgType2 {
+        width: 140%;
+        margin-top: 30%;
+        margin-left: -10%;
+      }
+
+      .imgType3 {
+        position: relative;
+
+        .bgimgType {
+          width: 110%;
+          margin-top: 90px;
+          margin-left: -25%;
+          // margin-left: -10%;
+        }
+
+        .preimgType {
+          width: 40%;
+          position: absolute;
+          top: -30px;
+          left: 11%;
+        }
+      }
+
+      .imgType4 {
+        width: 80%;
+        margin-top: -20px;
+        margin-left: 5%;
+      }
+
+      .imgType5 {
+        width: 60%;
+        margin-top: -20px;
+        // margin-left: -20%;
+      }
+
+      .imgType6 {
+        // 地产
+        width: 90%;
+        margin-top: 8%;
+        margin-left: 11%;
+      }
+
+      .imgType7 {
+        width: 110%;
+        margin-left: -20%;
+        margin-top: 10%;
+      }
+    }
+  }
+}
+@media screen and(min-width: 1440px) and(max-width: 1560px) {
+  .imgType2 {
+    margin-top: 12% !important;
+  }
+  .preimgType {
+    width: 36% !important;
+    left: 7% !important;
+  }
+  .bgimgType {
+    width: 100% !important;
+  }
+  .imgType7 {
+    width: 100% !important;
+  }
+}
+@media screen and(min-width: 1440px) and(max-width: 1560px) {
+  .appMainDivType {
+    .appRowType {
+      margin: 121px 12%;
+
+      .appCardDivType {
+        .titleType {
+          font-size: 45px;
+        }
+        .subtitleType {
+          margin: 10px 0;
+          font-size: 24px;
+        }
+        .contentDivType {
+          font-size: 22px;
+          line-height: 30px;
+        }
+
+        .funType {
+          margin: 10px 0;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+@media screen and(min-width: 1200px) and(max-width: 1370px) {
+  .appMainDivType {
+    .appRowType {
+      margin: 60px 12%;
+
+      .appCardDivType {
+        .titleType {
+          font-size: 45px;
+        }
+        .subtitleType {
+          margin: 10px 0;
+          font-size: 24px;
+        }
+        .contentDivType {
+          font-size: 22px;
+          line-height: 30px;
+        }
+
+        .funType {
+          margin: 10px 0;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(min-width: 1000px) and(max-width: 1200px) {
+  .appMainDivType {
+    .appRowType {
+      margin: 60px 12%;
+
+      .appCardDivType {
+        .titleType {
+          font-size: 40px;
+        }
+
+        .subtitleType {
+          margin: 0;
+          letter-spacing: 1px;
+          font-size: 18px;
+        }
+
+        .contentDivType {
+          font-size: 18px;
+          line-height: 34px;
+        }
+
+        .funType {
+          margin: 10px 0;
+          font-size: 30px;
+        }
+
+        .btnDivType {
+          .btnType {
+            // font-size: 6px;
+            margin: 0 15px 10px 0;
+          }
+        }
+
+        .btuGroupType {
+          margin-top: 10px;
+
+          .gBtnType {
+            margin-right: 20px;
+            padding: 5px 20px;
+            font-size: 24px;
+          }
+
+          .btnType {
+            padding: 5px 50px;
+            font-size: 24px;
+          }
+        }
+      }
+
+      .appImgDivType {
+        .imgType3 {
+          .bgimgType {
+            width: 110%;
+            margin-top: 50px;
+            margin-left: -25%;
+            // margin-left: -10%;
+          }
+
+          .preimgType {
+            width: 40%;
+            position: absolute;
+            top: -10px;
+            left: 11%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and(min-width: 760px) and(max-width: 1000px) {
+  .appMainDivType {
+    .appRowType {
+      margin: 60px 12%;
+
+      .appCardDivType {
+        .titleType {
+          font-size: 28px;
+        }
+
+        .subtitleType {
+          margin: 0;
+          letter-spacing: 0px;
+          font-size: 14px;
+        }
+
+        .contentDivType {
+          font-size: 12px;
+          line-height: 20px;
+        }
+
+        .funType {
+          margin: 0;
+          font-size: 24px;
+        }
+
+        .btnDivType {
+          .btnType {
+            font-size: 12px;
+            margin: 0 10px 10px 0;
+          }
+        }
+
+        .btuGroupType {
+          margin-top: 0;
+
+          .gBtnType {
+            margin-right: 10px;
+            padding: 4px 20px;
+            font-size: 18px;
+          }
+
+          .btnType {
+            padding: 4px 20px;
+            font-size: 18px;
+          }
+        }
+      }
+
+      .appImgDivType {
+        .imgType3 {
+          .bgimgType {
+            width: 110%;
+            margin-top: 50px;
+            margin-left: -25%;
+            // margin-left: -10%;
+          }
+
+          .preimgType {
+            width: 40%;
+            position: absolute;
+            top: -10px;
+            left: 11%;
+          }
+        }
+      }
+    }
+  }
+}
+
+/deep/ .ivu-modal {
+  width: 62.5% !important;
+
+  .ivu-input-group-large {
+    margin-bottom: 20px;
+  }
+
+  .ivu-input-group-prepend {
+    background: #fff !important;
+    border-right: none;
+  }
+
+  .ivu-input {
+    border-left: none;
+  }
+
+  .ivu-icon {
+    font-size: 22px;
+    margin-right: 10px;
+  }
+
+  textarea.ivu-input {
+    height: 150px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rightMenu {
+    top: 60px !important;
+    right: 18px !important;
+
+    /deep/ .bulleType {
+      padding: 5px 10px !important;
+    }
+  }
+
+  .form-left {
+    width: 60% !important;
+  }
+
+  .form-right {
+    width: 40% !important;
+  }
+
+  /deep/ .ivu-modal {
+    width: 96.5% !important;
+
+    .ivu-icon {
+      font-size: 16px;
+    }
+
+    .ivu-input-group-large > .ivu-input-group-prepend {
+      font-size: 12px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 1025px) and(max-width: 1280px) {
+  .rightMenu {
+    right: 30px !important;
+  }
+}
+
+@media screen and (min-width: 1281px) and(max-width: 1366px) {
+  .rightMenu {
+    right: 30px !important;
+  }
+}
+
+@media screen and (min-width: 1367px) and(max-width: 1440px) {
+  .rightMenu {
+    right: 50px !important;
+  }
+}
+
+@media screen and (min-width: 1441px) and(max-width: 1600px) {
+  .rightMenu {
+    right: 50px !important;
+  }
+}
+
+@media screen and (min-width: 769px) and(max-width: 1024px) {
+  .rightMenu {
+    top: 60px !important;
+    right: 18px !important;
+
+    /deep/ .bulleType {
+    }
+  }
+
+  /deep/ .ivu-modal {
+    width: 80% !important;
+
+    .ivu-input-group-large > .ivu-input-group-prepend {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+  }
+}
+</style>

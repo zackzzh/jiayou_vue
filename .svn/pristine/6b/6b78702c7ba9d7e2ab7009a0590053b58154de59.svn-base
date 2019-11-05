@@ -1,0 +1,166 @@
+<template>
+  <!-- 左侧列表 -->
+  <div class="trendsMainDivType">
+    <Row>
+      <i-col span="4">
+        <Menu class="menuType" width="auto" active-name @on-select="handlerMenu">
+          <MenuItem name>全部</MenuItem>
+          <MenuItem :name="item.id" v-for="item in data.newsTypeList" :key="item.id">{{item.name}}</MenuItem>
+          <!-- <MenuItem name="3-3">时段分析</MenuItem> -->
+        </Menu>
+      </i-col>
+      <i-col span="20">
+        <div v-if="list.list.length">
+          <Row class="rowType" v-for="item in list.list" :key="item.key">
+            <div @click="handlerClick(item)">
+              <i-col span="6">
+                <img style="width: 90%" :src="item.picUrl">
+              </i-col>
+              <i-col span="18">
+                <div>
+                  <Tooltip :content="item.title" placement="top" max-width="80%">
+                    <div class="titleType" v-html="item.title"></div>
+                  </Tooltip>
+                  <Tooltip :content="item.subtitle" placement="top" max-width="80%">
+                    <div class="subtitleType" v-html="item.subtitle"></div>
+                  </Tooltip>
+                  <div class="timeDivType">
+                    <span>{{item.author}}&nbsp;&nbsp;</span>
+                    <span>{{item.createtime}}</span>
+                  </div>
+                </div>
+              </i-col>
+            </div>
+          </Row>
+        </div>
+        <div v-else style="margin-top: 20px;text-align:center">
+          暂无数据
+        </div>
+        <div class="pageDivType">
+          <div>
+            <span>5条/页&nbsp;&nbsp;&nbsp;共{{list.totalPage}}页</span>
+          </div>
+          <Page class-name="pageType" :total="list.totalCount" :page-size="5" :current="handlerData.page" show-elevator
+            @on-change="handlerChange" />
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["data"],
+    computed: {
+      list() {
+        return this.data.page || {};
+      }
+    },
+    data() {
+      return {
+        handlerData: {
+          typeid: null,
+          page: 1 // 当前页码
+        }
+      };
+    },
+    methods: {
+      handlerChange(val) {
+        // 分页改变时调用
+        // console.log("handlerChange", val);
+        this.handlerData.page = val;
+        this.getDataById();
+      },
+      handlerMenu(val) {
+        // 菜单切换是调用
+        // const typeid = {
+        //   typeid: val
+        // }
+        // console.log("handlerMenu", typeof val);
+        if (val === "") {
+          this.handlerData = {};
+        } else {
+          this.handlerData = {
+            page: 1,
+            typeid: val
+          };
+        }
+        this.getDataById();
+      },
+      getDataById() {
+        // 根据id获取数据
+        this.$emit("handlerMenu", this.handlerData);
+      },
+      handlerClick(val) {
+        // 获取详情
+        // console.log("handlerClick");
+        this.$emit("handlerClick", val);
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  /deep/ .ivu-tooltip {
+    width: 100%;
+  }
+
+  .trendsMainDivType {
+    // height: 850px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.21);
+
+    .menuType {
+      z-index: 0;
+    }
+
+    .rowType {
+      padding: 20px;
+      border: 1px solid #f2f2f2;
+
+      .titleType {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 26px;
+        font-weight: bold;
+      }
+
+      .subtitleType {
+        margin: 5px 0;
+        font-size: 14px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .timeDivType {
+        color: rgba(0, 0, 0, 0.6);
+        font-style: italic;
+      }
+    }
+
+    .rowType:hover {
+      background-color: #ebf7ff;
+      cursor: pointer;
+    }
+
+    .pageDivType {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+
+      .pageType {
+        font-size: 14px;
+      }
+
+      div {
+        margin: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+
+</style>

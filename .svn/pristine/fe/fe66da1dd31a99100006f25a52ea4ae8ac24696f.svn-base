@@ -1,0 +1,168 @@
+<template>
+  <div class="designDivType">
+    <div class="swiper-container" :style="`height: ${heightNum}px`">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item,index) in webItemData.list" :key="item.key">
+          <web-item-bgimg :id="item.followId" :data="item.imgUrl">
+            <Row class="webItemRowType" type="flex">
+              <i-col span="12" :order="index%2===0?3:1">
+                <img :class="`imgDivType${index}`" :src="item.itemImgUrl">
+              </i-col>
+              <i-col span="3" :order="index%2===0?1:3"></i-col>
+              <i-col span="9" order="2">
+                <web-item-card :data="item">
+                  <div>
+                    <p>{{webItemData.commonContent}}</p>
+                    <div class="btuGroupType">
+                      <Button class="gBtnType" ghost>更多案例</Button>
+                      <Button class="btnType">我要做网站</Button>
+                    </div>
+                  </div>
+                </web-item-card>
+              </i-col>
+            </Row>
+          </web-item-bgimg>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+
+import homeImg from "@/pages/home/home-img";
+
+import webItemBgimg from "./web-item-bgimg";
+import webItemCard from "./web-item-card";
+
+import webItemData from "./webItemData";
+
+export default {
+  components: {
+    homeImg,
+    webItemBgimg,
+    webItemCard
+  },
+  data() {
+    return {
+      webItemData,
+      heightNum: 1080
+    };
+  },
+  mounted() {
+    // console.log(this.$route.query);
+    // const pathVal = "#" + this.$route.query.pathName.slice(1);
+    // this.goAnchor(pathVal);
+    this.setSwiper();
+    // this.setSwiper();
+  },
+  methods: {
+    setSwiper() {
+      const that = this;
+      const designSwiper = new Swiper(".swiper-container", {
+        //autoplay: true //可选选项，自动滑动
+        direction: "vertical",
+        simulateTouch: false,
+        mousewheel: true,
+        on: {
+          progress: function(progress) {
+            const elData = document.querySelector(".designDivType");
+            const elWidth = elData.getBoundingClientRect().width;
+            that.heightNum = elWidth * (27 / 48);
+            // console.log("elData", that.heightNum);
+          }
+        }
+      });
+
+      let slideToNum = 0;
+      switch (this.$route.query.pathName) {
+        case "/enterprise":
+          slideToNum = 0;
+          break;
+        case "/responsive":
+          slideToNum = 1;
+          break;
+        case "/eBusiness":
+          slideToNum = 2;
+          break;
+        case "/marketing":
+          slideToNum = 3;
+          break;
+        case "/trade":
+          slideToNum = 4;
+          break;
+      }
+      designSwiper.slideTo(slideToNum, 1000, false);
+    }
+    // goAnchor(val) {
+    //   const anchor = this.$el.querySelector(val);
+    //   // console.log("valval", anchor);
+    //   // document.documentElement.scrollTop = anchor.offsetTop;
+    //   document.documentElement.scrollTop = 0;
+    //   const timer = setInterval(function() {
+    //     // document.body.scrollTop = document.body.scrollTop - 50;
+    //     document.documentElement.scrollTop += 50;
+    //     if (document.documentElement.scrollTop >= anchor.offsetTop) {
+    //       clearInterval(timer);
+    //     }
+    //   }, 1);
+    // }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.webItemRowType {
+  margin-top: 7%;
+  .btuGroupType {
+    .gBtnType {
+      margin-right: 40px;
+      padding: 5px 50px;
+      font-size: 24px;
+      color: #000000;
+      border: 1px solid #000000;
+    }
+    .gBtnType:hover {
+      color: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.7);
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .btnType {
+      padding: 5px 50px;
+      font-size: 24px;
+      color: #ffffff;
+      border: 1px solid #000000;
+      background: #000000;
+    }
+    .btnType:hover {
+      border: 1px solid rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+  .imgDivType0 {
+    width: 68%;
+    margin-top: 8%;
+    margin-left: 10%;
+  }
+  .imgDivType1 {
+    // margin: 25% 0 0 -180px;
+    width: 90%;
+    margin-top: 25%;
+    margin-left: 3%;
+  }
+  .imgDivType2 {
+    margin: 23% 0 0 -15%;
+    width: 115%;
+  }
+  .imgDivType3 {
+    margin: -5% 0 0 0;
+    width: 180%;
+  }
+  .imgDivType4 {
+    margin: 15% 0 0 -5%;
+    width: 100%;
+  }
+}
+</style>

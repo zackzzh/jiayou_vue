@@ -1,0 +1,65 @@
+<template>
+  <div class="footerDivType">
+    <Row>
+      <i-col offset="3" span="3">
+        <footer-img></footer-img>
+      </i-col>
+      <i-col offset="2" span="16">
+        <footer-card :list="footerData" @fromCard="handlerClick"></footer-card>
+      </i-col>
+    </Row>
+    <div class="bottomType">
+      <p>粤ICP备18144457号-1© 甲由信息技术</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import footerCard from "./footer-card";
+import footerImg from "./footer-img";
+
+import footerData from "./footerData";
+
+export default {
+  components: {
+    footerCard,
+    footerImg
+  },
+  data() {
+    return {
+      footerData: footerData
+    };
+  },
+  // mounted() {
+  //   console.log("footerData", this.footerData);
+  // },
+  methods: {
+    handlerClick(val) {
+      if (val.key === "f5-4") {
+        this.$go({
+          path: "/test"
+        });
+      }
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.footerDivType {
+  /* background: rgba(0, 0, 0, 0.7); */
+  /* color: aliceblue; */
+  background-image: url("../../assets/common/bottomImg.png");
+  width: 100%;
+  /* height: 550px; */
+  /* border: 1px solid #000000; */
+  padding: 74px 0;
+  .bottomType {
+    margin-top: 50px;
+    border-top: 1px solid #e7f8ff;
+    text-align: center;
+    font-size: 14px;
+    color: #e7f8ff;
+  }
+}
+</style>

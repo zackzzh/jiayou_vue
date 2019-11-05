@@ -1,0 +1,79 @@
+<template>
+  <div>
+    <Row :style="`width: ${230 * itemList.length}px`" type="flex" justify="space-around">
+      <div class="cardColType" v-for="item in itemList" :key="item.key">
+        <!-- 二级菜单card -->
+        <MenuItem style="padding: 0;background: none;" :name="item.pathName">
+          <Card class="cardType" shadow>
+            <p class="fontType" slot="title">{{item.title}}</p>
+            <!-- <p class="fontType" @click="handlerClick(itemList)" slot="title">{{itemList.title}}</p> -->
+            <Row type="flex" justify="space-between">
+              <i-col span="12" v-for="o of item.list" :key="o.key">
+                <MenuItem style="padding: 0;background: none;" :name="o.pathName">
+                  <p class="itemFontType">{{o.title}}</p>
+                  <!-- <p class="itemFontType" @click="handlerClick(item)">{{item.title}}</p> -->
+                </MenuItem>
+              </i-col>
+            </Row>
+          </Card>
+          <div class="floorType">
+            <!-- <p class="floorType fontType" style="background: rgba(0, 0, 0, 0)">{{itemList.link}}</p> -->
+            <Button ghost long>{{item.link}}</Button>
+          </div>
+        </MenuItem>
+      </div>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["itemList"],
+  // data() {
+  //   return {};
+  // },
+  // created() {
+  //   console.log("menuCard", this.itemList);
+  // },
+  methods: {
+    handlerClick(val) {
+      // console.log("点击了啊", val);
+      this.$emit("fromCard", val);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.cardType {
+  height: 210px;
+  margin: 0 5px;
+  cursor: default;
+  background: none;
+}
+.fontType {
+  cursor: pointer;
+  color: #ffffff;
+}
+.fontType:hover {
+  font-size: 16px;
+}
+.itemFontType {
+  cursor: pointer;
+  color: #8cddfe;
+  margin-bottom: 8px;
+}
+.itemFontType:hover {
+  font-size: 16px;
+}
+.floorType {
+  text-align: center;
+  margin-bottom: 1px;
+}
+.cardColType {
+  width: 230px;
+}
+.cardColType:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+</style>

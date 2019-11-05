@@ -1,0 +1,178 @@
+<template>
+  <div>
+    <!-- 公共部分中间 -->
+    <!-- {{commonData}} background: url(img_flwr.gif) right bottom no-repeat, url(paper.gif) left top repeat; -->
+    <div class="contentDivType" :style="`background-image:url(${commonData.imgUrl})`">
+      <img :src="list.iconUrl">
+      <p class="titleType">{{list.title}}</p>
+      <div class="lineType"></div>
+      <p class="contentType">{{list.content}}</p>
+    </div>
+    <!-- <div class="contentDivType" :style="`background: url(${commonData.iconUrl})  top no-repeat, url(${commonData.imgUrl}) left top repeat;`"></div> -->
+    <!-- 公共图标部分 -->
+    <Row>
+      <i-col class="iconType" span="3" v-for="item in commonData.list" :key="item.key">
+        <div
+          class="iconDivType"
+          @mouseenter="mouseenter(item)"
+          @mouseleave="mouseleave(item)"
+          @click="handlerClick(item)"
+        >
+          <img v-show="isShow !== item.key" :src="item.iconUrl">
+          <img v-show="isShow === item.key" :src="item.activeUrl">
+          <!-- {{item}}activeUrl -->
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "commonData"],
+  data() {
+    return {
+      isShow: null
+    };
+  },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.key;
+      // console.log("鼠标进入", val);
+    },
+    mouseleave(val) {
+      this.isShow = null;
+      // console.log("鼠标离开", val);
+    },
+    handlerClick(val) {
+      console.log("handlerClick", val);
+      this.$go({
+        path: val.pathName,
+        query: {
+          pathName: val.pathName
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.contentDivType {
+  width: 72%;
+  height: 500px;
+  margin: -128px 14% 0 14%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  img {
+    margin: 20px;
+    width: 10%;
+  }
+  .titleType {
+    font-size: 38px;
+    font-weight: bold;
+    color: rgba(2, 2, 2, 0.8);
+  }
+  .lineType {
+    margin: 28px 42%;
+    border-bottom: 2px solid #000000;
+  }
+  .contentType {
+    margin: 0 110px;
+    font-size: 24px;
+    color: rgba(2, 2, 2, 0.55);
+  }
+}
+.iconType {
+  margin-top: 100px;
+  cursor: pointer;
+  img {
+    width: 60%;
+  }
+  .iconDivType {
+    -webkit-transition: margin 200ms; /* Safari */
+    transition: margin 200ms;
+  }
+  .iconDivType:hover {
+    margin-top: -10px;
+  }
+}
+
+@media screen and(min-width: 1200px) and(max-width: 1370px) {
+  .contentDivType {
+    // overflow: auto;
+    width: 72%;
+    // height: 500px;
+    margin: -128px 14% 0 14%;
+    .titleType {
+      margin-top: -10px;
+      font-size: 38px;
+    }
+    .lineType {
+      margin: 22px 42%;
+    }
+    .contentType {
+      margin: 0 80px;
+      font-size: 24px;
+    }
+  }
+  .iconType {
+    margin-top: 10px;
+  }
+}
+
+@media screen and(min-width: 1000px) and(max-width: 1200px) {
+  .contentDivType {
+    // overflow: auto;
+    width: 72%;
+    height: 350px;
+    margin: -112px 14% 0 14%;
+    img {
+      margin: 15px;
+      width: 10%;
+    }
+    .titleType {
+      margin-top: -15px;
+      font-size: 24px;
+    }
+    .lineType {
+      margin: 10px 42%;
+    }
+    .contentType {
+      margin: 0 40px;
+      font-size: 20px;
+    }
+  }
+  .iconType {
+    margin-top: 10px;
+  }
+}
+
+@media screen and(min-width: 760px) and(max-width: 1000px) {
+  .contentDivType {
+    // overflow: auto;
+    width: 72%;
+    height: 260px;
+    margin: -104px 14% 0 14%;
+    img {
+      margin: 10px;
+      width: 10%;
+    }
+    .titleType {
+      margin-top: -18px;
+      font-size: 24px;
+    }
+    .lineType {
+      margin: 6px 42%;
+    }
+    .contentType {
+      margin: 0 40px;
+      font-size: 14px;
+    }
+  }
+  .iconType {
+    margin-top: 10px;
+  }
+}
+</style>

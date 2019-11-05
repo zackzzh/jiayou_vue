@@ -1,0 +1,83 @@
+export default {
+    imgList: [
+        {
+            key: "applet01",
+            imgUrl: "static/mobileDevelop/applet/01.png"
+        },
+        {
+            key: "applet02",
+            isCenterImg: true,
+            imgUrl: "static/mobileDevelop/applet/02.png"
+        }, {
+            key: "applet03",
+            isAdvantage: true,
+            imgUrl: "static/mobileDevelop/applet/03.png"
+        }, {
+            key: "applet04",
+            isCase: true,
+            imgUrl: "static/mobileDevelop/applet/04.png"
+        }
+    ],
+    appletOne: {
+        key: "ao01",
+        imgUrl: "static/mobileDevelop/applet/111.png",
+        list: [
+            {
+                key: "ao01-1",
+                title: "电子商务",
+                content: "电子商务通常是指是在全球各地广泛的商业贸易活动中，在因特网开放的网络环境下，基于浏览器/服务器应用方式，买卖双方不谋面地进行各种商贸活动。"
+            },
+            {
+                key: "ao01-2",
+                title: "平台类",
+                content: "平台就是通过为买卖双方提供一个在线交易平台，使卖方可以主动提供商品上网拍卖，而买方可以自行选择商品进行竞价。"
+            }
+        ]
+    },
+    advantage: {
+        key: "adv01",
+        titleImgUrl: "static/mobileDevelop/applet/advantage/title.png",
+        list: [
+            {
+                key: "adv01-1",
+                title: "成本低",
+                content: "微信小程序的价格区间在万元以内远远低于同等条件下的APP开发",
+                imgUrl: "static/mobileDevelop/applet/advantage/01.png"
+            }, {
+                key: "adv01-2",
+                title: "推广易",
+                content: "微信分发平台担保，应用可信度高；基于社群应用分享，引发用户自推广",
+                imgUrl: "static/mobileDevelop/applet/advantage/02.png"
+            }, {
+                key: "adv01-3",
+                title: "回报高",
+                content: "8亿用户微信生态，互联网新蓝海，早期小程序将享受高达百万PV流量红利",
+                imgUrl: "static/mobileDevelop/applet/advantage/03.png"
+            }
+        ]
+    },
+    caseData: {
+        key: "case01",
+        title: "开发案例",
+        enTitle: "Development Case",
+        list: [
+            {
+                key: "case01-1",
+                imgUrl: "static/mobileDevelop/applet/case/01.png",
+                qrImgUrl: "static/mobileDevelop/applet/case/01QR.png"
+            }, {
+                key: "case01-2",
+                imgUrl: "static/mobileDevelop/applet/case/02.png",
+                qrImgUrl: "static/mobileDevelop/applet/case/02QR.png"
+            }, {
+                key: "case01-3",
+                imgUrl: "static/mobileDevelop/applet/case/03.png",
+                qrImgUrl: "static/mobileDevelop/applet/case/03QR.png"
+            }, {
+                key: "case01-4",
+                imgUrl: "static/mobileDevelop/applet/case/04.png",
+                qrImgUrl: "static/mobileDevelop/applet/case/04QR.png"
+            }
+        ]
+    }
+}

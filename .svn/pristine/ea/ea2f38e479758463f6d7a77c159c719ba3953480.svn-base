@@ -1,0 +1,30 @@
+import * as types from './mutation-types'
+import { api } from '@/api'
+// import { UserValidate } from '@/validate'
+// import session from '@/libs/session'
+
+export const actions = {
+  // 全部新闻列表
+  async newsList({ commit }, o = {}) {
+    // console.log("oooooo", o)
+    const limit = {
+      limit: 5
+    }
+    Object.assign(o, limit)
+    const hotNewsVal = {
+      typeid: 8
+    }
+
+    let res = await api.trendsApi.newsList(o)
+    Object.assign(hotNewsVal, limit, o)
+    let hotNewsRes = await api.trendsApi.newsList(hotNewsVal)
+    // console.log("访问后端数据", hotNewsRes);
+    if (res.code === 200 && hotNewsRes.code === 200) {
+      commit(types.NEWSLIST, res.page)
+      commit(types.HOTNEWSLIST, hotNewsRes.page)
+      // console.log('操作访问成功')
+    } else {
+      console.log('操作访问失败')
+    }
+  }
+}

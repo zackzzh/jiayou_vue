@@ -1,0 +1,174 @@
+<template>
+  <!-- 这是企业文化 -->
+  <div class="mainDivType">
+
+    <p class="titleType">{{list.title}}</p>
+    <Row :gutter="20">
+      <i-col span="8" v-for="item in list.list" :key="item.key" class="colType">
+        <div class="colType-item">
+          <p class="subtitleType">{{item.subtitle}}</p>
+          <p class="contentType">{{item.content}}</p>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list"]
+  };
+
+</script>
+
+<style scoped lang="less">
+  .mainDivType {
+    letter-spacing: 5px;
+    color: #4a4a4a;
+
+    .titleType {
+      padding-top: 80px;
+      margin-bottom: 70px;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .subtitleType {
+      margin-bottom: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .contentType {
+      margin: 0 24px;
+      font-size: 14px;
+      color: #0066ff;
+    }
+
+    .colType {
+      padding: 20px;
+
+      .colType-item {
+        padding: 10px 0px;
+        background: #fff;
+        box-shadow: 1px 1px 10px #fff;
+        opacity: 0.7;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .titleType {
+      padding-top: 0px !important;
+      font-size: 20px !important;
+      margin-bottom: 0px !important;
+    }
+
+    .subtitleType {
+      letter-spacing: 0px !important;
+      margin-bottom: 5px !important;
+      font-size: 12px !important;
+      color: #884 !important;
+    }
+
+    .contentType {
+      color: #884 !important;
+      margin: 5px !important;
+      font-size: 10px !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .titleType {
+      padding-top: 0px !important;
+      font-size: 20px !important;
+      margin-bottom: 20px !important;
+    }
+
+    .subtitleType {
+      letter-spacing: 0px !important;
+      margin-bottom: 5px !important;
+      font-size: 12px !important;
+    }
+
+    .contentType {
+      font-size: 10px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .titleType {
+      padding-top: 35px !important;
+      font-size: 30px !important;
+      margin-bottom: 45px !important;
+    }
+
+    .subtitleType {
+      font-size: 14px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+  }
+
+  @media screen and (min-width: 1281px) and (max-width: 1366px) {
+    .titleType {
+      padding-top: 10px !important;
+      font-size: 30px !important;
+      margin-bottom: 0px !important;
+    }
+
+    .subtitleType {
+      font-size: 15px !important;
+      margin-bottom: 25px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+  }
+
+  @media screen and (min-width: 1367px) and (max-width: 1440px) {
+    .titleType {
+      padding-top: 5px !important;
+      font-size: 30px !important;
+      margin-bottom: 0px !important;
+    }
+
+    .subtitleType {
+      font-size: 17px !important;
+      margin-bottom: 15px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+  }
+
+  @media screen and (min-width: 1441px) and (max-width: 1600px) {
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .subtitleType {
+      font-size: 19px !important;
+    }
+
+    .titleType {
+      padding-top: 45px !important;
+      font-size: 35px !important;
+      margin-bottom: 60px !important;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    .titleType {
+      padding-top: 131px !important;
+    }
+  }
+
+</style>

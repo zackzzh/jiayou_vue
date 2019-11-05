@@ -1,0 +1,33 @@
+<template>
+  <div>
+    <header-menu @fromCard="clickCard" :list="menuData" />
+  </div>
+</template>
+
+<script>
+import listData from "./headerData";
+import headerMenu from "./header-menu";
+
+export default {
+  components: {
+    headerMenu
+  },
+  data() {
+    return {
+      menuData: listData
+    };
+  },
+  created() {
+    // console.log("menuData", this.menuData);
+  },
+  methods: {
+    // 从二级菜单card传过来的数据
+    clickCard(val){
+      // console.log("我是menu传过来的card内容", val);
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>

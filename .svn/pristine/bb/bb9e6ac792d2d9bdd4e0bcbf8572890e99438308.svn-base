@@ -1,0 +1,121 @@
+<template>
+  <div>
+    <img class="bgImgType" :src="casesDataDemo.bgImgUrl">
+    <!-- 图标 -->
+    <Row class="iconRowType" type="flex" justify="space-around">
+      <!-- <p>{{casesTypeData}}</p> -->
+      <div v-for="item in casesData.caseTypeList" :key="item.id" @click="clickIcon(item)">
+        <img :src="item.picUrl">
+      </div>
+    </Row>
+    <!-- 卡片 -->
+    <!-- <cases-card :data="casesApiData" @cardData="handlerCard" @handlerClick="clickCard"></cases-card> -->
+    <cases-card :data="casesDataFun" @handlerClick="clickCard"></cases-card>
+    <div class="pageDivType">
+      <div>
+        <span>6条/页&nbsp;&nbsp;&nbsp;共{{casesDataFun.totalPage}}页</span>
+      </div>
+      <Page
+        class-name="pageType"
+        :total="casesDataFun.totalCount"
+        :page-size="6"
+        :current="pageNum.page"
+        show-elevator
+        @on-change="handlerChange"
+      />
+    </div>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from "vuex";
+import jyFooter from "@/components/jy-footer/index";
+
+import casesCard from "./cases-card";
+
+import casesDataDemo from "./casesData";
+
+export default {
+  components: {
+    jyFooter,
+    casesCard
+  },
+  computed: {
+    ...mapState("cases", ["casesData", "casesTypeList"]),
+    // ...mapGetters("test", ["getTest"])
+    casesDataFun() {
+      return this.casesData.page || {};
+    }
+  },
+  data() {
+    return {
+      casesDataDemo,
+      iconList: casesDataDemo.iconList,
+      casesList: casesDataDemo.casesList,
+      pageNum: {
+        total: 1, //总条数
+        page: 1 //当前页码
+      }
+    };
+  },
+  created() {
+    // console.log(this.pageNum);
+    document.body.style.cssText = "overflow-y: auto;overflow-x: hidden";
+    this.getCasesData(this.pageNum);
+    // this.casesType();
+  },
+  methods: {
+    ...mapActions("cases", ["getCasesData", "casesType"]),
+    // handlerCard(val) {
+    //   // console.log("handlerCard", this.casesList.length);
+    //   this.pageNum.total = val;
+    // },
+    handlerChange(val) {
+      // 翻页事件
+      // console.log("handlerChange", val);
+      this.pageNum.page = val;
+      this.getCasesData(this.pageNum);
+    },
+    clickIcon(val) {
+      // 点击图标项
+      console.log("clickIcon", val);
+      this.pageNum.page = 1;
+      val.typeId = val.id;
+      Object.assign(val, this.pageNum);
+      this.getCasesData(val);
+    },
+    clickCard(val) {
+      // 当前点击卡片事件
+      // console.log("clickCard", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.bgImgType {
+  width: 100%;
+  height: auto;
+}
+.iconRowType {
+  margin: 3% 15%;
+  height: 100px;
+  img:hover {
+    margin-top: -5px;
+    cursor: pointer;
+  }
+}
+.pageDivType {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  .pageType {
+    font-size: 14px;
+  }
+  div {
+    margin: 5px 10px;
+    font-size: 14px;
+  }
+}
+</style>

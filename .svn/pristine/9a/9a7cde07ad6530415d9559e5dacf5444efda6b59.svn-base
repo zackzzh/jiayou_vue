@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <support-img :data="item" v-for="item in supportData" :key="item.key">
+      <div v-if="item.middleData" slot="middleSlot">
+        <support-card :data="item.middleData"/>
+      </div>
+      <div v-if="item.tableData" slot="tableSlot">
+        <p class="itemTitleType">{{item.title}}</p>
+        <Table :columns="item.tableData.columns" :data="item.tableData.data" size="large" stripe border></Table>
+      </div>
+      <div v-if="item.cardList" slot="middleSlot">
+        <p class="itemTitleType">{{item.title}}</p>
+        <support-server-card :data="item.cardList"/>
+      </div>
+    </support-img>
+    <jy-footer/>
+  </div>
+</template>
+
+<script>
+import jyFooter from "@/components/jy-footer/index";
+
+import supportImg from "./support-img";
+import supportCard from "./support-card";
+import supportServerCard from "./support-server-card";
+
+import supportData from "./supportServiceData";
+
+export default {
+  components: {
+    jyFooter,
+    supportImg,
+    supportCard,
+    supportServerCard
+  },
+  created() {
+    document.body.style.cssText = "overflow: auto";
+  },
+  data() {
+    return {
+      supportData,
+      inputValue: "",
+      selectValue: ".com"
+    };
+  }
+};
+</script>
+
+<style scoped lang="less">
+.itemTitleType {
+  margin-bottom: 26px;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+</style>

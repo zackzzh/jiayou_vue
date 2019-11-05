@@ -1,0 +1,286 @@
+<template>
+  <div class="homeCaseMainDivType">
+    <div class="titleType">
+      <p>精品案例</p>
+      <p>Classic case</p>
+    </div>
+    <Row class="rowType" type="flex" justify="start">
+      <i-col span="6" v-for="(item,index) in data" :key="item.id">
+        <div class="itemDivType" @mouseenter="mouseenter(item)" @mouseleave="mouseleave(item)" @click="handlerClick(item)"
+          :class="[index < 4 ? animationData.leftIn : animationData.rightIn]">
+          <!-- <div> -->
+          <!-- <img style="width:100%" :src="item.picUrl"> -->
+          <img :src="item.picUrl">
+          <!-- <div class="transbox" :class="{displayType: isDisplay!==item.id}"> -->
+          <transition name="transbox">
+            <div class="transbox" v-show="isDisplay===item.id">
+              <div class="textTitleType" v-html="item.title"></div>
+              <div class="subtitleType" v-html="item.subtitle"></div>
+              <div class="textType" v-html="item.remark"></div>
+              <!-- <Button class="btnType" size="small" ghost>{{item.title}}</Button> -->
+              <div class="linkDivType">
+                <a class="btnType" v-if="item.caseUrl" :href="item.caseUrl" target="_blank">
+                  <Button ghost>{{item.title}}</Button>
+                </a>
+                <a class="btnType" v-if="item.androidUrl" :href="item.androidUrl" target="_blank">
+                  <Button ghost>安卓下载</Button>
+                </a>
+                <a class="btnType" v-if="item.iosUrl" :href="item.iosUrl" target="_blank">
+                  <Button ghost>IOS下载</Button>
+                </a>
+                <!-- class="imgDivType" -->
+                <div class="imgDivType" v-if="item.picWechat">
+                  <img :src="item.picWechat">
+                  <p>公众号</p>
+                </div>
+                <div class="imgDivType" v-if="item.picApplet">
+                  <img :src="item.picApplet">
+                  <p>小程序</p>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list", "data", "animationData"],
+    computed: {
+      dataFun() {
+        // console.log("this.data", this.data);
+        return this.data.list;
+      }
+    },
+    data() {
+      return {
+        isDisplay: null
+      };
+    },
+    created() {
+      console.log('data', this.data)
+    },
+    methods: {
+      mouseenter(val) {
+        this.isDisplay = val.id;
+        // console.log("鼠标进入事件", val, this.isDisplay);
+      },
+      mouseleave(val) {
+        this.isDisplay = null;
+        // console.log("鼠标离开事件", val);
+      },
+      // handlerClick() {
+      // this.isDisplay = true;
+      //   console.log("点击事件",this.isDisplay);
+
+      // },
+      handlerClick(val) {
+        if (val.insturctions.length > 0) {
+          this.$go({
+            path: "/cases",
+            query: {
+              id: val.id
+            }
+          });
+        }
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  .homeCaseMainDivType {
+    // position: relative;
+    // 全屏时
+    margin-top: 6%;
+
+    .titleType {
+      margin-bottom: 84px;
+      font-size: 44px;
+      font-weight: bold;
+      line-height: 56px;
+      letter-spacing: 5px;
+    }
+
+    .rowType {
+      position: relative;
+
+      img {
+        width: 100%;
+        // height: 350px;
+        margin-bottom: -5px;
+      }
+
+      .itemDivType {
+        overflow: hidden;
+
+        .transbox {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          border: 1px solid black;
+          font-weight: bold;
+          color: #ffffff;
+          line-height: 20px;
+          letter-spacing: 3px;
+          background-color: rgba(0, 0, 0, 0.7);
+          opacity: 1;
+
+          .textTitleType {
+            /* 屏蔽罩内标题 */
+            margin: 30px 0 20px 0;
+            font-size: 20px;
+          }
+
+          .subtitleType {
+            /* 副标题 */
+            margin: 20px 0 10px 0;
+          }
+
+          .textType {
+            /* 内容 */
+            margin: 0 14px;
+            text-indent: 26px;
+            text-align: left;
+          }
+
+          .linkDivType {
+            margin-top: 20px;
+
+            .btnType {
+              margin: 0 30px;
+            }
+
+            .imgDivType {
+              display: inline-block;
+
+              img {
+                width: 100px;
+                margin: 0 30px;
+              }
+            }
+          }
+        }
+
+        .transbox-enter-active,
+        .transbox-leave-active {
+          transition: all 0.5s ease;
+        }
+
+        .transbox-enter,
+        .transbox-leave-to {
+          // transform: translateY(10px);
+          height: 0%;
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1371px) and (max-width: 1440px) {
+    .titleType {
+      margin-bottom: 112px !important;
+    }
+  }
+
+  @media screen and (min-width: 1200px) and (max-width: 1370px) {
+    .homeCaseMainDivType {
+      margin-top: 60px;
+
+      .titleType {
+        margin-bottom: 20px;
+
+        p {
+          line-height: 40px;
+          font-size: 30px;
+        }
+      }
+
+      .rowType {
+        position: relative;
+
+        img {
+          width: 100%;
+          // height: 350px;
+          margin-bottom: -5px;
+        }
+
+        .itemDivType {
+          .transbox {
+            .textTitleType {
+              /* 屏蔽罩内标题 */
+              margin: 20px 0 8px 0;
+              font-size: 16px;
+            }
+
+            .subtitleType {
+              /* 副标题 */
+              margin: 0 0 5px 0;
+            }
+
+            .textType {
+              /* 内容 */
+              margin: 0 5px;
+            }
+
+            .linkDivType {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 760px) and (max-width: 1000px) {
+    .homeCaseMainDivType {
+      margin-top: 55px;
+
+      .titleType {
+        margin-bottom: 14px;
+        line-height: 44px;
+        font-size: 38px;
+      }
+
+      .rowType {
+        position: relative;
+
+        img {
+          width: 100%;
+          // height: 350px;
+          margin-bottom: -5px;
+        }
+
+        .itemDivType {
+          .transbox {
+            .textTitleType {
+              /* 屏蔽罩内标题 */
+              margin: 20px 0 8px 0;
+              font-size: 16px;
+            }
+
+            .subtitleType {
+              /* 副标题 */
+              margin: 0 0 5px 0;
+            }
+
+            .textType {
+              /* 内容 */
+              margin: 0 5px;
+            }
+
+            .linkDivType {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+</style>

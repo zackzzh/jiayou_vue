@@ -1,0 +1,291 @@
+<template>
+  <div class="mainDivType">
+    <!-- ivivew的锚点 -->
+    <!-- <jy-anchor :list="muneList"></jy-anchor> -->
+    <!-- <jy-anchor class="swiper-pagination" :list="muneList"></jy-anchor> -->
+    <div class="swiper-pagination rightMenu" :style="`background-image: url(${muneList.bgImgUrl})`"></div>
+
+    <div class="swiper-home swiper-container" :style="`height:${heightData}px`">
+      <div class="swiper-wrapper">
+        <!-- 轮播项-至下 :style="`height:${heightData}px`" -->
+        <div
+          class="swiper-slide"
+          :data-hash="item.link"
+          :id="item.link"
+          v-for="item in muneList.list"
+          :key="item.key"
+        >
+          <!-- <home-img :list="item" :animationData="animationData"> -->
+          <home-img :list="item" :class="animationData.imgIn">
+            <div v-if="item.isCenterImg" slot="centerImg">
+              <!-- 轮播图 -->
+              <home-swiper
+                v-if="item.isSlideshow"
+                :list="slideshowList"
+                :animationData="animationData"
+              ></home-swiper>
+              <!-- 新闻动态 -->
+              <home-news v-if="item.isNews" :list="newsList" :animationData="animationData"></home-news>
+            </div>
+            <!-- 精品案例样式 -->
+            <div v-if="item.isBottomImg" slot="bottomImg">
+              <!-- <p>我是底部</p> -->
+              <home-case :list="caseList" :animationData="animationData"></home-case>
+            </div>
+          </home-img>
+        </div>
+        <!-- <div class="swiper-slide">
+          <jy-footer></jy-footer>
+        </div>-->
+        <!-- 轮播项-至上 -->
+      </div>
+      <!--  pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },-->
+    </div>
+  </div>
+</template>
+
+<script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+
+import jyAnchor from "@/components/jy-anchor";
+import homeImg from "./home-img";
+import homeSwiper from "./home-swiper";
+import homeCase from "./home-case";
+import homeNews from "./home-news";
+
+import jyFooter from "@/components/jy-footer/index";
+
+import homeData from "./homeData";
+
+// const scrollData = document.body.scrollTop;
+
+export default {
+  components: {
+    jyFooter,
+    // 锚点，右侧导航
+    jyAnchor,
+    // 整体布局图片
+    homeImg,
+    // 轮播
+    homeSwiper,
+    // 精品案例
+    homeCase,
+    // 新闻动态
+    homeNews
+  },
+  mounted() {
+    this.setSwiper();
+  },
+  data() {
+    return {
+      // offsetTop: 0
+      muneList: homeData.muneList,
+      caseList: homeData.caseList,
+      slideshowList: homeData.slideshowList,
+      newsList: homeData.newsList,
+      heightData: 1070,
+      animationData: {}
+      // heightData: 1570
+    };
+  },
+  methods: {
+    setSwiper() {
+      const that = this;
+      const swiperHome = new Swiper(".swiper-home", {
+        // height: "auto",
+        //autoplay: true, //可选选项，自动滑动
+        direction: "vertical",
+        mousewheel: {
+          releaseOnEdges: true
+        },
+        // mousewheel: true,
+        simulateTouch: false,
+        pagination: {
+          el: ".swiper-pagination",
+          // type: "custom",
+          clickable: true,
+          // clickableClass: "clickableClass",
+          bulletClass: "bulleType",
+          bulletActiveClass: "bulleActiveType",
+          // hashNavigation: true
+          renderBullet: function(index, className) {
+            // console.log("renderBullet", index, className);
+            let text = null;
+            let borderType = "";
+            // let customer = "";
+            switch (index) {
+              case 0:
+                text = "首页置顶";
+                break;
+              case 1:
+                text = "热门服务";
+                break;
+              case 2:
+                text = "精品案例";
+                break;
+              case 3:
+                text = "关于我们";
+                break;
+              case 4:
+                text = "新闻动态";
+                borderType = "border: none";
+                // customer =
+                //   '<span style="border: none" @click="handlerCustomer" class="' +
+                //   className +
+                //   '">客户服务</span>';
+                break;
+            }
+            // if (index === 5) {
+            //   return "";
+            // } else {
+            return (
+              '<span class="' +
+              className +
+              '" style="' +
+              borderType +
+              '">' +
+              text +
+              "</span>"
+              // '<span style="display: block;padding: 15px;font-size: 24px;line-height:24px;" class="' +
+              // className +
+              // '">' +
+              // text +
+              // "</span>"
+            );
+            // }
+          }
+        },
+        on: {
+          // 回调函数，当Swiper的progress被改变时执行。接受Swiper的progress作为参数（0-1）。
+          progress: function(progress) {
+            // console.log("Swiper的progress被改变", progress);
+            if (progress === 1) {
+              that.heightData = 1570;
+              that.animationData = {
+                leftIn: "animated zoomInLeft",
+                rightIn: "animated zoomInRight"
+              };
+              // console.log("滚动了", window.scroll);
+            } else {
+              that.heightData = 1070;
+              if (progress === 0.75) {
+                document.documentElement.scrollTop = 0;
+                that.animationData = {
+                  imgIn: "animated zoomIn"
+                };
+              } else if (progress === 0.5) {
+                document.documentElement.scrollTop = 0;
+                that.animationData = {
+                  leftIn: "animated bounceInLeft",
+                  rightIn: "animated bounceInRight"
+                };
+              } else if (progress === 0.25) {
+                document.documentElement.scrollTop = 0;
+                that.animationData = {
+                  leftIn: "animated fadeInLeftBig",
+                  rightIn: "animated fadeInRightBig"
+                };
+              } else if (progress === 0) {
+                document.documentElement.scrollTop = 0;
+                that.animationData = {
+                  imgIn: "animated zoomIn"
+                };
+              } else {
+                that.animationData = {};
+              }
+            }
+            // if (progress === 0.8) {
+            //   that.heightData = 1570;
+            //   that.animationData = {
+            //     leftIn: "animated zoomInLeft",
+            //     rightIn: "animated zoomInRight"
+            //   };
+            //   // console.log("滚动了", window.scroll);
+            // } else {
+            //   that.heightData = 1070;
+            //   if (progress === 0.6) {
+            //     that.animationData = {
+            //       imgIn: "animated zoomIn"
+            //     };
+            //   } else if (progress === 0.4) {
+            //     that.animationData = {
+            //       leftIn: "animated bounceInLeft",
+            //       rightIn: "animated bounceInRight"
+            //     };
+            //   } else if (progress === 0.2) {
+            //     that.animationData = {
+            //       leftIn: "animated fadeInLeftBig",
+            //       rightIn: "animated fadeInRightBig"
+            //     };
+            //   } else if (progress === 0) {
+            //     that.animationData = {
+            //       imgIn: "animated zoomIn"
+            //     };
+            //   } else {
+            //     that.animationData = {};
+            //   }
+            // }
+          }
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  transition: all 2s;
+  .rightMenu {
+    position: fixed;
+    top: 220px;
+    right: 100px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    /deep/.bulleType {
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid rgba(86, 121, 255, 0.4);
+      font-size: 14px;
+      line-height: 14px;
+      color: #a9d1ff;
+      -webkit-transition: font-size 300ms;
+      -moz-transform: font-size 300ms;
+      -ms-transform: font-size 300ms;
+      -o-transform: font-size 300ms;
+      transition: font-size 300ms;
+    }
+    /deep/.bulleType:hover {
+      font-size: 16px;
+      color: #1b85ff;
+      background-color: rgba(230, 230, 230, 1);
+    }
+    /deep/.bulleActiveType {
+      font-size: 16px;
+      color: #1b85ff;
+      background-color: rgba(230, 230, 230, 1);
+    }
+  }
+  .swiper-home {
+    width: 100%;
+  }
+}
+// .swiper-home {
+//   width: 100%;
+// }
+/* .bulletType { */
+/* font-size: 100px; */
+/* // margin: 6px; */
+/* display: block; */
+/* color: red;
+  width: 100px; */
+/* } */
+</style>

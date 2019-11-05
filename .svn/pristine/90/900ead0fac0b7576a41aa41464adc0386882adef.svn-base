@@ -1,0 +1,175 @@
+<template>
+  <div>
+    <Row v-if="data.list.length" type="flex" justify="start">
+      <i-col span="8" v-for="item in data.list" :key="item.id">
+        <!-- class="casesCardColType" -->
+        <div
+          class="itemImgDivType"
+          @mouseenter="mouseenter(item)"
+          @mouseleave="mouseleave(item)"
+          @click="handlerClick(item)"
+        >
+          <img class="imgType" :src="item.picUrl">
+          <transition name="transbox">
+            <div class="shadowBoxType" v-show="isShow === item.id">
+              <div class="textTitleType" v-html="item.title"></div>
+              <div class="subtitleType" v-html="item.subtitle"></div>
+              <div class="textType" v-html="item.remark"></div>
+              <div class="linkDivType">
+                <a class="btnType" v-if="item.caseUrl" :href="item.caseUrl" target="_blank">
+                  <Button ghost @click.stop>{{item.title}}</Button>
+                </a>
+                <a class="btnType" v-if="item.androidUrl" :href="item.androidUrl" target="_blank">
+                  <Button ghost @click.stop>安卓下载</Button>
+                </a>
+                <a class="btnType" v-if="item.iosUrl" :href="item.iosUrl" target="_blank">
+                  <Button ghost @click.stop>IOS下载</Button>
+                </a>
+                <!-- class="imgDivType" -->
+                <div class="imgDivType">
+                  <div v-if="item.picWechat">
+                    <img :src="item.picWechat" @click.stop>
+                    <p>公众号</p>
+                  </div>
+                  <div v-if="item.picApplet">
+                    <img :src="item.picApplet" @click.stop>
+                    <p>小程序</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </i-col>
+    </Row>
+    <div v-else style="text-align:center">暂无数据</div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["data"],
+  data() {
+    return {
+      isShow: null,
+      cardArr: [],
+      cardSixArr: []
+    };
+  },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.id;
+    },
+    mouseleave() {
+      this.isShow = null;
+    },
+    handlerClick(val) {
+      // 当前点击卡片事件
+      // console.log("handlerClick", val);
+      this.$emit("handlerClick", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.itemImgDivType {
+  position: relative;
+  margin: 10px 20px;
+  .imgType {
+    width: 100%;
+    margin-bottom: -5px;
+    box-shadow: -10px 10px 12px rgba(0, 0, 0, 0.21);
+  }
+  .shadowBoxType {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 20px;
+    letter-spacing: 3px;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    overflow: hidden;
+
+    .textTitleType {
+      /* 屏蔽罩内标题 */
+      margin: 30px 0 20px 14px;
+      font-size: 20px;
+    }
+    .subtitleType {
+      /* 副标题 */
+      margin: 20px 0 10px 0;
+    }
+    .textType {
+      /* 内容 */
+      margin: 0 14px;
+      text-indent: 26px;
+      text-align: left;
+    }
+    .linkDivType {
+      // background-color: aliceblue;
+      margin-top: 10px;
+      .btnType {
+        margin: 0 30px;
+      }
+      .imgDivType {
+        display: flex;
+        justify-content: center;
+        div {
+          text-align: center;
+          img {
+            width: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+    }
+  }
+  .transbox-enter-active,
+  .transbox-leave-active {
+    transition: all 0.5s ease;
+  }
+  .transbox-enter,
+  .transbox-leave-to {
+    height: 0%;
+    opacity: 0;
+  }
+}
+
+@media screen and (min-width: 760px) and(max-width: 1370px) {
+  .itemImgDivType {
+    position: relative;
+    margin: 10px;
+    .shadowBoxType {
+      line-height: 18px;
+      letter-spacing: 2px;
+      .textTitleType {
+        /* 屏蔽罩内标题 */
+        margin: 10px 0 5px 14px;
+        font-size: 20px;
+      }
+      .subtitleType {
+        /* 副标题 */
+        margin: 5px 0;
+      }
+      .textType {
+        /* 内容 */
+        margin: 0 10px;
+      }
+      .linkDivType {
+        // background-color: aliceblue;
+        margin-top: 5px;
+        .btnType {
+          margin: 0 30px;
+        }
+      }
+    }
+  }
+}
+
+</style>

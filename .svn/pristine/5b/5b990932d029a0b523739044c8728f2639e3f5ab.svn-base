@@ -1,0 +1,100 @@
+<template>
+  <div class="mainDivType">
+    <Card>
+      <Row>
+        <i-col span="8">
+          <img style="width: 90%" :src="tabList[0].imgUrl">
+        </i-col>
+        <i-col span="16">
+          <div>
+            <p class="titleType">{{titleReplace}}</p>
+            <p>{{textReplace}}</p>
+            <p>{{tabList[0].createDate}}</p>
+          </div>
+        </i-col>
+      </Row>
+    </Card>
+    <Row>
+      <i-col span="12" v-for="(item,index) in list" :key="index">
+        <Table
+          style="margin: 5px"
+          size="small"
+          :columns="columns"
+          :data="item"
+          :show-header="false"
+        ></Table>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["tabList"],
+  computed: {
+    titleReplace() {
+      if (this.tabList[0].title.length > 20) {
+        return this.tabList[0].title.slice(0, 20) + "......";
+      } else {
+        return this.tabList[0].title;
+      }
+    },
+    textReplace() {
+      if (this.tabList[0].textData.length > 120) {
+        return this.tabList[0].textData.slice(0, 120) + "......";
+      } else {
+        return this.tabList[0].textData;
+      }
+    },
+    list() {
+      const listArr = [];
+      // odd奇数
+      // even偶数
+      const evenArr = [];
+      const oddArr = [];
+      this.tabList.map((item, index) => {
+        if (index !== 0) {
+          if (index % 2) {
+            evenArr.push(item);
+          } else {
+            oddArr.push(item);
+          }
+        }
+      });
+      listArr.push(evenArr, oddArr);
+      return listArr;
+    }
+  },
+  data() {
+    return {
+      columns: [
+        {
+          title: "标题",
+          key: "title",
+          ellipsis: true,
+          tooltip: true
+        },
+        {
+          title: "日期",
+          key: "createDate",
+          width: 100,
+          ellipsis: true,
+          tooltip: true
+        }
+      ]
+    };
+  },
+  created() {
+    // console.log("右边tablist", this.tabList);
+  }
+};
+</script>
+
+<style scoped>
+.mainDivType {
+  margin: 0 5px;
+}
+.titleType {
+  font-weight: bold;
+}
+</style>

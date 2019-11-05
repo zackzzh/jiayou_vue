@@ -1,0 +1,158 @@
+<template>
+  <!-- 这是合作伙伴 -->
+  <div>
+    <p class="titleType">{{list.title}}</p>
+    <div class="list">
+      <div class="item" v-for="(item,index) in data" :key="item.id" @mouseenter="handlerEnter(index)" @mouseleave="handlerLeave(index)">
+        <div class="imgDivType">
+          <img class="imgType" :src="item.picUrl" :class="{'active':index === key}" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list", "data"],
+    data() {
+      return {
+        key: null
+      }
+    },
+    methods: {
+      handlerEnter(index) {
+        this.key = index;
+      },
+      handlerLeave() {
+        this.key = null;
+      }
+    }
+  };
+
+</script>
+
+<style scoped lang="less">
+  .titleType {
+    padding-top: 80px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .item {
+      padding: 0px 10px;
+      flex: 1 33.3%;
+      max-width: 33.3%;
+      height: 150px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .imgDivType {
+    border-radius: 10px;
+    background: #fff;
+    opacity: 0.9;
+    box-shadow: 1px 1px 10px #fff;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 30%;
+    }
+
+    .active {
+      width: 40%;
+    }
+
+    // .active {
+    //   width: 20%;
+    // }
+  }
+
+  @media screen and (max-width: 768px) {
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 0px !important;
+      font-size: 20px !important;
+    }
+
+    .imgDivType {
+      height: 80px;
+    }
+
+    .item
+      {
+      height: 80px !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 0px !important;
+      font-size: 20px !important;
+    }
+  }
+
+  @media screen and (min-width: 1281px) and (max-width: 1366px) {
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 0px !important;
+      font-size: 30px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 10px !important;
+      font-size: 30px !important;
+    }
+  }
+
+  @media screen and (min-width: 1367px) and (max-width: 1440px) {
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 10px !important;
+      font-size: 30px !important;
+    }
+  }
+
+  @media screen and (min-width: 1441px) and (max-width: 1600px) {
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    .titleType {
+      padding-top: 40px !important;
+      font-size: 35px !important;
+    }
+  }
+
+</style>

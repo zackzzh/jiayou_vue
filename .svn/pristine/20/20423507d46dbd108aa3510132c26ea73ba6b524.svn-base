@@ -1,0 +1,57 @@
+<template>
+  <div>
+    <div class="titleDivType">
+      <p class="titleType">{{list.title}}</p>
+      <p class="enTitleType">{{list.enTitle}}</p>
+    </div>
+    <Row :gutter="90">
+      <i-col span="8" v-for="item in list.list" :key="item.key">
+        <div class="cardDivType">
+          <p class="subtitleType">{{item.subtitle}}</p>
+          <p class="contentType">{{item.content}}</p>
+          <img class="imgType" :src="item.imgUrl">
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"],
+  created() {
+    // console.log("SEM广告投放服务内容", this.list);
+  }
+};
+</script>
+
+<style scoped>
+.titleDivType {
+  line-height: 33px;
+  margin: 40px 0;
+}
+.titleType {
+  font-size: 45px;
+  margin-bottom: 26px;
+}
+.enTitleType {
+  font-size: 28px;
+}
+.cardDivType {
+  margin-bottom: 100px;
+}
+.subtitleType {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.contentType {
+  font-size: 16px;
+  /* width: 100%; */
+  height: 100px;
+}
+.imgType {
+  width: 100%;
+  box-shadow: -8px 8px 18px rgba(0, 0, 0, 0.8);
+}
+</style>

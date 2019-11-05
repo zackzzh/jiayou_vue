@@ -1,0 +1,75 @@
+<template>
+  <div>
+    <Row class="rowType" type="flex" justify="space-around">
+      <MenuItem
+        style="padding: 0;background: none;"
+        :name="item.pathName"
+        v-for="item in itemList"
+        :key="item.key"
+      >
+        <div class="iconType" v-if="!item.iconUrl">
+          <p>{{item.title}}{{item.iconUrl}}</p>
+        </div>
+        <div v-else class="iconType" @mouseenter="mouseenter(item)" @mouseleave="mouseleave(item)">
+          <img v-show="imgShow !== item.key" :src="item.iconUrl">
+          <img v-show="imgShow === item.key" :src="item.activeUrl">
+          <p>{{item.title}}</p>
+        </div>
+      </MenuItem>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["itemList"],
+  data() {
+    return {
+      imgShow: null
+    };
+  },
+  //   created() {
+  //     console.log("itemList", this.itemList);
+  //   },
+  methods: {
+    mouseenter(val) {
+      // console.log("鼠标进入", val);
+      this.imgShow = val.key;
+    },
+    mouseleave(val) {
+      this.imgShow = null;
+      //   console.log("鼠标离开", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.rowType {
+  width: 900px;
+  margin: 20px 10px;
+  .iconType {
+    width: 90px;
+    text-align: center;
+    color: #ffffff;
+
+    -webkit-transition: font-size 200ms, margin-top 200ms; /* Safari */
+    transition: font-size 200ms, margin-top 200ms;
+    // -webkit-transition: margin-top 2s; /* Safari */
+    // transition: margin-top 2s;
+    img {
+      width: 80%;
+    }
+    p {
+      margin-top: 8px;
+    }
+  }
+  .iconType:hover {
+    margin-top: -5px;
+    margin-bottom: -4px;
+    font-size: 16px;
+    color: #ffa74e;
+    // background: rgba(255, 255, 255, 0.3);
+  }
+}
+</style>

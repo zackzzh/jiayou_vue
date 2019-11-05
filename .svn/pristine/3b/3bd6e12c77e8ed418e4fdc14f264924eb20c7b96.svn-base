@@ -1,0 +1,127 @@
+<template>
+  <div class="footerDivType" style="background-image:url('static/jyfooter/bottomImg.png')">
+    <Row>
+      <i-col offset="3" span="3">
+        <footer-img :class="animationFun.logoIn"></footer-img>
+      </i-col>
+      <i-col offset="2" span="16">
+        <footer-card
+          :list="footerData"
+          :data="footerList"
+          :animationData="animationFun"
+          @fromCard="handlerClick"
+        ></footer-card>
+      </i-col>
+    </Row>
+    <div class="bottomType">
+      <p>粤ICP备18144457号-1© 甲由信息技术</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from "vuex";
+
+import footerCard from "./footer-card";
+import footerImg from "./footer-img";
+
+import footerData from "./footerData";
+
+export default {
+  components: {
+    footerCard,
+    footerImg
+  },
+  props: ["animationData"],
+  data() {
+    return {
+      footerData: footerData
+    };
+  },
+  created() {
+    this.getFooterList();
+  },
+  // mounted() {
+  //   console.log("footerData", this.footerList);
+  // },
+  computed: {
+    ...mapState("aboutUs", ["footerList"]),
+    animationFun() {
+      return this.animationData || {};
+    }
+  },
+
+  methods: {
+    ...mapActions("aboutUs", ["getFooterList"]),
+    handlerClick(val, parentVal) {
+      console.log("子类传过来", val, parentVal);
+      if (parentVal.id === "f1") {
+        // 首页跳转
+        this.$go({
+          path: "/home",
+          query: val
+        });
+      } else if (parentVal.id === "f2") {
+        // 精品案例跳转
+        this.$go({
+          path: "/cases"
+        });
+      } else if (parentVal.id === "f3") {
+        // 新闻动态跳转
+        this.$go({
+          path: "/trends/details",
+          query: {
+            id: val.id
+          }
+        });
+      } else if (parentVal.id === "f4") {
+        // 加入我们跳转
+        this.$go({
+          path: "/aboutUs",
+          query: {
+            pathName: "/aboutUs/joinUs"
+          }
+        });
+      } else if (parentVal.id === "f5") {
+        // 关于我们跳转
+        this.$go({
+          path: "/aboutUs",
+          query: {
+            pathName: val.pathName
+          }
+        });
+        // if (val.id === "f5-7") {
+        //   // 跳转至测试
+        //   // const handlerHref = this.$go({
+        //   //   path: "/test"
+        //   // });
+        //   const handlerHref = this.$router.resolve({
+        //     path: "/test"
+        //   });
+        //   window.open(handlerHref.href, "_blank");
+        //   // console.log("handlerHref", routeData);
+        // }
+      }
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.footerDivType {
+  /* background: rgba(0, 0, 0, 0.7); */
+  /* color: aliceblue; */
+  // background-image: url("/static/jyfooter/bottomImg.png");
+  width: 100%;
+  /* height: 550px; */
+  /* border: 1px solid #000000; */
+  padding: 74px 0;
+  .bottomType {
+    margin-top: 50px;
+    border-top: 1px solid #e7f8ff;
+    text-align: center;
+    font-size: 14px;
+    color: #e7f8ff;
+  }
+}
+</style>

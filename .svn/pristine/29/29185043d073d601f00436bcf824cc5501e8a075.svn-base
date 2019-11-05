@@ -1,0 +1,7 @@
+const root = '/platform/api/'
+
+// export const API_BASE_URL = 'http://192.168.1.126:8099' + root;
+export const API_BASE_URL = '/test' + root;
+export const TOKEN_KEY = 'X-Nideshop-Token'
+export const HISTORY_KEY = 'History-Key'
+

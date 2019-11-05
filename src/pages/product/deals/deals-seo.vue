@@ -1,0 +1,168 @@
+<template>
+  <div class="mainDivType">
+    <p>{{list.title}}</p>
+    <p>{{list.enTitle}}</p>
+    <Row :gutter="30">
+      <i-col span="8" v-for="item in list.list" :key="item.key">
+        <div class="cardType" :style="`background-image:url(${item.bgIconUrl});`">
+          <!-- <div class="textType"> -->
+          <p class="subtitleType">{{item.subtitle}}</p>
+          <p class="contentType">{{item.content}}</p>
+          <!-- </div> -->
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ["list"]
+  };
+
+</script>
+
+<style scoped>
+  .mainDivType {
+    color: #000000;
+    font-size: 45px;
+  }
+
+  .cardType {
+    height: 230px;
+    margin-top: 26px;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    background-repeat: no-repeat;
+    background-position: 92% 90%;
+    background-size: 80px;
+    /* background-origin:border-box; */
+    /* padding: 0 22px 22px 0; */
+  }
+
+  /* .textType{
+    margin: 30px;
+} */
+  .subtitleType {
+    margin: 30px 0 20px 0;
+    font-size: 24px;
+    color: #424242;
+  }
+
+  .contentType {
+    margin: 0 28px;
+    font-size: 16px;
+    color: #898989;
+  }
+
+  @media screen and (max-width: 768px){
+    .cardType {
+      margin-top: 15px !important;
+      height: 120px !important;
+    }
+
+    .contentType {
+      font-size: 12px !important;
+    }
+
+    p {
+      font-size: 18px !important;
+    }
+
+    .subtitleType {
+      font-size: 16px !important;
+      margin: 5px !important;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width:1024px) {
+    .cardType {
+      margin-top: 15px !important;
+      height: 160px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+
+    p {
+      font-size: 23px !important;
+    }
+
+    .subtitleType {
+      font-size: 18px !important;
+      margin: 10px !important;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width:1280px) {
+    .cardType {
+      margin-top: 15px !important;
+      height: 180px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+
+    p {
+      font-size: 28px !important;
+    }
+
+    .subtitleType {
+      font-size: 22px !important;
+      margin: 15px !important;
+    }
+  }
+
+  @media screen and (min-width: 1281px) and (max-width:1366px) {
+    .cardType {
+      margin-top: 15px !important;
+      height: 200px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+
+    p {
+      font-size: 28px !important;
+    }
+
+    .subtitleType {
+      font-size: 22px !important;
+      margin: 15px !important;
+    }
+  }
+
+  @media screen and (min-width: 1367px) and (max-width:1440px) {
+    .cardType {
+      margin-top: 20px !important;
+      height: 200px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+
+    p {
+      font-size: 30px !important;
+    }
+
+    .subtitleType {
+      font-size: 22px !important;
+      margin: 15px !important;
+    }
+  }
+
+  @media screen and (min-width: 1441px) and (max-width:1600px) {
+    .cardType {
+      margin-top: 20px !important;
+    }
+
+    .contentType {
+      font-size: 14px !important;
+    }
+  }
+
+</style>

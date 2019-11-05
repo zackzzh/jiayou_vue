@@ -1,0 +1,154 @@
+<template>
+  <div>
+    <Row :gutter="30">
+      <i-col span="8" v-for="item in data.list" :key="item.id">
+        <div
+          class="itemImgDivType"
+          @mouseenter="mouseenter(item)"
+          @mouseleave="mouseleave(item)"
+          @click="handlerClick(item)"
+        >
+          <img class="imgType" :src="item.picUrl">
+          <transition name="transbox">
+            <div class="shadowBoxType" v-show="isShow === item.id">
+              <!-- <div class="titleType">
+              {{item.title}}
+              <span>{{item.subtitle}}</span>
+            </div>
+              <div class="contentType" v-html="item.insturctions"></div>-->
+              <div class="textTitleType" v-html="item.title"></div>
+              <div class="subtitleType" v-html="item.subtitle"></div>
+              <div class="textType" v-html="item.insturctions"></div>
+              <!-- <p class="textTitleType">{{item.title}}</p>
+              <p class="textType">{{item.insturctions}}</p> -->
+              <Button class="btnType" size="small" ghost>{{item.title}}</Button>
+            </div>
+          </transition>
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["data"],
+  data() {
+    return {
+      isShow: null,
+      cardArr: [],
+      cardSixArr: []
+    };
+  },
+  // created() {
+  //   for (let i = 0; i < this.data.length; i++) {
+  //     // console.log("精品案例i % 6 === 0：", this.cardArr.length !== 0);
+  //     if (i % 6 === 0 && this.cardSixArr.length !== 0) {
+  //       this.cardArr.push(this.cardSixArr);
+  //       this.cardSixArr = [];
+  //     }
+  //     this.cardSixArr.push(this.data[i]);
+  //   }
+  //   this.cardArr.push(this.cardSixArr);
+
+  //   this.$emit("cardData", this.cardArr.length);
+  //   // console.log("精品案例card：", this.cardSixArr, this.cardArr);
+  // },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.id;
+    },
+    mouseleave() {
+      this.isShow = null;
+    },
+    handlerClick(val) {
+      // 当前点击卡片事件
+      // console.log("handlerClick",val);
+      this.$emit("handlerClick", val);
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.itemImgDivType {
+  // width: 100%;
+  // height: auto;
+  // height: 20%;
+  position: relative;
+  margin: 10px 0;
+  .imgType {
+    width: 100%;
+    height: 410px;
+    margin-bottom: -5px;
+    box-shadow: -10px 10px 12px rgba(0, 0, 0, 0.21);
+  }
+  .shadowBoxType {
+    // position: absolute;
+    // bottom: 0;
+    // width: 100%;
+    // height: 34%;
+    // padding: 0 20px 10px 20px;
+    // letter-spacing: 2px;
+    // color: #fefefe;
+    // background: rgba(0, 0, 0, 0.6);
+    // .titleType {
+    //   padding: 12px 0;
+    //   font-size: 28px;
+    //   font-weight: bold;
+    //   span {
+    //     padding-left: 12px;
+    //     font-size: 18px;
+    //     font-weight: 1;
+    //   }
+    // }
+    // .contentType {
+    //   font-size: 14px;
+    // }
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 20px;
+    letter-spacing: 3px;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+
+    .textTitleType {
+      /* 屏蔽罩内标题 */
+      margin: 30px 0 20px 14px;
+      font-size: 20px;
+    }
+    .subtitleType {
+      /* 副标题 */
+      margin: 20px 0 10px 0;
+    }
+    .textType {
+      /* 内容 */
+      margin: 0 14px;
+      text-indent: 26px;
+      text-align: left;
+    }
+    .btnType {
+      margin-top: 20px;
+    }
+  }
+  .transbox-enter-active,
+  .transbox-leave-active {
+    transition: all 0.5s ease;
+  }
+  .transbox-enter,
+  .transbox-leave-to {
+    // transform: translateY(10px);
+    height: 0%;
+    opacity: 0;
+  }
+  // .displayType {
+  //   display: none;
+  // }
+}
+</style>

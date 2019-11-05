@@ -1,0 +1,40 @@
+<template>
+  <div class="mainDivType">
+    <Row :gutter="70">
+      <i-col offset="1" span="10">
+        <p class="titleType">{{list.title}}</p>
+        <Divider style="height: 3px;color: #15ffd6;width: 40%"/>
+        <p class="contentType">{{list.content}}</p>
+      </i-col>
+      <i-col offset="1" span="12">
+        <img :src="list.imgUrl">
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list"]
+};
+</script>
+
+<style scoped lang="less">
+.mainDivType {
+  margin-top: 70px;
+  text-align: left;
+  .titleType {
+    //   border-bottom: 3px solid #15ffd6;
+    font-size: 54px;
+    font-weight: bold;
+  }
+  .contentType {
+    margin-top: 40px;
+    font-size: 26px;
+    color: #ffefff;
+  }
+  img {
+    width: 120%;
+  }
+}
+</style>

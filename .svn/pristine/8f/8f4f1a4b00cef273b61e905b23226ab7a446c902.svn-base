@@ -1,0 +1,96 @@
+<template>
+  <div>
+    <!-- 公共部分中间 -->
+    <!-- {{commonData}} background: url(img_flwr.gif) right bottom no-repeat, url(paper.gif) left top repeat; -->
+    <div class="contentDivType" :style="`background-image:url(${commonData.imgUrl})`">
+      <img :src="list.iconUrl">
+      <p class="titleType">{{list.title}}</p>
+      <div class="lineType"></div>
+      <p class="contentType">{{list.content}}</p>
+    </div>
+    <!-- <div class="contentDivType" :style="`background: url(${commonData.iconUrl})  top no-repeat, url(${commonData.imgUrl}) left top repeat;`"></div> -->
+    <!-- 公共图标部分 -->
+    <Row>
+      <i-col class="iconType" span="3" v-for="item in commonData.list" :key="item.key">
+        <div class="iconDivType" @mouseenter="mouseenter(item)" @mouseleave="mouseleave(item)" @click="handlerClick(item)">
+          <img v-show="isShow !== item.key" :src="item.iconUrl">
+          <img v-show="isShow === item.key" :src="item.activeUrl">
+          <!-- {{item}}activeUrl -->
+        </div>
+      </i-col>
+    </Row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["list", "commonData"],
+  data() {
+    return {
+      isShow: null
+    };
+  },
+  methods: {
+    mouseenter(val) {
+      this.isShow = val.key;
+      // console.log("鼠标进入", val);
+    },
+    mouseleave(val) {
+      this.isShow = null;
+      // console.log("鼠标离开", val);
+    },
+    handlerClick(val){
+      console.log("handlerClick",val);
+      this.$go({
+        path: val.pathName,
+        query: {
+          pathName: val.pathName
+        }
+      })
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+.contentDivType {
+  width: 72%;
+  height: 500px;
+  margin: -128px 14% 0 14%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  img {
+    margin: 20px;
+    width: 10%;
+  }
+  .titleType {
+    font-size: 38px;
+    font-weight: bold;
+    color: rgba(2, 2, 2, 0.8);
+  }
+  .lineType {
+    margin: 28px 42%;
+    border-bottom: 2px solid #000000;
+  }
+  .contentType {
+    margin: 0 110px;
+    font-size: 24px;
+    color: rgba(2, 2, 2, 0.55);
+  }
+}
+.iconType {
+  margin-top: 40px;
+  cursor: pointer;
+  img {
+    width: 60%;
+  }
+  .iconDivType {
+    -webkit-transition: margin 200ms; /* Safari */
+    transition: margin 200ms;
+  }
+  .iconDivType:hover {
+    margin-top: -10px;
+  }
+}
+</style>
